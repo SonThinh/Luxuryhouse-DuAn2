@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Model\City;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -13,18 +14,21 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('pages.area');
+        $data['citiesList'] = City::paginate(9);
+        return view('pages.area',$data);
     }
 
     public function login()
     {
         return view('auth.login');
     }
+
     function logout()
     {
         Auth::logout();
         return redirect()->route('users.login');
     }
+
     public function register()
     {
         return view('auth.register');
@@ -50,16 +54,11 @@ class HomeController extends Controller
 
     public function postRegister(RegisterRequest $request)
     {
-        DB::beginTransaction();
-        try {
-            $user = new User;
-            $user->email = $request->email;
-            $user->password = Hash::make($request->password);
-            $user->level = 1;
-            $user->save();
-            return back()->withInput()->with('success', 'Tài khoản đăng ký thành công! Mời đăng nhập');
-        }catch (\Exception $ex){
-            DB::rollBack();
-        }
+        $user = new User;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->level = 1;
+        $user->save();
+        return back()->withInput()->with('success', 'Tài khoản đăng ký thành công! Mời đăng nhập!');
     }
 }

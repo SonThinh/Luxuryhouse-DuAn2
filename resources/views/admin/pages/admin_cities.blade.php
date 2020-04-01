@@ -22,17 +22,26 @@
                     </thead>
                     <tbody>
                     @foreach($citiesList as $city)
+                        @php
+                            $image = json_decode($city->image);
+                            $areas = json_decode($city->areas);
+                        @endphp
                         <tr {{$city->id}}>
                             <td>{{$city->name}}</td>
-                            <td>{{$city->image}}</td>
+                            <td><img src="{{asset($image->image_path)}}" alt="" style="width: 50%"></td>
                             <td>{{$city->description}}</td>
-                            <td>{{$city->area}}</td>
                             <td>
-                                <a href="#">
+                                @foreach($areas as $area)
+                                    {{$area}},
+                                @endforeach
+                            </td>
+                            <td>
+                                <a href="{{route('admin.city.editCities',[$city->id])}}">
                                     <button class="btn btn-block btn-primary" name="btn-edit"><i
                                             class="far fa-edit"></i></button>
                                 </a>
-                                <a href="#">
+                                <a href="{{route('admin.city.deleteCity',[$city->id])}}" style="margin-top: 5px"
+                                   onclick="return confirm('Bạn có muốn xóa không?')">
                                     <button class="btn btn-block btn-danger" name="btn-delete"><i
                                             class="far fa-trash-alt"></i></button>
                                 </a>

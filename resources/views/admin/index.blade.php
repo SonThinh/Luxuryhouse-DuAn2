@@ -13,7 +13,6 @@
     <link href="{{asset('../resources/assets/admin/css/style_grid.css')}}" rel="stylesheet" type="text/css" media="all" />
     <link href="{{asset('../resources/assets/admin/css/table-style.css')}}" rel="stylesheet" type="text/css" media="all" />
     <link href="{{asset('../resources/assets/admin/css/style.css')}}" rel="stylesheet" type="text/css" media="all" />
-
     <!-- font-awesome-icons -->
     <link href="{{asset('../resources/assets/admin/css/font-awesome.css')}}" rel="stylesheet">
     <!-- //font-awesome-icons -->
@@ -65,8 +64,9 @@
         });
     });
 </script>
+<script type="text/javascript" src="{{asset('../resources/assets/admin/js/bootstrap-3.1.1.min.js')}}"></script>
 <script src="{{asset('../resources/assets/admin/js/jquery.nicescroll.js')}}"></script>
 <script src="{{asset('../resources/assets/admin/js/scripts.js')}}"></script>
-<script type="text/javascript" src="{{asset('../resources/assets/admin/js/bootstrap-3.1.1.min.js')}}"></script>
+
 </body>
 </html>

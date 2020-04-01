@@ -7,13 +7,16 @@ body {
     font-size: 18px;
     background-color: #f2f2f2;
 }
-header{
+
+header {
     background-color: #ffffff;
     box-shadow: 0 0 10px 0 #ff5722;
 }
-footer{
+
+footer {
     background-color: #f2f2f2;
 }
+
 .main .title
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
@@ -35,9 +38,11 @@ label {
 li {
     list-style: none;
 }
-a:hover{
+
+a:hover {
     text-decoration: none;
 }
+
 /*--header--*/
 
 
@@ -98,36 +103,45 @@ li.nav-item {
     font-family: Florence, cursive;
     font-size: 13px;
 }
-.nav-link span{
+
+.nav-link span {
     font-weight: bold;
 }
-.dropdown{
+
+.dropdown {
     margin: auto;
 }
-.dropdown .dropdown-toggle{
+
+.dropdown .dropdown-toggle {
     font-weight: bold;
     color: #555555
 }
-.dropdown-menu{
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+
+.dropdown-menu {
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
-.dropdown-menu li{
+
+.dropdown-menu li {
     padding: 10px 20px;
 }
-.dropdown-menu li a{
+
+.dropdown-menu li a {
     font-weight: bold;
     color: #555555;
 }
-.dropdown-menu li:hover, .dropdown-menu li a:hover{
+
+.dropdown-menu li:hover, .dropdown-menu li a:hover {
     color: #ff5722;
     background-color: #ddd;
 }
-.avatar{
+
+.avatar {
     width: 30px;
     height: 30px;
     border-radius: 50%;
 }
-.btn-register-host{
+
+.btn-register-host {
     font-weight: bold;
     background: #ff5722;
     color: white;
@@ -142,6 +156,7 @@ li.nav-item {
     background: #fff;
     box-shadow: 5px 5px 10px 10px rgba(206, 206, 206, 0.5)
 }
+
 /* style inputs and link buttons */
 .login-form input,
 .btn {
@@ -231,6 +246,7 @@ li.nav-item {
     border-radius: 0 0 4px 4px;
     margin: 0 31px;
 }
+
 /*//login form*/
 /*register form*/
 .register-form {
@@ -253,7 +269,7 @@ li.nav-item {
     display: inline-block;
     font-size: 17px;
     line-height: 20px;
-    text-decoration: none; /* remove underline from anchors */
+    text-decoration: none;
 }
 
 .register-form input:hover,
@@ -318,15 +334,18 @@ li.nav-item {
     border-radius: 50%;
     padding: 8px 10px;
 }
+
 .register-form .hide-md-lg {
     display: none;
 }
+
 .register-form .bottom-button {
     text-align: center;
     background-color: #666;
     border-radius: 0 0 4px 4px;
     margin: 0 31px;
 }
+
 /*//register form*/
 /*banner*/
 .banner {
@@ -458,14 +477,17 @@ li.nav-item {
     border-left: 3px solid #ff5722;
     color: #ff5722;
 }
-.main .card{
+
+.main .card {
     position: relative;
     border-radius: 1px;
 }
+
 .main .card img {
     vertical-align: middle;
 }
-.main .card .card-items{
+
+.main .card .card-items {
     position: absolute;
     bottom: 0;
     background: rgb(0, 0, 0);
@@ -479,57 +501,71 @@ li.nav-item {
     height: 0;
     transition: .5s ease;
 }
-.main .card:hover .card-items{
+
+.main .card:hover .card-items {
     height: 25%;
 }
-.main .card .card-items .card-body{
+
+.main .card .card-items .card-body {
     text-align: center;
 }
-.main .services img{
+
+.main .services img {
     max-height: 200px;
 }
-.main .filter{
+
+.main .filter {
     background: #ffffff;
     border-radius: 10px 10px 5px 5px;
     padding: 20px;
 }
-.main .filter h3{
+
+.main .filter h3 {
     font-size: 20px;
     font-weight: bold;
     color: #ff5722;
     border-bottom: 2px solid #ff5722;
 }
-.main .filter ul{
+
+.main .filter ul {
     padding: 10px 10px;
 }
-.main .home-content{
+
+.main .home-content {
     min-height: 400px;
 }
-.main .home-content .home-type{
+
+.main .home-content .home-type {
     font-size: 15px;
     color: #888888;
 }
-.main .home-content .home-name{
+
+.main .home-content .home-name {
     font-weight: bold;
     text-align: center;
 }
-.main .home-content .home-detail{
+
+.main .home-content .home-detail {
     font-size: 16px;
 }
-.main .home-content .home-price{
+
+.main .home-content .home-price {
     font-weight: bold;
     font-size: 16px;
 }
-.main .home-content .home-address{
+
+.main .home-content .home-address {
     font-size: 16px;
 }
 
 .slide-home .home-slider {
     display: none;
- }
-.slide-home .home-slider img{
+}
+
+.slide-home .home-slider img {
     width: 100%;
 }
+
 .slide-home .prev,
 .slide-home .next {
     cursor: pointer;
@@ -546,6 +582,7 @@ li.nav-item {
     right: 9%;
     border-radius: 3px 0 0 3px;
 }
+
 .slide-home .prev {
     left: 9%;
     border-radius: 3px 0 0 3px;
@@ -553,85 +590,169 @@ li.nav-item {
 
 .slide-home .prev:hover,
 .slide-home .next:hover {
-background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.8);
 }
 
 .slide-home .row:after {
-content: "";
-display: table;
-clear: both;
+    content: "";
+    display: table;
+    clear: both;
 }
+
 .slide-home .column-thumbnail-image {
-float: left;
-width: 16.66%;
+    float: left;
+    width: 16.66%;
 }
 
 .slide-home .thumbnail-image {
-opacity: 0.6;
-cursor: pointer;
-width: 100%;
+    opacity: 0.6;
+    cursor: pointer;
+    width: 100%;
 }
-.slide-home .row-thumbnail-image{
+
+.slide-home .row-thumbnail-image {
     width: 100%;
     margin: auto;
 }
+
 .slide-home .active,
 .slide-home .thumbnail-image:hover {
     opacity: 1;
 }
-.main .house-detail .house-name{
+
+.main .house-detail .house-name {
     font-size: 30px;
     font-weight: bold;
     color: #ff5722;
 }
+
 .room-detail .fa {
     transform: rotate(0deg);
     transition: .3s transform ease-in-out;
 }
+
 .room-detail .collapsed .fa {
     transform: rotate(180deg);
 }
-.price-detail td{
+
+.price-detail td {
     border: none;
 }
-.house-detail h3{
+
+.house-detail h3 {
     font-size: 23px;
     font-weight: bold;
 }
-.house-detail h4{
+
+.house-detail h4 {
     font-size: 20px;
     font-weight: bold;
 }
-.contact-owner{
+
+.contact-owner {
     background: #fff;
     margin-top: 15px;
     padding: 20px;
     border-radius: 10px;
 }
+
 .contact-owner .avatar {
     vertical-align: middle;
     width: 50px;
     height: 50px;
     border-radius: 50%;
 }
-.contact-owner .owner-name{
+
+.contact-owner .owner-name {
     margin: 10px;
     color: black;
     font-weight: bold;
 }
-.contact-owner .owner-name:hover{
+
+.contact-owner .owner-name:hover {
     color: #ff5722;
     font-weight: bold;
 }
-.contact-owner .owner-phone{
+
+.contact-owner .owner-phone {
     margin: 10px;
     color: black;
 }
-.similar-house .title{
+
+.similar-house .title {
     font-size: 28px;
 }
-/*main*/
 
+/*main*/
+.edit-form {
+    position: relative;
+    border-radius: 5px;
+    padding: 5px 0 10px 0;
+    background: #fff;
+    box-shadow: 5px 5px 10px 10px rgba(206, 206, 206, 0.5)
+}
+
+/* style inputs and link buttons */
+.edit-form input {
+    padding: 12px;
+    border-radius: 4px;
+    margin: 10px 0;
+    opacity: 0.85;
+    display: inline-block;
+    font-size: 17px;
+    line-height: 20px;
+    text-decoration: none;
+}
+
+.edit-form input:hover,
+.edit-form .btn:hover {
+    opacity: 1;
+}
+
+/* style the submit button */
+.edit-form input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+.edit-form textarea {
+    width: 100%;
+    border: none;
+    padding: 12px;
+}
+
+.edit-form input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+/* Two-column layout */
+.edit-form .col {
+    float: left;
+    width: 50%;
+    margin: auto;
+    padding: 0 50px;
+    margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.edit-form .row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.menu-profile {
+    text-align: center;
+}
+.menu-profile a{
+    color: black;
+}
+.menu-profile a:hover{
+    opacity: 0.85;
+}
+.menu-profile a.active{
+    color: #ff5722;
+}
 /*-- footer --*/
 h1.heading, h2.heading, h3.heading {
     font-size: 50px;
@@ -676,19 +797,24 @@ footer .logo a {
     font-size: 3em;
     color: #555555;
 }
-footer .follow-us i{
+
+footer .follow-us i {
     font-size: 40px;
 }
-footer .about-us{
+
+footer .about-us {
     margin-bottom: 10px;
 }
-footer .follow-us #fb i:hover{
+
+footer .follow-us #fb i:hover {
     color: #4c6ef5;
 }
-footer .follow-us #yt i:hover{
+
+footer .follow-us #yt i:hover {
     color: #ff0000;
 }
-footer .follow-us #ins i:hover{
+
+footer .follow-us #ins i:hover {
     color: #ff0000;
 }
 
@@ -807,10 +933,12 @@ footer .follow-us #ins i:hover{
         width: 100%;
         margin-top: 0;
     }
+
     /* hide the vertical line */
     .login-form .vl {
         display: none;
     }
+
     /* show the hidden text on small screens */
     .login-form .hide-md-lg {
         display: block;
@@ -871,3 +999,5 @@ footer .follow-us #ins i:hover{
 }
 
 /*-- //Responsive Design --*/
+
+
