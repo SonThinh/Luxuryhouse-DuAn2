@@ -79,6 +79,7 @@
 </script>
 <!-- //here ends scrolling icon -->
 <!-- start-smooth-scrolling -->
+<script type="text/javascript" src="{{asset('../resources/assets/home/js/script.js')}}"></script>
 <!-- //js-scripts -->
 </body>
 </html>

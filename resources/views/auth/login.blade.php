@@ -49,7 +49,7 @@
                 <div class="bottom-button mt-4">
                     <div class="row">
                         <div class="col">
-                            <a href="#" style="color:white" class="btn">Đăng ký</a>
+                            <a href="{{route('users.register')}}" style="color:white" class="btn">Đăng ký</a>
                         </div>
                         <div class="col">
                             <a href="#" style="color:white" class="btn">Quên mật khẩu ?</a>

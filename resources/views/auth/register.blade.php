@@ -13,7 +13,7 @@
                     <div class="col">
                         <div class="d-block">
                             <p class="m-auto">Đã có tài khoản?</p>
-                            <input type="button" href="login.html" value="Đăng nhập" class="btn btn-block btn-primary">
+                            <a type="button" class="btn btn-block btn-primary" href="{{route('users.login')}}">Đăng nhập</a>
                         </div>
                         <a href="#" class="fb btn">
                             <i class="fab fa-facebook-f"></i> Đăng nhập bằng Facebook

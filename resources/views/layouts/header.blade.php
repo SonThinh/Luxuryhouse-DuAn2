@@ -2,7 +2,7 @@
     <div class="top-nav">
         <div class="container-fluid">
             <nav class="navbar navbar-expand-lg navbar-light">
-                <a href="index.blade.php">
+                <a href="{{route('place')}}">
                     <div class="logo d-flex">
                         <img src="{{asset('../resources/assets/home/images/logo/logo.png')}}">
                         <div class="logo-name text-uppercase ml-1 mt-2 d-block">
@@ -23,11 +23,24 @@
                         </li>
                         @if(Auth::check())
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="{{asset('../resources/assets/home/images/avatar/avatar-default.png')}}" class="avatar" alt=""><span>{{isset(auth()->user()->username) ? auth()->user()->username : auth()->user()->email}}</span>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    @php
+                                        $image = json_decode(auth()->user()->avatar);
+                                    @endphp
+                                    @isset($image)
+                                        <img src="{{asset($image->image_path)}}" class="avatar" alt="">
+                                    @else
+                                        <img
+                                            src="{{asset('../resources/assets/home/images/avatar/avatar-default.png')}}"
+                                            class="avatar" alt="">
+                                    @endisset
+                                    <span>{{isset(auth()->user()->username) ? auth()->user()->username : auth()->user()->email}}</span>
                                     <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#"><i class="fal fa-id-card"></i> Hồ sơ cá nhân</a></li>
-                                    <li><a href="{{route('users.logout')}}"><i class="fal fa-sign-out-alt"></i> Đăng xuất</a></li>
+                                    <li><a href="{{route('users.showProfile',[auth()->user()->id])}}"><i
+                                                class="fal fa-id-card"></i> Hồ sơ cá nhân</a></li>
+                                    <li><a href="{{route('users.logout')}}"><i class="fal fa-sign-out-alt"></i> Đăng
+                                            xuất</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item">
