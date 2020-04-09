@@ -14,7 +14,7 @@
                             <li><a href="{{route('admin.user.showUsers')}}"><i class="fas fa-users"></i> Tài khoản</a></li>
                             <li><a href="{{route('admin.city.showCities')}}"><i class="far fa-city"></i> Khu vực, thành phố</a>
                             </li>
-                            <li><a href="{{route('admin.user.showUsers')}}"><i class="fas fa-warehouse-alt"></i> Phòng, căn hộ</a></li>
+                            <li><a href="{{route('admin.house.showDashboard')}}"><i class="fas fa-warehouse-alt"></i> Phòng, căn hộ</a></li>
                             <li><a href="{{route('admin.user.showUsers')}}"><i class="far fa-taxi"></i> Loại hình dịch vụ</a></li>
                             <li><a href="{{route('admin.user.showUsers')}}"><i class="far fa-clone"></i> Top,banner,event,slide</a></li>
 

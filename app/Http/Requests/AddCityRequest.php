@@ -29,7 +29,6 @@ class AddCityRequest extends FormRequest
         return [
             'city_name' => 'required',
             'city_description' => 'required',
-            'city_areas.*' => 'required',
             'image_city' => 'required|',
         ];
     }
@@ -39,7 +38,6 @@ class AddCityRequest extends FormRequest
         return [
             'city_name.required' => 'Chưa nhập tên thành phố',
             'city_description.required' => 'Chưa nhập mô tả thành phố',
-            'city_areas.*.required' => 'Chưa nhập khu vực',
             'image_city.required' => 'Chưa nhập hình ảnh',
         ];
     }

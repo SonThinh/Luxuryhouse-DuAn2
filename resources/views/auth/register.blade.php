@@ -1,5 +1,5 @@
 @extends('index')
-@section('title','area')
+@section('title','register')
 @section('main')
     <div class="container">
         <div class="register-form m-5" id="register-form">

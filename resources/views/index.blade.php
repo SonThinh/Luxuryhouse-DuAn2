@@ -28,19 +28,11 @@
 <!-- js -->
 <script type="text/javascript" src="{{asset('../resources/assets/home/js/jquery-3.4.1.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('../resources/assets/home/js/bootstrap.js')}}"></script>
+
 <!-- //js -->
 <!--date range picker-->
 <script>
-    $(function () {
-        $('input[name="datetimes"]').daterangepicker({
-            timePicker: true,
-            startDate: moment().startOf('hour'),
-            endDate: moment().startOf('hour').add(32, 'hour'),
-            locale: {
-                format: 'DD/MM hh:mm A'
-            }
-        });
-    });
+
 </script>
 
 <script type="text/javascript" src="{{asset('../resources/assets/home/js/moment.js')}}"></script>

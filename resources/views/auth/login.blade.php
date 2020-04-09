@@ -1,5 +1,5 @@
 @extends('index')
-@section('title','area')
+@section('title','login')
 @section('main')
     <div class="container">
         <div class="login-form m-5" id="login-form">

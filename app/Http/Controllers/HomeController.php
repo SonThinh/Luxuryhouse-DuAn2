@@ -46,7 +46,7 @@ class HomeController extends Controller
             'password' => $request->password,
         ];
         if (Auth::attempt($data, $remember_me)) {
-            return redirect()->route('place');
+            return redirect()->route('users.showProfile',[auth()->user()->id]);
         } else {
             return back()->withInput()->with('error', 'Tài khoản hoặc mật khẩu không đúng');
         }

@@ -43,9 +43,16 @@
                                             xuất</a></li>
                                 </ul>
                             </li>
-                            <li class="nav-item">
-                                <input type="submit" class="btn btn-block btn-register-host" value="Host">
-                            </li>
+                            @isset(auth()->user()->host)
+                                <li class="nav-item">
+                                    <a class="nav-link {{ (request()->segment(2) == 'host') ? 'active' : '' }}"
+                                       href="{{route('users.host.showDashboard',[auth()->user()->host->id])}}"><span>Host</span></a>
+                                </li>
+                            @else
+                                <li class="nav-item host">
+                                    <a href="{{route('users.host',[auth()->user()->id])}}" type="submit" class="btn btn-block btn-host">Host</a>
+                                </li>
+                            @endisset
                         @else
                             <li class="nav-item">
                                 <a class="nav-link {{ (request()->segment(2) == 'login') ? 'active' : '' }}"
