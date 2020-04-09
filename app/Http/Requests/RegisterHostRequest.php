@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EditCityRequest extends FormRequest
+class RegisterHostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,15 @@ class EditCityRequest extends FormRequest
     public function rules()
     {
         return [
-            'city_name' => 'required',
-            'city_description' => 'required',
+            'id_card' => 'required|',
+            'id_card_image.*' => 'required|',
         ];
     }
     public function messages()
     {
         return [
-            'city_name.required' => 'Chưa nhập tên thành phố',
-            'city_description.required' => 'Chưa nhập mô tả thành phố',
+            'id_card.required' => 'Chưa nhập chứng minh nhân dân',
+            'id_card_image.*.required' => 'Chưa nhập hình ảnh chứng minh nhân dân',
         ];
     }
 }

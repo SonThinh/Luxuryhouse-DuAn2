@@ -53,20 +53,20 @@
                                        value="{{$user->birth}}">
                                 <div class="form-check-inline">
                                     <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="gender" value="male"
-                                               @if($user->gender === 'male') checked @endif>Nam
+                                        <input type="radio" class="form-check-input" name="gender" value="nam"
+                                               @if($user->gender === 'nam') checked @endif>Nam
                                     </label>
                                 </div>
                                 <div class="form-check-inline">
                                     <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="gender" value="female"
-                                               @if($user->gender === 'female') checked @endif>Nữ
+                                        <input type="radio" class="form-check-input" name="gender" value="nữ"
+                                               @if($user->gender === 'nữ') checked @endif>Nữ
                                     </label>
                                 </div>
                                 <div class="form-check-inline">
                                     <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="gender" value="other"
-                                               @if($user->gender === 'other') checked @endif>Khác
+                                        <input type="radio" class="form-check-input" name="gender" value="khác"
+                                               @if($user->gender === 'khác') checked @endif>Khác
                                     </label>
                                 </div>
                                 <input class="form-control" type="tel" name="phone" placeholder="Số điện thoại"
@@ -76,7 +76,7 @@
                                 <input class="form-control" type="text" name="fb" placeholder="Facebook"
                                        value="{{$user->facebook}}">
                                 <textarea class="form-control" name="description" rows="5"
-                                          placeholder="Mô tả về bản thân">@isset($user->description){{$user->facebook}}@endisset</textarea>
+                                          placeholder="Mô tả về bản thân">{{$user->description}}</textarea>
                                 <input class="btn btn-block btn-success" type="submit" value="Cập nhật">
                             </div>
                         </div>

@@ -33,7 +33,13 @@
                             <div class="upload-ad-photos">
                                 <label class="col-sm-2 control-label">Hình ảnh</label>
                                 <div class="photos-upload-view col-sm-8">
-                                    <input name="image_city" type="file" accept="image/*" onchange="loadFile(event)">
+                                    <label>
+                                        <input style="display:none;" name="image_city" type="file" accept="image/*" onchange="loadFile(event)">
+                                        <p class="upload-image">
+                                            Chọn hình ảnh
+                                        </p>
+                                    </label>
+
                                     <img id="output" alt="" style="width: 50%;"/>
                                     @if($errors->has('image_city'))
                                         <div class="alert alert-danger alert-dismissible" style="width: 93%">
@@ -58,25 +64,7 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Các khu vực</label>
-                            <div class="col-sm-8 area-form">
-                                <div class="area">
-                                    <input type="text" class="form-control1" name="city_areas[]">
-                                </div>
-                                <div class="input-group-btn">
-                                    <button type="button" class="btn btn-success" onclick="addClone()"><i
-                                            class="far fa-plus-circle"></i> Add
-                                    </button>
-                                </div>
-                                @if($errors->has('city_areas.*'))
-                                    <div class="alert alert-danger alert-dismissible">
-                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                        <strong>{{ $errors->first('city_areas.*') }}</strong>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
+
                         <div class="btn-bot">
                             <input type="submit" class="btn btn-block btn-primary" value="Thêm">
                             <a href="{{route('admin.city.showCities')}}" type="submit" class="btn btn-block btn-danger"
@@ -88,13 +76,6 @@
         </div>
     </div>
     <script type="text/javascript">
-        function addClone() {
-            if ($('.area').length > 15) {
-                return false;
-            }
-            $($('.area').prop('outerHTML')).insertBefore('.input-group-btn');
-        }
-
         var loadFile = function (event) {
             var old = document.getElementById('img-old');
             if (old) {

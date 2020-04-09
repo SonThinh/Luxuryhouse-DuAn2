@@ -161,7 +161,12 @@ li.active a i, .act a i {
     padding: 5px;
     text-decoration: none;
 }
-
+.upload-image{
+    border: 2px solid gray;
+    color: gray;
+    background-color: white;
+    border-radius: 8px;
+}
 li.dropdown.head-dpdn i {
     color: #fff;
     font-size: 20px;

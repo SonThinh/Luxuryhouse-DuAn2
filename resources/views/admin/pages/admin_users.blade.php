@@ -19,33 +19,27 @@
                     <th>Google</th>
                     <th>Facebook</th>
                     <th>Mô tả bản thân</th>
-                    <th>Tùy chọn</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($memberList as $members)
+                    @php
+                        $image = json_decode($members->avatar);
+                    @endphp
                     @if($members->level != 0)
                         <tr {{$members->id}}>
                             <td>{{Str::limit($members->username , 10)}}</td>
                             <td>{{Str::limit($members->email , 8)}}</td>
-                            <td>{{Str::limit($members->avatar)}}</td>
+                            <td class="text-center" style="width: 15%"><img
+                                    src="@isset($image->image_path){{asset($image->image_path)}}@else{{asset('../resources/assets/home/images/avatar/avatar-default.png')}} @endisset"
+                                    alt="" style="width: 100%"></td>
                             <td>{{$members->address}}</td>
                             <td>{{$members->gender}}</td>
-                            <td>{{$members->birth}}</td>
+                            <td>{{date('d-m-Y',strtotime($members->birth))}}</td>
                             <td>{{$members->phone}}</td>
                             <td>{{$members->google}}</td>
                             <td>{{$members->facebook}}</td>
                             <td>{{$members->description}}</td>
-                            <td>
-                                <a href="{{route('admin.user.editUsers',[$members->id])}}">
-                                    <button class="btn btn-block btn-primary" name="btn-edit"><i
-                                            class="far fa-edit"></i></button>
-                                </a>
-                                <a href="#">
-                                    <button class="btn btn-block btn-danger" name="btn-delete"><i
-                                            class="far fa-trash-alt"></i></button>
-                                </a>
-                            </td>
                         </tr>
                     @endif
                 @endforeach

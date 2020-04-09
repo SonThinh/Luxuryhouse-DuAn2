@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\House;
 use Illuminate\Database\Eloquent\Model;
 
 class City extends Model
@@ -13,6 +14,8 @@ class City extends Model
         'name',
         'image',
         'description',
-        'areas',
     ];
+    public function house(){
+        return $this->hasMany(House::class,'city_id','id');
+    }
 }

@@ -7,7 +7,7 @@
         <div class="agile_top_w3_grids">
             <ul class="ca-menu">
                 <li>
-                    <a href="#">
+                    <a href="{{route('admin.house.showDashboard')}}">
                         <i class="fas fa-warehouse-alt"></i>
                         <div class="ca-content">
                             <h4 class="ca-main">16,808</h4>
@@ -25,7 +25,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{route('admin.city.showCities')}}">
+                    <a href="{{route('admin.city.showDashboard')}}">
                         <i class="far fa-city"></i>
                         <div class="ca-content">
                             <h4 class="ca-main two">29,008</h4>
