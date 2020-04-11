@@ -2,25 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Host;
 use App\House;
 use App\Http\Requests\TypeRequest;
 use App\Http\Requests\UtilityRequest;
+use App\Model\District;
 use App\Model\Trip;
 use App\Model\Type;
 use App\Model\Utility;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class HouseController extends Controller
 {
     public function showDashboardHouse()
     {
         return view('admin.pages.admin_dashboard_house');
-    }
-
-    public function showViewHouses()
-    {
-        $data['housesList'] = House::paginate(10);
-        return view('admin.pages.house.houses', $data);
     }
 
     public function showViewUtility()
@@ -39,6 +36,7 @@ class HouseController extends Controller
         $utility = new Utility();
         $utility->symbol = $request->symbol;
         $utility->icon = json_encode($request->icon);
+        $utility->key = $request->key;
         $utility->save();
         return back()->withInput()->with('success', 'Thêm tiện ích thành công!');
     }
@@ -54,6 +52,7 @@ class HouseController extends Controller
         $utility = Utility::find($id);
         $utility->symbol = $request->symbol;
         $utility->icon = json_encode($request->icon);
+        $utility->key = $request->key;
         $utility->save();
         return back()->withInput()->with('success', 'Sửa tiện ích thành công!');
     }
@@ -134,4 +133,26 @@ class HouseController extends Controller
         Trip::destroy($id);
         return back();
     }
+
+    public function showViewHouses()
+    {
+        $data['housesList'] = House::paginate(10);
+        $data['host'] = Host::with(['user'])->get();
+        $data['house'] = House::with(['city'])->get();
+        $data['district'] = District::with(['city'])->get();
+        $data['types'] = Type::all();
+        $data['trip_types'] = Trip::all();
+        return view('admin.pages.house.houses', $data);
+    }
+    public function deleteHouse($id){
+        House::destroy($id);
+        return back();
+    }
+    public function changeStatus(Request $request){
+        $house = House::find($request->id);
+        $house->status = $request->status;
+        $house->save();
+        return response()->json(['success'=>'Đổi trạng thái thành công.']);
+    }
+
 }

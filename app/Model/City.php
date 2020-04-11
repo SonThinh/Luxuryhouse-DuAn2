@@ -18,4 +18,7 @@ class City extends Model
     public function house(){
         return $this->hasMany(House::class,'city_id','id');
     }
+    public function district(){
+        return $this->hasMany(District::class,'city_id','id');
+    }
 }

@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="{{asset('../resources/assets/home/css/bootstrap.css')}}"> <!-- Bootstrap-Core-CSS -->
     <link rel="stylesheet" type="text/css" href="{{asset('../resources/assets/home/css/daterangepicker.css')}}"/>
     <link rel="stylesheet" href="{{asset('../resources/assets/home/css/style.css')}}" type="text/css" media="all"/> <!-- Style-CSS -->
+    <link href="{{asset('../resources/assets/home/css/toggle-bt4.min.css')}}" rel="stylesheet">
+    <link href="{{asset('../resources/assets/admin/css/toast.min.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('../resources/assets/home/css/fontawesome-all.css')}}"> <!-- Font-Awesome-Icons-CSS -->
     <!-- //css files -->
     <!-- favicon -->
@@ -27,6 +29,8 @@
 <!-- js-scripts -->
 <!-- js -->
 <script type="text/javascript" src="{{asset('../resources/assets/home/js/jquery-3.4.1.min.js')}}"></script>
+<script src="{{asset('../resources/assets/home/js/toggle-bt4.min.js')}}"></script>
+<script src="{{asset('../resources/assets/admin/js/toastr.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('../resources/assets/home/js/bootstrap.js')}}"></script>
 
 <!-- //js -->

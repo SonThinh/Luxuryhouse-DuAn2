@@ -15,6 +15,7 @@ class CreateUtilitiesTable extends Migration
     {
         Schema::create('utilities', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('key');
             $table->string('symbol');
             $table->string('icon');
             $table->timestamps();

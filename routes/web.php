@@ -22,6 +22,11 @@ Route::group(['prefix' => 'user', 'as' => 'users.', 'middleware' => 'CheckLogout
         Route::get('/dashboard/{id}/add-house',[App\Http\Controllers\HostController::class,'viewAddHouse'])->name('addHouse');
         Route::post('/dashboard/{id}/add-house',[App\Http\Controllers\HostController::class,'postAddHouse'])->name('addHouse');
         Route::post('/select-district',[Controllers\HostController::class,'selectDistrict'])->name('selectDistrict');
+        Route::get('/house/{id}',[Controllers\HostController::class,'ViewHouse'])->name('ViewHouse');
+        Route::get('/change-status',[Controllers\HostController::class,'changeStatus'])->name('changeStatus');
+        Route::get('/house/{id}/edit',[Controllers\HostController::class,'ViewEditHouse'])->name('editHouse');
+        Route::post('/house/{id}/edit',[Controllers\HostController::class,'editHouse'])->name('editHouse');
+        Route::get('/house/{id}/delete',[Controllers\HostController::class,'deleteHouse'])->name('deleteHouse');
     });
 });
 
@@ -62,6 +67,8 @@ Route::group(['namespace' => 'Admin'], function () {
         Route::group(['prefix'=>'house','as'=>'house.'],function (){
             Route::get('/dashboard',[Controllers\Admin\HouseController::class,'showDashboardHouse'])->name('showDashboard');
             Route::get('/house-manage',[Controllers\Admin\HouseController::class,'showViewHouses'])->name('showViewHouses');
+            Route::get('/delete-house/{id}',[Controllers\Admin\HouseController::class,'deleteHouse'])->name('deleteHouse');
+            Route::get('/change-status',[Controllers\Admin\HouseController::class,'changeStatus'])->name('changeStatus');
 
             Route::get('/house-type',[Controllers\Admin\HouseController::class,'showViewType'])->name('showViewType');
             Route::get('/house-type/add',[Controllers\Admin\HouseController::class,'showViewAddType'])->name('addType');

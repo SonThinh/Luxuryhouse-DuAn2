@@ -10,6 +10,7 @@ class Utility extends Model
     protected $guarded = [];
     protected $primaryKey = 'id';
     protected $fillable = [
+        'key',
         'symbol',
         'icon',
     ];
