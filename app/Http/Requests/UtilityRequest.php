@@ -25,14 +25,19 @@ class UtilityRequest extends FormRequest
     {
         return [
             'symbol' => 'required|',
+            'key' => 'required',
             'icon' => 'required|',
+
         ];
     }
+
     public function messages()
     {
         return [
             'symbol.required' => 'Chưa nhập biểu tượng',
+            'key.required' => 'Chưa nhập key',
             'icon.required' => 'Chưa nhập icon',
+
         ];
     }
 }

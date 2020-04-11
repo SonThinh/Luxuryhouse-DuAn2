@@ -29,6 +29,18 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-2 control-label">Từ khóa</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control1" name="key">
+                                @if($errors->has('key'))
+                                    <div class="alert alert-danger alert-dismissible">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        <strong>{{ $errors->first('key') }}</strong>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-2 control-label">Icon</label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control1" name="icon">

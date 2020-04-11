@@ -15,10 +15,10 @@
                             <p class="m-auto">Đã có tài khoản?</p>
                             <a type="button" class="btn btn-block btn-primary" href="{{route('users.login')}}">Đăng nhập</a>
                         </div>
-                        <a href="#" class="fb btn">
+                        <a href="#" class="fb btn btn-block mt-2">
                             <i class="fab fa-facebook-f"></i> Đăng nhập bằng Facebook
                         </a>
-                        <a href="#" class="google btn">
+                        <a href="#" class="google btn btn-block">
                             <i class="fab fa-google-plus-g"></i> Đăng nhập với Google+
                         </a>
                     </div>
@@ -39,28 +39,28 @@
                                 <strong>{{ Session::get('success')}}</strong>
                             </div>
                         @endif
-                        <input type="text" name="email" placeholder="Email">
+                        <input class="register-input" type="text" name="email" placeholder="Email">
                         @if($errors->has('email'))
                             <div class="alert alert-danger alert-dismissible">
                                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                 <strong>{{ $errors->first('email') }}</strong>
                             </div>
                         @endif
-                        <input type="password" name="password" placeholder="Mật khẩu">
+                        <input class="register-input" type="password" name="password" placeholder="Mật khẩu">
                         @if($errors->has('password'))
                             <div class="alert alert-danger alert-dismissible">
                                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                 <strong>{{ $errors->first('password') }}</strong>
                             </div>
                         @endif
-                        <input type="password" name="password_confirmation" placeholder="Xác nhận mật khẩu mới">
+                        <input class="register-input" type="password" name="password_confirmation" placeholder="Xác nhận mật khẩu mới">
                         @if($errors->has('password'))
                             <div class="alert alert-danger alert-dismissible">
                                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                 <strong>{{ $errors->first('password') }}</strong>
                             </div>
                         @endif
-                        <input type="submit" value="Đăng ký">
+                        <input type="submit" value="Đăng ký" class="btn btn-block btn-success">
                     </div>
                 </div>
             </form>

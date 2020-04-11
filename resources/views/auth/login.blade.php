@@ -11,10 +11,10 @@
                         <span class="vl-innertext">hoặc</span>
                     </div>
                     <div class="col">
-                        <a href="#" class="fb btn">
+                        <a href="#" class="fb btn btn-block">
                             <i class="fab fa-facebook-f"></i> Đăng nhập bằng Facebook
                         </a>
-                        <a href="#" class="google btn">
+                        <a href="#" class="google btn btn-block">
                             <i class="fab fa-google-plus-g"></i> Đăng nhập với Google+
                         </a>
                     </div>
@@ -29,21 +29,21 @@
                                 <strong>{{ Session::get('error')}}</strong>
                             </div>
                         @endif
-                        <input type="text" name="email" placeholder="Email">
+                        <input class="login-input" type="text" name="email" placeholder="Email">
                         @if($errors->has('email'))
                             <div class="alert alert-danger alert-dismissible">
                                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                 <strong>{{ $errors->first('email') }}</strong>
                             </div>
                         @endif
-                        <input type="password" name="password" placeholder="Mật khẩu">
+                        <input class="login-input" type="password" name="password" placeholder="Mật khẩu">
                         @if($errors->has('password'))
                             <div class="alert alert-danger alert-dismissible">
                                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                 <strong>{{ $errors->first('password') }}</strong>
                             </div>
                         @endif
-                        <input type="submit" value="Đăng nhập" id="btn-login">
+                        <input type="submit" value="Đăng nhập" class="btn btn-block btn-success" id="btn-login">
                     </div>
                 </div>
                 <div class="bottom-button mt-4">
