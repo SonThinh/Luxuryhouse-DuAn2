@@ -4,6 +4,11 @@ use App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/place', [Controllers\HomeController::class, 'index'])->name('place');
+
+Route::group(['prefix'=>'place','as'=>'places.'],function (){
+    Route::get('/{id}', [Controllers\PlaceController::class, 'viewCityDetail'])->name('CityDetail');
+    Route::get('/house/{id}', [Controllers\PlaceController::class, 'viewHouseDetail'])->name('HouseDetail');
+});
 Route::group(['prefix' => 'user', 'as' => 'users.', 'middleware' => 'CheckLoginUser'], function () {
     Route::get('/login', [Controllers\HomeController::class, 'login'])->name('login');
     Route::post('/login', [Controllers\HomeController::class, 'postLogin'])->name('login');
@@ -27,7 +32,9 @@ Route::group(['prefix' => 'user', 'as' => 'users.', 'middleware' => 'CheckLogout
         Route::get('/house/{id}/edit',[Controllers\HostController::class,'ViewEditHouse'])->name('editHouse');
         Route::post('/house/{id}/edit',[Controllers\HostController::class,'editHouse'])->name('editHouse');
         Route::get('/house/{id}/delete',[Controllers\HostController::class,'deleteHouse'])->name('deleteHouse');
+        Route::get('/house/{id}/delete',[Controllers\HostController::class,'deleteHouse'])->name('deleteHouse');
     });
+
 });
 
 Route::group(['prefix' => 'user', 'as' => 'users.'], function () {

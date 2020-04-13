@@ -5,17 +5,24 @@
         <div class="row">
             <div class="edit-form my-5 mx-auto">
                 <h2 class="text-center mt-4">Sửa chỗ ở</h2>
-                <form action="#" method="post" class="mt-3" id="add_house"
+                <form action="{{route('users.host.editHouse',[$house->id])}}" method="post" class="mt-3" id="add_house"
                       autocomplete="off" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col">
+                            @if(Session::has('success'))
+                                <div class="alert alert-success alert-dismissible">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <strong>{{ Session::get('success')}}</strong>
+                                </div>
+                            @endif
                             @php
                                 $images = json_decode($house->image);
                                 $address = json_decode($house->address);
                                 $utilities_house = json_decode($house->utilities);
                                 $room = json_decode($house->room);
                                 $price_detail = json_decode($house->price_detail);
+                                $rules = json_decode($house->rules);
                             @endphp
                             <div class="my-4">
                                 <p>Tên chủ hộ</p>
@@ -157,12 +164,37 @@
                                 @endif
                             </div>
                             <div class="my-4">
-                                <textarea class="form-control" rows="5" name="rules"
-                                          placeholder="Các quy định chung">{{$house->rules}}</textarea>
-                                @if($errors->has('rules'))
+                                <p>Các quy định chung</p>
+                                <textarea class="form-control" rows="5" name="cancel_rules"
+                                          placeholder="Chính sách hủy phòng">{{$rules->cancel_rule}}</textarea>
+                                @if($errors->has('cancel_rules'))
                                     <div class="alert alert-danger alert-dismissible">
                                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                        <strong>{{ $errors->first('rules') }}</strong>
+                                        <strong>{{ $errors->first('cancel_rules') }}</strong>
+                                    </div>
+                                @endif
+                                <textarea class="form-control mt-3" rows="5" name="attention"
+                                          placeholder="Lưu ý">{{$rules->attention}}</textarea>
+                                @if($errors->has('attention'))
+                                    <div class="alert alert-danger alert-dismissible">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        <strong>{{ $errors->first('attention') }}</strong>
+                                    </div>
+                                @endif
+                                <label>Thời gian nhận phòng</label>
+                                <input type="time" class="w-24 form-control" name="check_in" value="{{$rules->check_in}}">
+                                @if($errors->has('check_in'))
+                                    <div class="alert alert-danger alert-dismissible">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        <strong>{{ $errors->first('check_in') }}</strong>
+                                    </div>
+                                @endif
+                                <label>Thời gian trả phòng</label>
+                                <input type="time" class="w-24 form-control" name="check_out" value="{{$rules->check_out}}">
+                                @if($errors->has('check_out'))
+                                    <div class="alert alert-danger alert-dismissible">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        <strong>{{ $errors->first('check_out') }}</strong>
                                     </div>
                                 @endif
                             </div>

@@ -35,7 +35,7 @@ class HouseController extends Controller
     {
         $utility = new Utility();
         $utility->symbol = $request->symbol;
-        $utility->icon = json_encode($request->icon);
+        $utility->icon = $request->icon;
         $utility->key = $request->key;
         $utility->save();
         return back()->withInput()->with('success', 'Thêm tiện ích thành công!');
@@ -51,7 +51,7 @@ class HouseController extends Controller
     {
         $utility = Utility::find($id);
         $utility->symbol = $request->symbol;
-        $utility->icon = json_encode($request->icon);
+        $utility->icon = $request->icon;
         $utility->key = $request->key;
         $utility->save();
         return back()->withInput()->with('success', 'Sửa tiện ích thành công!');

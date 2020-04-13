@@ -834,7 +834,12 @@ li.nav-item {
 .w-24 {
     width: 24%;
 }
-
+.form-choose-day{
+    background: #fff;
+    margin-top: 15px;
+    padding: 20px;
+    border-radius: 10px;
+}
 /*-- footer --*/
 h1.heading, h2.heading, h3.heading {
     font-size: 50px;

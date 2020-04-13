@@ -58,6 +58,7 @@
 <!--//slider-->
 <!-- start-smooth-scrolling -->
 <script type="text/javascript" src="{{asset('../resources/assets/home/js/move-top.js')}}"></script>
+<script type="text/javascript" src="{{asset('../resources/assets/home/js/home-thumbnail-detail.js')}}"></script>
 <script type="text/javascript" src="{{asset('../resources/assets/home/js/easing.js')}}"></script>
 <script type="text/javascript">
     $(document).ready(function ($) {
