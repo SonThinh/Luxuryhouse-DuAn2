@@ -26,12 +26,9 @@
                     </thead>
                     <tbody>
                     @foreach($utilitiesList as $utility)
-                        @php
-                            $icon = json_decode($utility->icon)
-                        @endphp
                         <tr {{$utility->id}}>
                             <td>{{$utility->symbol}}</td>
-                            <td>{{$icon}}</td>
+                            <td><i class="{{$utility->icon}}"></i></td>
                             <td>
                                 <a href="{{route('admin.house.editUtility',[$utility->id])}}">
                                     <button class="btn btn-primary" name="btn-edit"><i

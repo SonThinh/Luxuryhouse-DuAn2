@@ -81,25 +81,18 @@
                                             <option value="{{$city->id}}">{{$city->name}}</option>
                                         @endforeach
                                     </select>
-                                    @if($errors->has('selectCity'))
-                                        <div class="alert alert-danger alert-dismissible">
-                                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                            <strong>{{ $errors->first('selectCity') }}</strong>
-                                        </div>
-                                    @endif
                                 </div>
                                 <div class="form-check-inline">
                                     <select name="selectAreas" class="selectAreas form-control">
                                         <option value="">Chọn khu vực</option>
                                     </select>
-                                    @if($errors->has('selectAreas'))
-                                        <div class="alert alert-danger alert-dismissible">
-                                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                            <strong>{{ $errors->first('selectAreas') }}</strong>
-                                        </div>
-                                    @endif
                                 </div>
-
+                                @if($errors->has('selectCity'))
+                                    <div class="alert alert-danger alert-dismissible">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        <strong>{{ $errors->first('selectCity') }}</strong>
+                                    </div>
+                                @endif
                             </div>
 
                             <div class="my-4">
@@ -148,12 +141,37 @@
                                 @endif
                             </div>
                             <div class="my-4">
-                                <textarea class="form-control" rows="5" name="rules"
-                                          placeholder="Các quy định chung"></textarea>
-                                @if($errors->has('rules'))
+                                <p>Các quy định chung</p>
+                                <textarea class="form-control" rows="5" name="cancel_rules"
+                                          placeholder="Chính sách hủy phòng"></textarea>
+                                @if($errors->has('cancel_rules'))
                                     <div class="alert alert-danger alert-dismissible">
                                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                        <strong>{{ $errors->first('rules') }}</strong>
+                                        <strong>{{ $errors->first('cancel_rules') }}</strong>
+                                    </div>
+                                @endif
+                                <textarea class="form-control mt-3" rows="5" name="attention"
+                                          placeholder="Lưu ý"></textarea>
+                                @if($errors->has('attention'))
+                                    <div class="alert alert-danger alert-dismissible">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        <strong>{{ $errors->first('attention') }}</strong>
+                                    </div>
+                                @endif
+                                <label>Thời gian nhận phòng</label>
+                                <input type="time" class="w-24 form-control" name="check_in">
+                                @if($errors->has('check_in'))
+                                    <div class="alert alert-danger alert-dismissible">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        <strong>{{ $errors->first('check_in') }}</strong>
+                                    </div>
+                                @endif
+                                <label>Thời gian trả phòng</label>
+                                <input type="time" class="w-24 form-control" name="check_out">
+                                @if($errors->has('check_out'))
+                                    <div class="alert alert-danger alert-dismissible">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        <strong>{{ $errors->first('check_out') }}</strong>
                                     </div>
                                 @endif
                             </div>

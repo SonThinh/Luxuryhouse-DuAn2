@@ -14,10 +14,10 @@
                             <th>Địa chỉ</th>
                             <th>Dạng nhà</th>
                             <th>Mô tả phòng</th>
-                            <th>Các tiện ích</th>
-                            <th>Mô tả chi tiết nhà</th>
-                            <th>Các quy định chung</th>
-                            <th style="width: 10%">Dành cho chuyến đi</th>
+                            <th>Tiện ích</th>
+                            <th>Chi tiết</th>
+                            <th >Các quy định chung</th>
+                            <th width="10%">Dành cho chuyến đi</th>
                             <th>Bảng giá</th>
                             <th>Trạng thái</th>
                             <th>Thao tác</th>
@@ -31,6 +31,7 @@
                                 $utilities_house = json_decode($house->utilities);
                                 $room = json_decode($house->room);
                                 $price_detail = json_decode($house->price_detail);
+                                $rules = json_decode($house->rules);
                             @endphp
                             <tr {{$house->id}}>
                                 <td class="img">{{$house->name}}</td>
@@ -42,9 +43,9 @@
                                 </td>
                                 <td>
                                     {{$address->house_number}},
-                                    @foreach($district as $d)
-                                        @if($d->id == $address->district_id)
-                                            {{$d->name}}
+                                    @foreach($districts as $district)
+                                        @if($district->id == $address->district_id)
+                                            {{$district->name}}
                                         @endif
                                     @endforeach
                                     ,{{$house->city->name}}
@@ -64,7 +65,6 @@
                                     Số khách tối đa: {{$room->max_guest}}
                                 </td>
                                 <td>
-
                                     @foreach($utilities_house as $utility_house)
                                         @foreach($utilities as $utility)
                                             @if($utility->key == $utility_house)
@@ -74,7 +74,12 @@
                                     @endforeach
                                 </td>
                                 <td>{{Str::limit($house->description,50)}}</td>
-                                <td>{{Str::limit($house->rules,50)}}</td>
+                                <td>
+                                    {{Str::limit($rules->cancel_rule,15)}},
+                                    {{Str::limit($rules->attention,15)}},
+                                    Thời gian nhận phòng: {{$rules->check_in}},
+                                    Thời gian trả phòng: {{$rules->check_out}},
+                                </td>
                                 <td>
                                     @foreach($trip_types as $trip)
                                         @if($trip->key == $house->trip_type)

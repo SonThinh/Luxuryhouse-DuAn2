@@ -12,7 +12,7 @@
                         $image = json_decode($city->image);
                     @endphp
                     <div class="card">
-                        <a href="#">
+                        <a href="{{route('places.CityDetail',[$city->id])}}">
                             <img src="{{asset($image->image_path)}}" class="w-100" alt="">
                             <div class="card-items">
                                 <div class="card-body">{{$city->name}}</div>
