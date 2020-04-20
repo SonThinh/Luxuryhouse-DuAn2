@@ -25,6 +25,7 @@ class RegisterRequest extends FormRequest
     {
         return [
             'email' => 'required|email|unique:users',
+            'phone' => 'required|',
             'password' => 'required|min:8|regex:/^(?=.*?[a-zA-Z])(?=.*[0-9]).*$/|confirmed',
         ];
     }
@@ -39,6 +40,7 @@ class RegisterRequest extends FormRequest
             'password.min' => 'Mật khẩu phải hơn 8 kí tự',
             'password.regex' => 'Mật khẩu phải gồm chữ in hoa, chữ thường, chữ số, không có kí tự đặc biệt',
             'password.confirmed' => 'Xác nhận mật khẩu không đúng',
+            'phone.required' => 'Chưa nhập số điện thoại',
         ];
     }
 }

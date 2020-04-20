@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Host;
 use App\House;
+use App\Model\Bill;
 use App\Model\City;
 use App\Model\District;
 use App\Model\Trip;
@@ -31,6 +32,7 @@ class PlaceController extends Controller
         $data['types'] = Type::all();
         $data['utilities'] = Utility::all();
         $data['host'] = Host::with(['user'])->get();
+        $data['bills'] = Bill::query()->where('h_id',$id)->get();
         return view('house.house_detail',$data);
     }
 }

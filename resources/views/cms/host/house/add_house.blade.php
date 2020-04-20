@@ -131,7 +131,7 @@
                                 @endif
                             </div>
                             <div class="my-4">
-                                <textarea class="form-control" rows="5" name="description"
+                                <textarea style="overflow: hidden" class="form-control" rows="5" name="description"
                                           placeholder="Mô tả chi tiết căn hộ"></textarea>
                                 @if($errors->has('description'))
                                     <div class="alert alert-danger alert-dismissible">
@@ -142,7 +142,7 @@
                             </div>
                             <div class="my-4">
                                 <p>Các quy định chung</p>
-                                <textarea class="form-control" rows="5" name="cancel_rules"
+                                <textarea style="overflow: hidden" class="form-control" rows="5" name="cancel_rules"
                                           placeholder="Chính sách hủy phòng"></textarea>
                                 @if($errors->has('cancel_rules'))
                                     <div class="alert alert-danger alert-dismissible">
@@ -150,7 +150,7 @@
                                         <strong>{{ $errors->first('cancel_rules') }}</strong>
                                     </div>
                                 @endif
-                                <textarea class="form-control mt-3" rows="5" name="attention"
+                                <textarea style="overflow: hidden" class="form-control mt-3" rows="5" name="attention"
                                           placeholder="Lưu ý"></textarea>
                                 @if($errors->has('attention'))
                                     <div class="alert alert-danger alert-dismissible">
@@ -251,8 +251,8 @@
                                         sử dụng</a> và <a href="#">các điều khoản</a>
                                 </label>
                             </div>
-                            <input id="btn-dis" class="btn btn-block btn-success" disabled type="submit" value="Thêm mới">
-                            <input id="btn-agree" class=" btn btn-block btn-success d-none" type="submit" value="Thêm mới">
+                            <input id="btn-dis" class="btn btn-block btn-success m-auto" disabled type="submit" value="Thêm mới">
+                            <input id="btn-agree" class=" btn btn-block btn-success d-none m-auto" type="submit" value="Thêm mới">
                         </div>
                     </div>
                 </form>

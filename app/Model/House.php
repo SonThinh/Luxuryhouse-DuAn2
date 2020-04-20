@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Model\Bill;
 use App\Model\City;
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,5 +33,8 @@ class House extends Model
     }
     public function city(){
         return $this->belongsTo(City::class,'city_id','id');
+    }
+    public function bill(){
+        return $this->HasMany(Bill::class,'h_id','id');
     }
 }

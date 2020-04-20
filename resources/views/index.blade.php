@@ -17,6 +17,7 @@
     <!-- favicon -->
     <link rel="icon" type="image/ico" href="{{asset('../resources/assets/home/images/logo/logo.ico')}}"/>
     <!-- //favicon -->
+
 </head>
 <body>
 <!-- Navigation -->
@@ -28,7 +29,9 @@
 
 <!-- js-scripts -->
 <!-- js -->
+
 <script type="text/javascript" src="{{asset('../resources/assets/home/js/jquery-3.4.1.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('../resources/assets/home/js/daterangepicker.min.js')}}"></script>
 <script src="{{asset('../resources/assets/home/js/toggle-bt4.min.js')}}"></script>
 <script src="{{asset('../resources/assets/admin/js/toastr.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('../resources/assets/home/js/bootstrap.js')}}"></script>
@@ -40,7 +43,6 @@
 </script>
 
 <script type="text/javascript" src="{{asset('../resources/assets/home/js/moment.js')}}"></script>
-<script type="text/javascript" src="{{asset('../resources/assets/home/js/daterangepicker.min.js')}}"></script>
 <!--//date range picker-->
 <!--slider-->
 <script>
@@ -76,7 +78,10 @@
 </script>
 <!-- //here ends scrolling icon -->
 <!-- start-smooth-scrolling -->
+
 <script type="text/javascript" src="{{asset('../resources/assets/home/js/script.js')}}"></script>
+
+
 <!-- //js-scripts -->
 </body>
 </html>

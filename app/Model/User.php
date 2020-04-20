@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Host;
+use App\Model\Bill;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -13,7 +14,6 @@ class User extends Authenticatable
     protected $fillable = [
         'email',
         'password',
-        'level',
         'username',
         'address',
         'gender',
@@ -32,5 +32,8 @@ class User extends Authenticatable
     ];
     public function host(){
         return $this->hasOne(Host::class,'m_id','id');
+    }
+    public function bill(){
+        return $this->hasMany(Bill::class,'guest_id','id');
     }
 }
