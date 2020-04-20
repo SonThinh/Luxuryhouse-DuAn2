@@ -4,6 +4,7 @@
     <div class="main p-3">
         <div class="container">
             <ul class="breadcrumb">
+
                 <li class="breadcrumb-item"><a href="{{route('place')}}">Địa điểm</a></li>
                 @foreach($cities as $city)
                     @if($city->id == $house->city_id)
@@ -11,6 +12,7 @@
                                 href="{{route('places.CityDetail',[$city->id])}}">{{$city->name}}</a></li>
                     @endif
                 @endforeach
+
                 <li class="breadcrumb-item active">{{$house->name}}</li>
             </ul>
             @php
@@ -46,6 +48,7 @@
                                 {{$house->city->name}}
                             </p>
                         </div>
+
                         <div class="house-area d-flex">
                             <i class="fal fa-hotel"></i>
                             <p class="ml-1"><span class="house-type">
@@ -54,7 +57,7 @@
                                             {{$type->name}}
                                         @endif
                                     @endforeach
-                                </span> - 25 m2</p>
+                                </span></p>
                         </div>
                         <div class="room-detail">
                             <p>{{$room->max_guest}} khách - {{$room->number_room}} phòng ngủ
@@ -81,30 +84,6 @@
                                         @endif
                                     @endforeach
                                 @endforeach
-                            </div>
-                        </div>
-                        <div class="house-price">
-                            <h3>Giá phòng</h3>
-                            <p>Giá có thể tăng vào cuối tuần hoặc ngày lễ</p>
-                            <div class="price-detail">
-                                <table class="table">
-                                    <tr>
-                                        <td>Thứ hai - Thứ năm</td>
-                                        <td>{{$price_detail->Mon_to_Thus}}₫</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Thứ sáu - Chủ nhật</td>
-                                        <td>{{$price_detail->Fri_to_Sun}}₫</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Phí khách tăng thêm</td>
-                                        <td>{{$price_detail->Ex_guest}}₫ (sau 2 khách)</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Số đêm tối thiểu</td>
-                                        <td>{{$price_detail->max_night}} đêm</td>
-                                    </tr>
-                                </table>
                             </div>
                         </div>
                         <div class="house-rules">
@@ -139,7 +118,6 @@
                 </div>
                 <div class="col-sm-12 col-md-4">
                     <div class="contact-owner">
-                        <h3>Chủ căn hộ</h3>
                         @foreach($host as $host)
                             <a href="#" class="d-flex mt-1">
                                 @if($host->id == $house->host_id)
@@ -155,23 +133,77 @@
                                         " alt="Avatar" class="avatar">
                                     <div class="contact">
                                         <p class="owner-name">
-                                            {{$host->user->username}}
+                                            @isset($host->user->username)
+                                                {{$host->user->username}}
+                                            @else
+                                                {{$host->user->email}}
+                                            @endisset
                                         </p>
                                     </div>
                                 @endif
                             </a>
+                            <p>Tham gia: {{date("d-m-Y",strtotime($host->user->created_at))}}</p>
                         @endforeach
                     </div>
                     <div class="form-choose-day">
-                        <form action="#" method="get">
-                            <div class="form-group">
-                                <p>Chọn lịch trình của bạn</p>
-                                <input name="datetimes" class="form-control"/>
+                        <div class="form-group">
+                            <h3>Chọn lịch trình</h3>
+                            <div class="d-flex">
+                                <input name="checkin" class="form-control" autocomplete="off" id="txtCheckin"
+                                       placeholder="dd/mm/YY"/>
+                                <p class="m-auto">đến</p>
+                                <input name="checkout" class="form-control" autocomplete="off" id="txtCheckout"
+                                       placeholder="dd/mm/YY"/>
                             </div>
-                            <input type="submit" class="btn btn-block btn-primary" value="Đặt ngay" id="btn-order"
-                            >
-                        </form>
+                        </div>
+                        <div class="house-price">
+                            <h3>Giá phòng</h3>
+                            <p>Giá có thể tăng vào cuối tuần hoặc ngày lễ</p>
+                            <div class="price-detail">
+                                <table class="table">
+                                    <tr>
+                                        <td>Thứ hai - Thứ năm</td>
+                                        <td><span style="font-weight: bold;font-size: 35px;">{{$price_detail->Mon_to_Thus}}₫</span>/đêm
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Thứ sáu - Chủ nhật</td>
+                                        <td><span style="font-weight: bold;font-size: 35px;">{{$price_detail->Fri_to_Sun}}₫</span>/đêm
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Phí khách tăng thêm</td>
+                                        <td><span style="font-weight: bold;font-size: 35px;">{{$price_detail->Ex_guest}}₫</span>/đêm
+                                            (sau {{$room->max_guest}} khách)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Số đêm tối thiểu</td>
+                                        <td>{{$price_detail->max_night}} đêm</td>
+                                        <input name="max_date" type="hidden"
+                                               value="{{$price_detail->max_night}}"/>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        @foreach($bills as $bill)
+                            @if($bill->status == 1 && $bill->pay == 1)
+                                @php
+                                    $checkin = date("Y-m-d", strtotime($bill->check_in));
+                                    $checkout = date("Y-m-d", strtotime($bill->check_out));
+                                @endphp
+                                <input type="hidden" name="checkin_booked" value="{{$checkin}}">
+                                <input type="hidden" name="checkout_booked" value="{{$checkout}}">
+                            @endif
+                        @endforeach
+                        <input type="button" id="btn-showPrice"
+                               @isset(auth()->user()->id) @if(auth()->user()->id == $host->user->id  ) disabled
+                               @endif @endisset class="btn btn-block btn-primary" data-toggle="modal"
+                               data-target="#form-order" value="Đặt ngay">
+                        @include('house.nav.form_order_nav')
+
                     </div>
+
                 </div>
             </div>
             <div class="similar-house">

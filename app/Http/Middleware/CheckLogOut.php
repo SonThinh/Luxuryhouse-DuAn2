@@ -16,7 +16,7 @@ class CheckLogOut
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::guest()){
+        if (Auth::guest() || Auth::user()->level == 1){
             return redirect()->route('admin.login');
         }
         return $next($request);

@@ -50,7 +50,8 @@
                                 </li>
                             @else
                                 <li class="nav-item host">
-                                    <a href="{{route('users.host',[auth()->user()->id])}}" type="submit" class="btn btn-block btn-host">Host</a>
+                                    <a href="{{route('users.host',[auth()->user()->id])}}" type="submit"
+                                       class="btn btn-block btn-host">Host</a>
                                 </li>
                             @endisset
                         @else

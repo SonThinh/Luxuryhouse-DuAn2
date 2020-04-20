@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ChangePasswordRequest;
+use App\Model\Bill;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +16,11 @@ class MemberController extends Controller
     {
         $data['user'] = User::find($id);
         return view('cms.member.profile', $data);
+    }
+    public function showProfileBooking($id)
+    {
+        $data['bookings'] = Bill::query()->where('guest_id',$id)->get();
+        return view('cms.member.booking-profile', $data);
     }
 
     public function updateUser(Request $request, $id)

@@ -834,11 +834,73 @@ li.nav-item {
 .w-24 {
     width: 24%;
 }
-.form-choose-day{
+
+.form-choose-day {
     background: #fff;
     margin-top: 15px;
     padding: 20px;
     border-radius: 10px;
+}
+
+.information-booking {
+    background: #fff;
+    margin-top: 15px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.information-booking a {
+    color: black;
+}
+
+.information-booking a:hover {
+    color: #ff5722;
+}
+
+.information-booking .inf-house {
+    border-bottom: 1px solid black;
+}
+
+.information-booking .inf-booking p {
+    margin: auto;
+}
+
+.sticky-box {
+    position: sticky;
+    top: 0;
+}
+
+.complete-booking h2 {
+    font-weight: bold;
+}
+
+.complete-booking span {
+    color: #ff5722;
+}
+.complete-booking .box-code {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+}
+.complete-booking .box-code p{
+    font-weight: bold;
+    margin: auto;
+    font-size: 25px;
+}
+.complete-booking .box-code label{
+    margin: auto;
+}
+.btn-pay{
+    width: 50%;
+    color: white;
+    background-color: #ff5722;
+}
+.btn-pay:hover{
+    color: white;
+    opacity: 0.9;
+}
+.booking-table{
+    text-align: center;
 }
 /*-- footer --*/
 h1.heading, h2.heading, h3.heading {

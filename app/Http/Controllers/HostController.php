@@ -7,6 +7,7 @@ use App\House;
 use App\Http\Requests\HouseEditRequest;
 use App\Http\Requests\HouseRequest;
 use App\Http\Requests\RegisterHostRequest;
+use App\Model\Bill;
 use App\Model\City;
 use App\Model\District;
 use App\Model\Trip;
@@ -219,5 +220,17 @@ class HostController extends Controller
         }
         $house->save();
         return back()->withInput()->with('success', 'Sửa nhà thành công! Đợi duyệt!');
+    }
+
+    public function viewBooking($id){
+        $data['bookings'] = Bill::query()->where('host_id',$id)->get();
+        return view('cms.host.booking',$data);
+    }
+    public function changeStatusBooking(Request $request)
+    {
+        $bill = Bill::find($request->id);
+        $bill->status = $request->status;
+        $bill->save();
+        return response()->json(['success' => 'Đã đổi trạng thái đơn đặt phòng']);
     }
 }

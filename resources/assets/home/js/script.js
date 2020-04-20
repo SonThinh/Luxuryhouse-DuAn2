@@ -1,11 +1,60 @@
-$(function () {
-    $('input[name="datetimes"]').daterangepicker({
-        startDate: moment().startOf('hour'),
-        endDate: moment().startOf('hour').add(24, 'hour'),
-        locale: {
-            format: 'DD/MM/YYYY'
-        },
+$(document).ready(function () {
+    let max_date = parseInt($('input[name=max_date]').val());
+    $("#txtCheckin").datepicker({
+        beforeShowDay: DisableDates,
+        minDate: "today",
+        dateFormat: "dd-mm-yy",
+        dayNamesMin: ['CN', '2', '3', '4', '5', '6', '7'],
+        monthNames: ['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7','Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12'],
+        onSelect: function (date) {
+            let date2 = $('#txtCheckin').datepicker('getDate');
+            date2.setDate(date2.getDate() + max_date);
+            $('#txtCheckout').datepicker('setDate', date2);
+            $('#txtCheckout').datepicker('option', 'minDate', date2);
+        }
+    });
+    let checkin = $('input[name=checkin_booked]').val();
+    let checkout = $('input[name=checkout_booked]').val();
+    let disabledDates = generateDateList(checkin, '2020-04-25');
+    function generateDateList(from, to) {
+        let getDate = function(date) {
+            let m = date.getMonth(), d = date.getDate();
+            return date.getFullYear() + '-' + (m < 10 ? '0' + m : m) + '-' + (d < 10 ? '0' + d : d);
+        };
+        let fs = from.split('-'), startDate = new Date(fs[0], fs[1], fs[2]), result = [getDate(startDate)], start = startDate.getTime(), ts, end;
 
+        if ( typeof to == 'undefined') {
+            end = new Date().getTime();
+        } else {
+            ts = to.split('-');
+            end = new Date(ts[0], ts[1], ts[2]).getTime();
+        }
+        while (start < end) {
+            start += 86400000;
+            startDate.setTime(start);
+            result.push(getDate(startDate));
+        }
+        return result;
+    }
+
+    function DisableDates(date) {
+        let string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+        return [ disabledDates.indexOf(string) === -1 ]
+    }
+
+    $('#txtCheckout').datepicker({
+        dateFormat: "dd-mm-yy",
+        beforeShowDay: DisableDates,
+        dayNamesMin: ['CN', '2', '3', '4', '5', '6', '7'],
+        monthNames: ['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7','Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12'],
+        onClose: function () {
+            let dt1 = $('#txtCheckin').datepicker('getDate');
+            let dt2 = $('#txtCheckout').datepicker('getDate');
+            if (dt2 <= dt1) {
+                let minDate = $('#txtCheckout').datepicker('option', 'minDate');
+                $('#txtCheckout').datepicker('setDate', minDate);
+            }
+        }
     });
 });
 var loadFile = function (event) {
@@ -97,7 +146,7 @@ $('select[name="selectCity"]').change(function (e) {
         data: {city_id: city_id, _token: token},
         success: function (response) {
             $("select[name='selectAreas']").html('');
-            $.each(response.data, function(key, value){
+            $.each(response.data, function (key, value) {
                 $("select[name='selectAreas']").append(
                     "<option value=" + value.id + ">" + value.name + "</option>"
                 );
@@ -130,7 +179,69 @@ $(function () {
             }
         });
     })
-})
-$(document).on('click','#btn-order',function () {
-    alert(1);
 });
+$(function () {
+    $('.toggle-class').change(function () {
+        let status = $(this).prop('checked') == true ? 1 : 0;
+        let book_id = $(this).data('id');
+        let url = $(this).data('url');
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: url,
+            data: {status: status, id: book_id},
+            success: function (data) {
+                toastr.success(data.success);
+            }
+        });
+    })
+});
+
+$(document).on('click', '#btn-showPrice', function () {
+    if ($('input[name=checkin]').val() === '' && $('input[name=checkout]').val() === ''){
+        toastr.error('Vui lòng chọn lịch trình!');
+        $("#btn-booking-request").prop('disabled', true);
+
+    }
+    else {
+        $("#btn-booking-request").prop('disabled', false);
+        let checkin = moment($('input[name=checkin]').val(), 'DD/MM/YYYY');
+        let checkout = moment($('input[name=checkout]').val(), 'DD/MM/YYYY');
+
+        $('input[name=check_in]').val($('input[name=checkin]').val());
+        $('input[name=check_in_clone]').val($('input[name=checkin]').val());
+        $('input[name=check_out]').val($('input[name=checkout]').val());
+        $('input[name=check_out_clone]').val($('input[name=checkout]').val());
+
+        let days_range = checkout.diff(checkin, 'days');
+        $('input[name=dates_range]').val(days_range);
+        $("#hire_dates").append("Giá cho thuê " + days_range + " đêm");
+        let price = parseInt($('input[name=price]').val());
+        let n_person;
+        let max_guest = parseInt($('input[name=max_guest]').val());
+        let total;
+        let extra_guest = parseInt($('input[name=Ex_guest]').val());
+        let price_days_range = price * days_range;
+        $('input[name=price_hire_dates]').val(price_days_range);
+        $('input[name=n_person]').change(function () {
+            if (this.getAttribute('value') === this.value) {
+                n_person = $('input[name=n_person]').val();
+                total = price_days_range;
+                $('input[name=total]').val(total);
+            } else {
+                n_person = parseInt(this.value);
+                if (n_person > max_guest) {
+                    total = price_days_range + extra_guest * (n_person - max_guest);
+                    $('#fee_extra_guest').show();
+                    $('input[name=Ex_fee]').val(extra_guest * (n_person - max_guest));
+                } else {
+                    $('#fee_extra_guest').hide();
+                    total = price_days_range;
+                }
+                $('input[name=total]').val(total);
+            }
+        }).change();
+    }
+});
+
+

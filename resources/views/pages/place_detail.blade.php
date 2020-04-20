@@ -41,9 +41,9 @@
                                             - {{$room->number_bath}} phòng tắm</p>
                                     </div>
                                     <p class="home-price">
-                                        @if(\Carbon\Carbon::now()->format('l') == 'Sunday' &&
-                                            \Carbon\Carbon::now()->format('l') == 'Saturday' &&
-                                            \Carbon\Carbon::now()->format('l') == 'Friday')
+                                        @if(\Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('l') == 'Sunday' ||
+                                            \Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('l') == 'Saturday' ||
+                                            \Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('l') == 'Friday')
                                             {{$price_detail->Fri_to_Sun}} đ/đêm
                                         @else
                                             {{$price_detail->Mon_to_Thus}} đ/đêm

@@ -6,6 +6,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Model\City;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -14,8 +15,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $data['citiesList'] = City::paginate(9);
-        return view('pages.area',$data);
+        $data['citiesList'] = City::paginate(12);
+        return view('pages.area', $data);
     }
 
     public function login()
@@ -46,16 +47,17 @@ class HomeController extends Controller
             'password' => $request->password,
         ];
         if (Auth::attempt($data, $remember_me)) {
-            return redirect()->route('users.showProfile',[auth()->user()->id]);
+            return redirect()->route('users.showProfile', [auth()->user()->id]);
         } else {
             return back()->withInput()->with('error', 'Tài khoản hoặc mật khẩu không đúng');
         }
     }
 
-    public function postRegister(RegisterRequest $request)
+    public function postRegister(Request $request)
     {
         $user = new User;
         $user->email = $request->email;
+        $user->phone = $request->phone;
         $user->password = Hash::make($request->password);
         $user->level = 1;
         $user->save();
