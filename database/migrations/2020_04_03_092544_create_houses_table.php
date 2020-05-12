@@ -21,14 +21,21 @@ class CreateHousesTable extends Migration
             $table->string('types',2000);
             $table->string('name');
             $table->string('address');
-            $table->string('room',1000);
+            $table->integer('district_id');
+            $table->string('n_room');
+            $table->string('n_bed');
+            $table->string('n_bath');
+            $table->string('max_guest');
             $table->string('image', 1000);
             $table->longText('description');
             $table->longText('rules');
             $table->tinyInteger('status');
             $table->tinyInteger('h_status');
             $table->string('trip_type');
-            $table->string('price_detail', 1000);
+            $table->string('price_m_to_t');
+            $table->string('price_f_to_s');
+            $table->string('exGuest_fee');
+            $table->string('min_night');
             $table->timestamps();
         });
     }

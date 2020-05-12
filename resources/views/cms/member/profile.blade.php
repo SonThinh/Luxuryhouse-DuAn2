@@ -1,14 +1,10 @@
 @extends('index')
-@section('title','profile')
+@section('title','member profile')
 @section('main')
     <div class="container">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="register-form m-3">
-                    @include('cms.member.menu')
-                </div>
-            </div>
-            <div class="col-md-9">
+        <div class="m-4">
+            @include('cms.member.menu')
+            <div class="content-host">
                 <div class="edit-form m-3">
                     <h2 class="text-center mt-4">Thông tin thành viên</h2>
                     <form action="{{route('users.updateUser',[$user->id])}}" method="post" class="mt-3"
@@ -83,6 +79,7 @@
                     </form>
                 </div>
             </div>
+
         </div>
     </div>
 @endsection

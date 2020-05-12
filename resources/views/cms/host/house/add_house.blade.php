@@ -18,8 +18,9 @@
                             @endif
                             <div class="my-4">
                                 <p>Tên chủ hộ</p>
-                                <input type="text" disabled class="form-control" name="host"@isset($host->user->username)
-                                       value="{{$host->user->username}}"@else value="{{$host->user->email}}" @endif>
+                                <input type="text" disabled class="form-control" name="host"
+                                       @isset($host->user->username)
+                                       value="{{$host->user->username}}" @else value="{{$host->user->email}}" @endif>
                                 <input type="hidden" class="form-control" name="host" value="{{$host->id}}">
                             </div>
                             <div class="my-4">
@@ -97,7 +98,7 @@
 
                             <div class="my-4">
                                 <p>Mô tả phòng</p>
-                                <input type="number" class="w-24 form-control" name="n_bed"
+                                <input type="number" min="1" max="20" class="w-24 form-control" name="n_bed"
                                        placeholder="Số giường">
                                 @if($errors->has('n_bed'))
                                     <div class="alert alert-danger alert-dismissible">
@@ -105,7 +106,7 @@
                                         <strong>{{ $errors->first('n_bed') }}</strong>
                                     </div>
                                 @endif
-                                <input type="number" class="w-24 form-control" name="n_bath"
+                                <input type="number" min="1" max="20" class="w-24 form-control" name="n_bath"
                                        placeholder="Số phòng tắm">
                                 @if($errors->has('n_bath'))
                                     <div class="alert alert-danger alert-dismissible">
@@ -113,7 +114,7 @@
                                         <strong>{{ $errors->first('n_bath') }}</strong>
                                     </div>
                                 @endif
-                                <input type="number" class="w-24 form-control" name="n_room"
+                                <input type="number" min="1" max="20" class="w-24 form-control" name="n_room"
                                        placeholder="Số phòng ngủ">
                                 @if($errors->has('n_room'))
                                     <div class="alert alert-danger alert-dismissible">
@@ -121,7 +122,7 @@
                                         <strong>{{ $errors->first('n_room') }}</strong>
                                     </div>
                                 @endif
-                                <input type="number" class="w-24 form-control" name="max_guest"
+                                <input type="number" min="1" max="50" class="w-24 form-control" name="max_guest"
                                        placeholder="Số khách tối đa">
                                 @if($errors->has('max_guest'))
                                     <div class="alert alert-danger alert-dismissible">
@@ -142,14 +143,10 @@
                             </div>
                             <div class="my-4">
                                 <p>Các quy định chung</p>
-                                <textarea style="overflow: hidden" class="form-control" rows="5" name="cancel_rules"
-                                          placeholder="Chính sách hủy phòng"></textarea>
-                                @if($errors->has('cancel_rules'))
-                                    <div class="alert alert-danger alert-dismissible">
-                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                        <strong>{{ $errors->first('cancel_rules') }}</strong>
-                                    </div>
-                                @endif
+                                <textarea style="overflow: hidden" disabled class="form-control" rows="5">Miễn phí hủy phòng trong vòng 48h sau khi đặt phòng thành công và trước 1 ngày so với thời gian check-in. Sau đó, hủy phòng trước 1 ngày so với thời gian check-in, được hoàn lại 100% tổng số tiền đã trả (trừ phí dịch vụ).
+                                </textarea>
+                                <input type="hidden" name="cancel_rules"
+                                       value="Miễn phí hủy phòng trong vòng 48h sau khi đặt phòng thành công và trước 1 ngày so với thời gian check-in. Sau đó, hủy phòng trước 1 ngày so với thời gian check-in, được hoàn lại 100% tổng số tiền đã trả (trừ phí dịch vụ).">
                                 <textarea style="overflow: hidden" class="form-control mt-3" rows="5" name="attention"
                                           placeholder="Lưu ý"></textarea>
                                 @if($errors->has('attention'))
@@ -211,7 +208,7 @@
                             </div>
                             <div class="my-4">
                                 <p>Bảng giá</p>
-                                <input type="number" class="w-24 form-control" name="m_to_t"
+                                <input type="number" min="0" class="w-24 form-control" name="m_to_t"
                                        placeholder="Thứ 2-thứ 5">
                                 @if($errors->has('m_to_t'))
                                     <div class="alert alert-danger alert-dismissible">
@@ -219,7 +216,7 @@
                                         <strong>{{ $errors->first('m_to_t') }}</strong>
                                     </div>
                                 @endif
-                                <input type="number" class="w-24 form-control" name="f_to_s"
+                                <input type="number" min="0" class="w-24 form-control" name="f_to_s"
                                        placeholder="Thứ 6-chủ nhật">
                                 @if($errors->has('f_to_s'))
                                     <div class="alert alert-danger alert-dismissible">
@@ -227,20 +224,20 @@
                                         <strong>{{ $errors->first('f_to_s') }}</strong>
                                     </div>
                                 @endif
-                                <input type="number" class="w-24 form-control" name="extra_guest"
+                                <input type="number" min="0" class="w-24 form-control" name="exGuest_fee"
                                        placeholder="Phí khách thêm">
-                                @if($errors->has('extra_guest'))
+                                @if($errors->has('exGuest_fee'))
                                     <div class="alert alert-danger alert-dismissible">
                                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                        <strong>{{ $errors->first('extra_guest') }}</strong>
+                                        <strong>{{ $errors->first('exGuest_fee') }}</strong>
                                     </div>
                                 @endif
-                                <input type="number" class="w-24 form-control" name="max_night"
+                                <input type="number" min="1" class="w-24 form-control" name="min_night"
                                        placeholder="Số đêm tối thiểu">
-                                @if($errors->has('max_night'))
+                                @if($errors->has('min_night'))
                                     <div class="alert alert-danger alert-dismissible">
                                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                        <strong>{{ $errors->first('max_night') }}</strong>
+                                        <strong>{{ $errors->first('min_night') }}</strong>
                                     </div>
                                 @endif
                             </div>
@@ -251,8 +248,10 @@
                                         sử dụng</a> và <a href="#">các điều khoản</a>
                                 </label>
                             </div>
-                            <input id="btn-dis" class="btn btn-block btn-success m-auto" disabled type="submit" value="Thêm mới">
-                            <input id="btn-agree" class=" btn btn-block btn-success d-none m-auto" type="submit" value="Thêm mới">
+                            <input id="btn-dis" class="btn btn-block btn-success m-auto" disabled type="submit"
+                                   value="Thêm mới">
+                            <input id="btn-agree" class=" btn btn-block btn-success d-none m-auto" type="submit"
+                                   value="Thêm mới">
                         </div>
                     </div>
                 </form>

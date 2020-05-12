@@ -13,8 +13,6 @@
                     <div class="col-md-8">
                         @php
                             $images = json_decode($house->image);
-                            $address = json_decode($house->address);
-                            $price_detail = json_decode($house->price_detail);
                             $rules = json_decode($house->rules);
                         @endphp
                         <h3 class="title">Thông tin đặt chỗ</h3>
@@ -46,9 +44,7 @@
                             </div>
                             <p>Quy định chỗ ở</p>
                             <textarea style="overflow: hidden" class="form-control mt-3" rows="5" disabled
-                                      name="attention">
-                                {{$rules->attention}}
-                        </textarea>
+                                      name="attention">{{$rules->attention}}</textarea>
                         </div>
                         <h3 class="title">Thông tin cá nhân</h3>
                         <div class="m-3 information-booking">
@@ -87,9 +83,9 @@
                                     <div class="col-md-6 ">
                                         <h4>{{$house->name}}</h4>
                                         <p style="font-size: 14px"><i class="far fa-map-marker-check"></i>
-                                            {{$address->house_number}},
+                                            {{$house->address}},
                                             @foreach($districts as $district)
-                                                @if($district->id == $address->district_id)
+                                                @if($district->id == $house->district_id)
                                                     {{$district->name}},
                                                 @endif
                                             @endforeach
@@ -121,8 +117,7 @@
                             </table>
                             <hr>
                             <p id="cancel_rule">Chính sách hủy phòng</p>
-                            <textarea style="overflow: hidden" class="form-control mt-3" rows="7" disabled>
-                                {{$rules->cancel_rule}}
+                            <textarea style="overflow: hidden" class="form-control mt-3" rows="7" disabled>{{$rules->cancel_rule}}
                             </textarea>
                         </div>
                     </div>

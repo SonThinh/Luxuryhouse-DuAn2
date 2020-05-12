@@ -43,6 +43,7 @@
                                 <strong>{{ $errors->first('password') }}</strong>
                             </div>
                         @endif
+                        <input type="checkbox" class="form-group" name="remember" value="Remember me"> Remember me
                         <input type="submit" value="Đăng nhập" class="btn btn-block btn-success" id="btn-login">
                     </div>
                 </div>
