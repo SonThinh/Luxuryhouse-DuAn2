@@ -3,24 +3,20 @@
 @section('main')
     <div class="main p-3">
         <div class="container">
-            <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{route('place')}}">Địa điểm</a></li>
-                <li class="breadcrumb-item active">{{$city->name}}</li>
-            </ul>
             <div class="my-3">
-                @include('layouts.search_place')
+                @include('layouts.search_location_nav')
             </div>
-            <p class="decs mb-2 px-4">{{$city->description}}</p>
             <div class="row ">
                 <div class="col-md-3">
-                    @include('layouts.search_nav_left_place')
+                    @include('layouts.search_nav_left_search')
                 </div>
                 <div class="col-md-9 content">
                     <div class="d-inline-block w-100">
-                        <h2 class="float-left">{{count($houseList)}} homestay tại {{$city->name}}</h2>
+                        <h2 class="float-left">{{count($houses)}} homestay
+                            @isset($cities) @if($cities->count() != 0 ) @foreach($cities as $city) {{$city->name}} @endforeach @else @endif @endisset</h2>
                     </div>
-                    <div class="row ml-1">
-                        @foreach($houseList as $house)
+                    <div class="row ml-1 mt-2">
+                        @foreach($houses as $house)
                             @php
                                 $images = json_decode($house->image);
                             @endphp
@@ -69,7 +65,7 @@
                             </div>
                         @endforeach
                     </div>
-                    {{$houseList->render()}}
+                    {{$houses->render()}}
                 </div>
             </div>
         </div>

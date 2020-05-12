@@ -4,10 +4,15 @@ use App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/place', [Controllers\HomeController::class, 'index'])->name('place');
+Route::get('/search', [Controllers\SearchController::class, 'searchView'])->name('search');
+Route::get('/search-city/name', [Controllers\SearchController::class, 'searchCityByName']);
+Route::get('/search-house/name', [Controllers\SearchController::class, 'searchHouseByName']);
+Route::get('/search-house', [Controllers\SearchController::class, 'searchHouses'])->name('searchHouses');
 
 Route::group(['prefix' => 'place', 'as' => 'places.'], function () {
     Route::get('/{id}', [Controllers\PlaceController::class, 'viewCityDetail'])->name('CityDetail');
     Route::get('/house/{id}', [Controllers\PlaceController::class, 'viewHouseDetail'])->name('HouseDetail');
+    Route::get('/{id}/search-house', [Controllers\PlaceController::class, 'searchHousesWithCityID'])->name('searchHousesWithCityID');
 });
 Route::group(['prefix' => 'user', 'as' => 'users.', 'middleware' => 'CheckLoginUser'], function () {
     Route::get('/login', [Controllers\HomeController::class, 'login'])->name('login');
@@ -17,11 +22,16 @@ Route::group(['prefix' => 'user', 'as' => 'users.', 'middleware' => 'CheckLoginU
 });
 Route::group(['prefix' => 'user', 'as' => 'users.', 'middleware' => 'CheckLogoutUser'], function () {
     Route::get('/profile/{id}', [Controllers\MemberController::class, 'showProfile'])->name('showProfile');
-    Route::get('/profile-booking/{id}', [Controllers\MemberController::class, 'showProfileBooking'])->name('showProfileBooking');
+    Route::group(['prefix'=>'booking','as'=>'booking-profile.'],function(){
+        Route::get('/{id}', [Controllers\MemberController::class, 'showProfileBooking'])->name('showProfileBooking');
+        Route::get('{id}/filter/{sort}', [Controllers\MemberController::class, 'filterWith'])->name('filterWith');
+        Route::get('/booking-detail/{code}', [Controllers\MemberController::class, 'bookingDetail'])->name('bookingDetail');
+    });
     Route::get('/delete-booking/{id}', [Controllers\MemberController::class, 'deleteBooking'])->name('deleteBooking');
     Route::post('/edit-user/{id}', [Controllers\MemberController::class, 'updateUser'])->name('updateUser');
     Route::get('/edit-pass/{id}', [Controllers\MemberController::class, 'showViewUpdatePass'])->name('showViewUpdatePass');
     Route::post('/edit-pass/{id}', [Controllers\MemberController::class, 'updatePass'])->name('updatePass');
+    Route::get('/pay-history/{id}', [Controllers\MemberController::class, 'showViewPayHistory'])->name('showViewPayHistory');
     Route::get('/register-host/{id}', [Controllers\HostController::class, 'showViewRegisterHost'])->name('host');
     Route::post('/register-host/{id}', [Controllers\HostController::class, 'postRegisterHost'])->name('host');
     Route::group(['prefix' => 'host', 'as' => 'host.'], function () {
@@ -37,13 +47,13 @@ Route::group(['prefix' => 'user', 'as' => 'users.', 'middleware' => 'CheckLogout
         Route::get('/house/{id}/delete', [Controllers\HostController::class, 'deleteHouse'])->name('deleteHouse');
         Route::get('/booking/{id}', [Controllers\HostController::class, 'viewBooking'])->name('viewBooking');
         Route::get('/change-booking', [Controllers\HostController::class, 'changeStatusBooking'])->name('changeStatusBooking');
-
     });
     Route::group(['prefix' => 'house', 'as' => 'house.'], function () {
         Route::post('/booking-house/{id}', [Controllers\OrderController::class, 'showPrice'])->name('showPrice');
         Route::post('/send-bill', [Controllers\OrderController::class, 'AddBill'])->name('AddBill');
     });
     Route::get('/booking-complete/{code}', [Controllers\OrderController::class, 'showViewBookingComplete'])->name('showViewBookingComplete');
+    Route::get('/pay/{code}', [Controllers\OrderController::class, 'showPayView'])->name('showPayView');
 });
 
 Route::group(['prefix' => 'user', 'as' => 'users.'], function () {
@@ -62,7 +72,12 @@ Route::group(['namespace' => 'Admin'], function () {
         Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
             Route::get('/', [Controllers\Admin\UserController::class, 'showUsers'])->name('showUsers');
         });
-
+        Route::group(['prefix' => 'event', 'as' => 'event.'], function () {
+            Route::get('/dashboard', [Controllers\Admin\SliderController::class, 'showDashboard'])->name('showDashboard');
+            Route::get('/view-event', [Controllers\Admin\SliderController::class, 'showViewEvent'])->name('showViewEvent');
+            Route::get('/add-event', [Controllers\Admin\SliderController::class, 'showViewAddEvent'])->name('AddEvent');
+            Route::post('/add-event', [Controllers\Admin\SliderController::class, 'AddEvent'])->name('AddEvent');
+        });
         Route::group(['prefix' => 'city', 'as' => 'city.'], function () {
             Route::get('/dashboard-city', [Controllers\Admin\CityController::class, 'showDashboard'])->name('showDashboard');
 

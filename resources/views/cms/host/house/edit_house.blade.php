@@ -18,10 +18,7 @@
                             @endif
                             @php
                                 $images = json_decode($house->image);
-                                $address = json_decode($house->address);
                                 $utilities_house = json_decode($house->utilities);
-                                $room = json_decode($house->room);
-                                $price_detail = json_decode($house->price_detail);
                                 $rules = json_decode($house->rules);
                             @endphp
                             <div class="my-4">
@@ -79,7 +76,7 @@
                             <div class="my-4 d-block">
                                 <p>Địa chỉ</p>
                                 <input type="text" class="w-50 form-control" name="house_number" placeholder="Số nhà"
-                                       value="{{$address->house_number}}">
+                                       value="{{$house->address}}">
                                 @if($errors->has('house_number'))
                                     <div class="alert alert-danger alert-dismissible">
                                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -92,7 +89,7 @@
                                         data-url="{{route('users.host.selectDistrict')}}">
                                         @foreach($cities as $city)
                                             <option value="{{$city->id}}"
-                                                    @if($city->id == $address->city_id)
+                                                    @if($city->id == $house->city_id)
                                                     selected @endif>{{$city->name}}</option>
                                         @endforeach
                                     </select>
@@ -100,9 +97,9 @@
                                 <div class="form-check-inline">
                                     <select name="selectAreas" class="selectAreas form-control">
                                         @foreach($districts as $district)
-                                            @if($district->city->id == $address->city_id)
+                                            @if($district->city->id == $house->city_id)
                                                 <option value="{{$district->id}}"
-                                                        @if($district->id == $address->district_id)
+                                                        @if($district->id == $house->district_id)
                                                         selected @endif>{{$district->name}}
                                                 </option>
                                             @endif
@@ -119,32 +116,32 @@
                             </div>
                             <div class="my-4">
                                 <p>Mô tả phòng</p>
-                                <input type="number" class="w-24 form-control" name="n_bed"
-                                       placeholder="Số giường" value="{{$room->number_bed}}">
+                                <input type="number" min="1" max="20" class="w-24 form-control" name="n_bed"
+                                       placeholder="Số giường" value="{{$house->n_bed}}">
                                 @if($errors->has('n_bed'))
                                     <div class="alert alert-danger alert-dismissible">
                                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                         <strong>{{ $errors->first('n_bed') }}</strong>
                                     </div>
                                 @endif
-                                <input type="number" class="w-24 form-control" name="n_bath"
-                                       placeholder="Số phòng tắm" value="{{$room->number_bath}}">
+                                <input type="number" min="1" max="20" class="w-24 form-control" name="n_bath"
+                                       placeholder="Số phòng tắm" value="{{$house->n_bath}}">
                                 @if($errors->has('n_bath'))
                                     <div class="alert alert-danger alert-dismissible">
                                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                         <strong>{{ $errors->first('n_bath') }}</strong>
                                     </div>
                                 @endif
-                                <input type="number" class="w-24 form-control" name="n_room"
-                                       placeholder="Số phòng ngủ" value="{{$room->number_room}}">
+                                <input type="number" min="1" max="20" class="w-24 form-control" name="n_room"
+                                       placeholder="Số phòng ngủ" value="{{$house->n_room}}">
                                 @if($errors->has('n_room'))
                                     <div class="alert alert-danger alert-dismissible">
                                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                         <strong>{{ $errors->first('n_room') }}</strong>
                                     </div>
                                 @endif
-                                <input type="number" class="w-24 form-control" name="max_guest"
-                                       placeholder="Số khách tối đa" value="{{$room->max_guest}}">
+                                <input type="number" min="1" max="50" class="w-24 form-control" name="max_guest"
+                                       placeholder="Số khách tối đa" value="{{$house->max_guest}}">
                                 @if($errors->has('max_guest'))
                                     <div class="alert alert-danger alert-dismissible">
                                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -165,14 +162,10 @@
                             </div>
                             <div class="my-4">
                                 <p>Các quy định chung</p>
-                                <textarea style="overflow: hidden" class="form-control" rows="5" name="cancel_rules"
+                                <textarea style="overflow: hidden" class="form-control" rows="5" disabled
                                           placeholder="Chính sách hủy phòng">{{$rules->cancel_rule}}</textarea>
-                                @if($errors->has('cancel_rules'))
-                                    <div class="alert alert-danger alert-dismissible">
-                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                        <strong>{{ $errors->first('cancel_rules') }}</strong>
-                                    </div>
-                                @endif
+                                <input type="hidden" name="cancel_rules"
+                                       value="Miễn phí hủy phòng trong vòng 48h sau khi đặt phòng thành công và trước 1 ngày so với thời gian check-in. Sau đó, hủy phòng trước 1 ngày so với thời gian check-in, được hoàn lại 100% tổng số tiền đã trả (trừ phí dịch vụ).">
                                 <textarea style="overflow: hidden" class="form-control mt-3" rows="5" name="attention"
                                           placeholder="Lưu ý">{{$rules->attention}}</textarea>
                                 @if($errors->has('attention'))
@@ -241,8 +234,8 @@
                             </div>
                             <div class="my-4">
                                 <p>Bảng giá</p>
-                                <input type="number" class="w-24 form-control" name="m_to_t"
-                                       value="{{$price_detail->Mon_to_Thus}}"
+                                <input type="number" min="0" class="w-24 form-control" name="m_to_t"
+                                       value="{{$house->price_m_to_t}}"
                                        placeholder="Thứ 2-thứ 5">
                                 @if($errors->has('m_to_t'))
                                     <div class="alert alert-danger alert-dismissible">
@@ -250,8 +243,8 @@
                                         <strong>{{ $errors->first('m_to_t') }}</strong>
                                     </div>
                                 @endif
-                                <input type="number" class="w-24 form-control" name="f_to_s"
-                                       value="{{$price_detail->Fri_to_Sun}}"
+                                <input type="number" min="0" class="w-24 form-control" name="f_to_s"
+                                       value="{{$house->price_f_to_s}}"
                                        placeholder="Thứ 6-chủ nhật">
                                 @if($errors->has('f_to_s'))
                                     <div class="alert alert-danger alert-dismissible">
@@ -259,20 +252,20 @@
                                         <strong>{{ $errors->first('f_to_s') }}</strong>
                                     </div>
                                 @endif
-                                <input type="number" class="w-24 form-control" name="extra_guest" value="{{$price_detail->Ex_guest}}"
+                                <input type="number" min="0" class="w-24 form-control" name="exGuest_fee" value="{{$house->exGuest_fee}}"
                                        placeholder="Phí khách thêm">
-                                @if($errors->has('extra_guest'))
+                                @if($errors->has('exGuest_fee'))
                                     <div class="alert alert-danger alert-dismissible">
                                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                        <strong>{{ $errors->first('extra_guest') }}</strong>
+                                        <strong>{{ $errors->first('exGuest_fee') }}</strong>
                                     </div>
                                 @endif
-                                <input type="number" class="w-24 form-control" name="max_night" value="{{$price_detail->max_night}}"
+                                <input type="number" min="1" class="w-24 form-control" name="min_night" value="{{$house->min_night}}"
                                        placeholder="Số đêm tối thiểu">
-                                @if($errors->has('max_night'))
+                                @if($errors->has('min_night'))
                                     <div class="alert alert-danger alert-dismissible">
                                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                        <strong>{{ $errors->first('max_night') }}</strong>
+                                        <strong>{{ $errors->first('min_night') }}</strong>
                                     </div>
                                 @endif
                             </div>

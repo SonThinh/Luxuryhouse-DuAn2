@@ -34,7 +34,6 @@ class HouseRequest extends FormRequest
             'n_room' => 'required',
             'max_guest' => 'required',
             'description' => 'required',
-            'cancel_rules' => 'required',
             'attention' => 'required',
             'check_in' => 'required',
             'check_out' => 'required',
@@ -42,8 +41,8 @@ class HouseRequest extends FormRequest
             'trip_type' => 'required',
             'm_to_t' => 'required',
             'f_to_s' => 'required',
-            'extra_guest' => 'required',
-            'max_night' => 'required'
+            'exGuest_fee' => 'required',
+            'min_night' => 'required'
         ];
     }
 
@@ -60,7 +59,6 @@ class HouseRequest extends FormRequest
             'n_room.required' => 'Chưa nhập số phòng phủ',
             'max_guest.required' => 'Chưa nhập tối đa số khách',
             'description.required' => 'Chưa nhập mô tả',
-            'cancel_rules.required' => 'Chưa nhập chính sách hủy phòng',
             'attention.required' => 'Chưa nhập lưu ý',
             'check_in.required' => 'Chưa chọn thời gian nhận phòng',
             'check_out.required' => 'Chưa chọn thời gian trả phòng',
@@ -68,8 +66,8 @@ class HouseRequest extends FormRequest
             'trip_type.required' => 'Chưa chọn dành cho chuyến đi',
             'm_to_t.required' => 'Chưa nhập giá thứ 2 tới thứ 5',
             'f_to_s.required' => 'Chưa nhập giá thứ 6 tới chủ nhật',
-            'extra_guest.required' => 'Chưa nhập giá khách thêm',
-            'max_night.required' => 'Chưa nhập số đêm tối thiểu',
+            'exGuest_fee.required' => 'Chưa nhập giá khách thêm',
+            'min_night.required' => 'Chưa nhập số đêm tối thiểu',
         ];
     }
 }

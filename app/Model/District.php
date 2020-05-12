@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\House;
 use Illuminate\Database\Eloquent\Model;
 
 class District extends Model
@@ -15,5 +16,8 @@ class District extends Model
     ];
     public function city(){
         return $this->belongsTo(City::class,'city_id','id');
+    }
+    public function house(){
+        return $this->HasMany(House::class,'district_id','id');
     }
 }

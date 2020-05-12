@@ -43,11 +43,11 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{route('admin.event.showDashboard')}}">
                         <i class="far fa-clone"></i>
                         <div class="ca-content">
                             <h4 class="ca-main four">30,808</h4>
-                            <h3 class="ca-sub four">Top,Banner,Event,Slider</h3>
+                            <h3 class="ca-sub four">Event,Top</h3>
                         </div>
                     </a>
                 </li>

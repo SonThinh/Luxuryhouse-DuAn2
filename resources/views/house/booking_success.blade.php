@@ -21,8 +21,7 @@
                                 </div>
                             </div>
 
-                            <a href="#" type="button" class="btn btn-block btn-primary w-50 m-auto">Quản lý đặt chỗ</a>
-                            <a href="#" type="button" class="btn btn-block btn-pay my-2 mx-auto">Thanh toán ngay</a>
+                            <a href="{{route('users.booking-profile.showProfileBooking',[auth()->user()->id])}}" type="button" class="btn btn-block btn-primary w-50 m-auto">Quản lý đặt chỗ</a>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -30,7 +29,6 @@
                         <div class="m-3 information-booking sticky-box">
                             @php
                                 $images = json_decode($bill->house->image);
-                                $address = json_decode($bill->house->address);
                                 $rules = json_decode($bill->house->rules);
                             @endphp
                             <a href="{{route('places.HouseDetail',$bill->h_id)}}">
@@ -38,9 +36,9 @@
                                     <div class="col-md-6 ">
                                         <h4>{{$bill->house->name}}</h4>
                                         <p style="font-size: 14px"><i class="far fa-map-marker-check"></i>
-                                            {{$address->house_number}},
+                                            {{$bill->house->address}},
                                             @foreach($districts as $district)
-                                                @if($district->id == $address->district_id)
+                                                @if($district->id == $bill->house->district_id)
                                                     {{$district->name}},
                                                 @endif
                                             @endforeach
@@ -70,8 +68,7 @@
                             </table>
                             <hr>
                             <p id="cancel_rule">Chính sách hủy phòng</p>
-                            <textarea style="overflow: hidden" class="form-control mt-3" rows="7" disabled>
-                                {{$rules->cancel_rule}}
+                            <textarea style="overflow: hidden" class="form-control mt-3" rows="7" disabled>{{$rules->cancel_rule}}
                             </textarea>
                         </div>
                     </div>
