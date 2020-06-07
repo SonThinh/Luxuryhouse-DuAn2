@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\House;
 use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
+use App\Model\City;
+use App\Model\Slider;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,7 +25,10 @@ class AdminController extends Controller
 
     public function getViewAdminDashboard()
     {
-        return view('admin.pages.admin_dashboard');
+        $data['houses'] = House::all();
+        $data['users'] = User::query()->where('level','!=',0)->get();
+        $data['cities'] = City::all();
+        return view('admin.pages.admin_dashboard',$data);
     }
 
     public function postLogin(LoginRequest $request)

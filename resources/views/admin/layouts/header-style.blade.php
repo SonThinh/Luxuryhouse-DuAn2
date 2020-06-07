@@ -1,4 +1,3 @@
-<link href="{{asset('../resources/assets/css/fonts.googleapis.css')}}" rel="stylesheet">
 <link href="{{asset('../resources/assets/css/bootstrap-v4.5.min.css')}}" rel="stylesheet">
 <link href="{{asset('../resources/assets/css/fontawesome-all.css')}}" rel="stylesheet">
 <link href="{{asset('../resources/assets/css/admin/admin.min.css')}}" rel="stylesheet">

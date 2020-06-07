@@ -8,7 +8,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class AreaRequest extends FormRequest
+class EventRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,16 +28,18 @@ class AreaRequest extends FormRequest
     public function rules()
     {
         return [
-            'city_name' => 'required',
-            'area_name' => 'required',
+            'image_event' => 'required|',
+            'key' => 'required|',
+            'link' => 'required|',
         ];
     }
 
     public function messages()
     {
         return [
-            'city_name.required' => 'Chưa chọn thành phố',
-            'area_name.required' => 'Chưa nhập tên khu vực',
+            'key.required' => 'Chưa nhập từ khóa',
+            'image_event.required' => 'Chưa chọn hình ảnh',
+            'link.required' => 'Chưa nhập đường dẫn sự kiện',
         ];
     }
 
@@ -47,6 +49,5 @@ class AreaRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'errors' => $errors,
         ], JsonResponse::HTTP_OK));
-
     }
 }
