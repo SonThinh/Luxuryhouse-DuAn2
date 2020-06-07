@@ -28,7 +28,7 @@ class AdminController extends Controller
     public function postLogin(LoginRequest $request)
     {
         if ($this->checkLevelByEmail($request->email)) {
-            if ($request->has('remember') && !empty($request->remember)) {
+            if ($request->remember !== 'undefined') {
                 $remember_me = true;
             } else {
                 $remember_me = false;
@@ -38,12 +38,22 @@ class AdminController extends Controller
                 'password' => $request->password,
             ];
             if (Auth::attempt($data, $remember_me)) {
-                return redirect()->route('admin.dashboard');
+                return response()->json([
+                    'status' => 'true',
+                    'message' => 'Đăng nhập thành công',
+                    'url' => route('admin.dashboard'),
+                ]);
             } else {
-                return back()->withInput()->with('error', 'Tài khoản hoặc mật khẩu không đúng');
+                return response()->json([
+                    'status'  => 'false',
+                    'message' => 'Sai tài khoản hoặc mật khẩu',
+                ]);
             }
         } else
-            return back()->withInput()->with('error', 'Tài khoản hoặc mật khẩu không đúng');
+            return response()->json([
+                'status'  => 'false',
+                'message' => 'Sai tài khoản hoặc mật khẩu',
+            ]);
     }
 
     public function checkLevelByEmail(String $email)

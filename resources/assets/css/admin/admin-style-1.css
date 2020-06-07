@@ -1,0 +1,11 @@
+img {
+    object-fit: cover !important;
+}
+.bg-gradient-lux{
+    background-color: #4e73df;
+    background-image: linear-gradient(200deg,#4e73df 25%,#fff 100%);
+    background-size: cover;
+}
+.w-15{
+    width: 15% !important;
+}
