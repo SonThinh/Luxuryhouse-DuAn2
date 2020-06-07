@@ -117,6 +117,15 @@ li.nav-item {
     color: #555555
 }
 
+.dropdown-filter {
+    color: white;
+    border: 1px solid;
+}
+
+.dropdown-filter:hover {
+    border: 1px solid #ff5722;
+}
+
 .dropdown-menu {
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
@@ -558,7 +567,46 @@ li.nav-item {
 }
 
 .main .filter ul {
-    padding: 10px 10px;
+    padding: 10px;
+}
+.tt-menu .top-list-search{
+    margin: 0 20px 5px 20px;
+    padding: 3px 0;
+}
+.tt-menu{
+    width: 100%;
+    background: #cecaca;
+}
+.list-group-item:hover{
+    cursor: pointer;
+}
+.price-slider {
+    padding: 10px;
+}
+
+.price-slider .price-box {
+    display: flex;
+    margin-top: 10px;
+}
+.price-slider .price-box input{
+    text-align: center;
+    position: relative;
+    padding-right: 23px;
+}
+.price-slider .price-box .left-currency{
+    position: absolute;
+    z-index: 1;
+    padding: 5px;
+    right: 150px;
+}
+.price-slider .price-box .right-currency{
+    position: absolute;
+    z-index: 1;
+    padding: 5px;
+    right: 50px;
+}
+.ui-state-default {
+    border-radius: 20px;
 }
 
 .main .home-content {
@@ -831,6 +879,94 @@ li.nav-item {
     box-shadow: 0 0 15px #939393;
 }
 
+.content-bookingDetail {
+    background: #fff;
+    border-top: 1px solid #bbb;
+    padding: 15px;
+    display: block;
+    box-shadow: 0 0 15px #939393;
+    z-index: -2;
+    position: relative;
+}
+.content-bottom-bookingDetail{
+    background: #fff;
+    padding: 15px;
+    display: block;
+    box-shadow: 0 0 15px #939393;
+}
+
+.progressbar {
+    padding-bottom: 60px;
+}
+
+.progressbar li {
+    list-style-type: none;
+    width: 25%;
+    float: left;
+    font-size: 12px;
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+    color: #7d7d7d;
+}
+
+.progressbar li:nth-child(2):before {
+    font-family: "Font Awesome 5 Pro";
+    content: "\f110";
+}
+
+.progressbar li:nth-child(3):before {
+    font-family: "Font Awesome 5 Pro";
+    content: "\f110";
+}
+
+.progressbar li:nth-child(4):before {
+    font-family: "Font Awesome 5 Pro";
+    content: "\f110";
+}
+
+.progressbar li:before {
+    width: 30px;
+    height: 30px;
+    content: '';
+    line-height: 30px;
+    border: 2px solid #7d7d7d;
+    display: block;
+    text-align: center;
+    margin: 0 auto 10px auto;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.progressbar li:after {
+    width: 100%;
+    height: 2px;
+    content: '';
+    position: absolute;
+    background-color: #7d7d7d;
+    top: 15px;
+    left: -50%;
+    z-index: -1;
+}
+
+.progressbar li:first-child:after {
+    content: none;
+}
+
+.progressbar li.active {
+    color: green;
+}
+
+.progressbar li.active:before {
+    border-color: #55b776;
+    font-family: "Font Awesome 5 Pro";
+    content: "\f00c";
+}
+
+.progressbar li.active + li:after {
+    background-color: #55b776;
+}
+
 .w-24 {
     width: 24%;
 }
@@ -856,6 +992,12 @@ li.nav-item {
 .information-booking a:hover {
     color: #ff5722;
 }
+.detail-booking{
+    color: black;
+}
+.detail-booking:hover {
+    color: #ff5722;
+}
 
 .information-booking .inf-house {
     border-bottom: 1px solid black;
@@ -877,31 +1019,68 @@ li.nav-item {
 .complete-booking span {
     color: #ff5722;
 }
+
 .complete-booking .box-code {
     background: #fff;
     padding: 20px;
     border-radius: 10px;
 }
-.complete-booking .box-code p{
+
+.complete-booking .box-code p {
     font-weight: bold;
     margin: auto;
     font-size: 25px;
 }
-.complete-booking .box-code label{
+
+.complete-booking .box-code label {
     margin: auto;
 }
-.btn-pay{
+
+.btn-pay {
     width: 50%;
     color: white;
     background-color: #ff5722;
 }
-.btn-pay:hover{
+
+.btn-pay:hover {
     color: white;
     opacity: 0.9;
 }
-.booking-table{
+
+.house-d-booking {
+    color: #212529;
+}
+
+.house-d-booking:hover {
+    color: #ff5722;
+}
+
+.pay-booking {
+    color: red;
+}
+
+.pay-booking:hover {
+    color: #ff5722;
+}
+
+.booking-table {
     text-align: center;
 }
+
+.twitter-typeahead {
+    width: 100%;
+}
+
+.breadcrumb {
+    font-size: 14px;
+}
+.content-top{
+    margin: auto;
+    padding: 75px;
+    background: #fff;
+    border-radius: 20px;
+}
+
 /*-- footer --*/
 h1.heading, h2.heading, h3.heading {
     font-size: 50px;

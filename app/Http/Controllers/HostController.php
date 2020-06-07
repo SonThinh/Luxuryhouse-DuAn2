@@ -29,7 +29,7 @@ class HostController extends Controller
     public function postRegisterHost(RegisterHostRequest $request, $id)
     {
         foreach ($request->file('imgIdCard') as $image) {
-            $file_name = 'ID_Card' . '_' . $request->id_card . '.' . $image->getClientOriginalExtension();
+            $file_name = 'ID_Card' . '_' . rand() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('uploads'), $file_name);
             $id_card [] = [
                 'image_name' => $file_name,
@@ -44,7 +44,7 @@ class HostController extends Controller
         if ($request->business_license) {
             if ($request->hasFile('imgBL')) {
                 foreach ($request->file('imgBL') as $image) {
-                    $file_name = 'BL' . '_' . $request->business_license . '.' . $image->getClientOriginalExtension();
+                    $file_name = 'BL' . '_' . rand() . '.' . $image->getClientOriginalExtension();
                     $image->move(public_path('uploads'), $file_name);
                     $business_license [] = [
                         'image_name' => $file_name,
@@ -62,7 +62,9 @@ class HostController extends Controller
     public function ViewDashboard($id)
     {
         $data['host'] = Host::find($id);
-
+        $data['bookings'] = Bill::query()->where('host_id', $id)->get();
+        $data['houses'] = House::all();
+        $data['users'] = User::all();
         return view('cms.host.dashboard', $data);
     }
 
@@ -90,35 +92,19 @@ class HostController extends Controller
     public function postAddHouse(HouseRequest $request)
     {
         foreach ($request->file('house_image') as $image) {
-            $file_name = $request->name . rand() . '.' . $image->getClientOriginalExtension();
+            $file_name = $request->name . '_' . rand() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('uploads'), $file_name);
             $house_image [] = [
                 'image_name' => $file_name,
                 'image_path' => 'uploads/' . $file_name
             ];
         }
-        $address = [
-            'house_number' => $request->house_number,
-            'city_id' => $request->selectCity,
-            'district_id' => $request->selectAreas
-        ];
-        $room = [
-            'number_bed' => $request->n_bed,
-            'number_bath' => $request->n_bath,
-            'number_room' => $request->n_room,
-            'max_guest' => $request->max_guest
-        ];
-        $price_detail = [
-            'Mon_to_Thus' => $request->m_to_t,
-            'Fri_to_Sun' => $request->f_to_s,
-            'Ex_guest' => $request->extra_guest,
-            'max_night' => $request->max_night
-        ];
-        $rules =[
+
+        $rules = [
             'cancel_rule' => $request->cancel_rules,
             'attention' => $request->attention,
-            'check_in' =>$request->check_in,
-            'check_out' =>$request->check_out,
+            'check_in' => $request->check_in,
+            'check_out' => $request->check_out,
         ];
         $house = new House();
         $house->city_id = $request->selectCity;
@@ -129,9 +115,16 @@ class HostController extends Controller
         $house->description = $request->description;
         $house->rules = json_encode($rules);
         $house->trip_type = $request->trip_type;
-        $house->address = json_encode($address);
-        $house->room = json_encode($room);
-        $house->price_detail = json_encode($price_detail);
+        $house->address = $request->house_number;
+        $house->district_id = $request->selectAreas;
+        $house->n_room = $request->n_room;
+        $house->n_bath = $request->n_bath;
+        $house->n_bed = $request->n_bed;
+        $house->price_m_to_t = $request->m_to_t;
+        $house->price_f_to_s = $request->f_to_s;
+        $house->exGuest_fee = $request->exGuest_fee;
+        $house->min_night = $request->min_night;
+        $house->max_guest = $request->max_guest;
         $house->image = json_encode($house_image);
         $house->status = 0;
         $house->h_status = 0;
@@ -147,6 +140,8 @@ class HostController extends Controller
         $data['types'] = Type::all();
         $data['trip_types'] = Trip::all();
         $data['utilities'] = Utility::all();
+        $data['bookings'] = Bill::query()->where('host_id', $id)->get();
+        $data['host'] = Host::find($id);
         return view('cms.host.house', $data);
     }
 
@@ -169,29 +164,14 @@ class HostController extends Controller
         $data['districts'] = District::all();
         return view('cms.host.house.edit_house', $data);
     }
-    public function editHouse(HouseEditRequest $request,$id){
-        $address = [
-            'house_number' => $request->house_number,
-            'city_id' => $request->selectCity,
-            'district_id' => $request->selectAreas
-        ];
-        $room = [
-            'number_bed' => $request->n_bed,
-            'number_bath' => $request->n_bath,
-            'number_room' => $request->n_room,
-            'max_guest' => $request->max_guest
-        ];
-        $price_detail = [
-            'Mon_to_Thus' => $request->m_to_t,
-            'Fri_to_Sun' => $request->f_to_s,
-            'Ex_guest' => $request->extra_guest,
-            'max_night' => $request->max_night
-        ];
-        $rules =[
+
+    public function editHouse(HouseEditRequest $request, $id)
+    {
+        $rules = [
             'cancel_rule' => $request->cancel_rules,
             'attention' => $request->attention,
-            'check_in' =>$request->check_in,
-            'check_out' =>$request->check_out,
+            'check_in' => $request->check_in,
+            'check_out' => $request->check_out,
         ];
         $house = House::find($id);
         $house->city_id = $request->selectCity;
@@ -202,14 +182,21 @@ class HostController extends Controller
         $house->description = $request->description;
         $house->rules = json_encode($rules);
         $house->trip_type = $request->trip_type;
-        $house->address = json_encode($address);
-        $house->room = json_encode($room);
-        $house->price_detail = json_encode($price_detail);
+        $house->address = $request->house_number;
+        $house->district_id = $request->selectAreas;
+        $house->n_room = $request->n_room;
+        $house->n_bath = $request->n_bath;
+        $house->n_bed = $request->n_bed;
+        $house->price_m_to_t = $request->m_to_t;
+        $house->price_f_to_s = $request->f_to_s;
+        $house->exGuest_fee = $request->exGuest_fee;
+        $house->min_night = $request->min_night;
+        $house->max_guest = $request->max_guest;
         $house->status = 0;
         $house->h_status = 0;
-        if($request->house_image){
+        if ($request->house_image) {
             foreach ($request->file('house_image') as $image) {
-                $file_name = $request->name .rand() . '.' . $image->getClientOriginalExtension();
+                $file_name = $request->name . rand() . '.' . $image->getClientOriginalExtension();
                 $image->move(public_path('uploads'), $file_name);
                 $house_image [] = [
                     'image_name' => $file_name,
@@ -222,10 +209,14 @@ class HostController extends Controller
         return back()->withInput()->with('success', 'Sửa nhà thành công! Đợi duyệt!');
     }
 
-    public function viewBooking($id){
-        $data['bookings'] = Bill::query()->where('host_id',$id)->get();
-        return view('cms.host.booking',$data);
+    public function viewBooking($id)
+    {
+        $data['bookings'] = Bill::query()->where('host_id', $id)->get();
+        $data['houses'] = House::all();
+        $data['users'] = User::all();
+        return view('cms.host.booking', $data);
     }
+
     public function changeStatusBooking(Request $request)
     {
         $bill = Bill::find($request->id);

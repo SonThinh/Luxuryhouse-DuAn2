@@ -1,34 +1,40 @@
 @extends('index')
 @section('title','house')
 @section('main')
+    <style>
+        table tr td{
+            text-align: center;
+        }
+    </style>
     <div class="container">
         <div class="m-4">
-            @foreach($bookings as $booking)
-                @include('cms.host.menu')
-                <div class="content-host">
-                    <div class="table-responsive-sm" style="font-size: 15px;">
-                        <table class="house-table table table-sm">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th>Mã đặt phòng</th>
-                                <th>Tên phòng</th>
-                                <th>Tên người đặt</th>
-                                <th>Số người</th>
-                                <th>Ngày đến</th>
-                                <th>Ngày đi</th>
-                                <th>Các yêu cầu</th>
-                                <th>Số đêm</th>
-                                <th>Tổng giá</th>
-                                <th>Trạng thái thanh toán</th>
-                                <th>Trạng thái đơn</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @if($booking->pay == 0)
+            @include('cms.host.menu')
+            <div class="content-host">
+                <div class="table-responsive-sm" style="font-size: 15px;">
+                    <table class="house-table table table-sm">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Mã đặt</th>
+                            <th>Nhà</th>
+                            <th>Người đặt</th>
+                            <th>Số người</th>
+                            <th>Ngày đến</th>
+                            <th>Ngày đi</th>
+                            <th>Các yêu cầu</th>
+                            <th>Số đêm</th>
+                            <th>Tổng giá</th>
+                            <th>Thanh toán</th>
+                            <th>Trạng thái đơn</th>
+                            <th>Ngày tạo</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($bookings as $booking)
+                            @if($booking->status == 1)
                                 <tr {{$booking->id}}>
                                     <td>{{$booking->code}}</td>
-                                    <td>{{$booking->h_id}}</td>
-                                    <td>{{$booking->guest_id}}</td>
+                                    <td>@foreach($houses as $house) @if($booking->h_id == $house->id) {{$house->name}} @endif @endforeach</td>
+                                    <td>@foreach($users as $user) @if($user->id == $booking->guest_id) @isset($user->username) {{$user->username}} @else {{$user->email}} @endisset @endif @endforeach</td>
                                     <td>{{$booking->n_person}}</td>
                                     <td>{{$booking->check_in}}</td>
                                     <td>{{$booking->check_out}}</td>
@@ -51,13 +57,16 @@
                                                data-on="Chấp nhận" data-off="Từ chối"
                                             {{ $booking->status ? 'checked' : '' }}>
                                     </td>
+                                    <td>
+                                        {{date("d-m-Y h:m:i",strtotime($booking->created_at))}}
+                                    </td>
                                 </tr>
                             @endif
-                            </tbody>
-                        </table>
-                    </div>
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div>
-            @endforeach
+            </div>
         </div>
     </div>
 @endsection

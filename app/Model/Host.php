@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Model\Bill;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,5 +24,8 @@ class Host extends Model
     }
     public function user(){
         return $this->belongsTo(User::class,'m_id','id');
+    }
+    public function bill(){
+        return $this->HasMany(Bill::class,'host_id','id');
     }
 }

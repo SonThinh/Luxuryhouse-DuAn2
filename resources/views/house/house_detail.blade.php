@@ -4,7 +4,6 @@
     <div class="main p-3">
         <div class="container">
             <ul class="breadcrumb">
-
                 <li class="breadcrumb-item"><a href="{{route('place')}}">Địa điểm</a></li>
                 @foreach($cities as $city)
                     @if($city->id == $house->city_id)
@@ -12,14 +11,10 @@
                                 href="{{route('places.CityDetail',[$city->id])}}">{{$city->name}}</a></li>
                     @endif
                 @endforeach
-
                 <li class="breadcrumb-item active">{{$house->name}}</li>
             </ul>
             @php
                 $images = json_decode($house->image);
-                $address = json_decode($house->address);
-                $room = json_decode($house->room);
-                $price_detail = json_decode($house->price_detail);
                 $utilities_house = json_decode($house->utilities);
                 $rules = json_decode($house->rules);
             @endphp
@@ -34,14 +29,14 @@
             </div>
             <div class="row house-detail">
                 <div class="col-sm-12 col-md-8 mt-2">
-                    <h2 class="house-name">Hana house</h2>
+                    <h2 class="house-name">{{$house->name}}</h2>
                     <div class="house-detail p-2">
                         <div class="house-address d-flex">
                             <i class="far fa-map-marker-alt"></i>
                             <p class="ml-1">
-                                {{$address->house_number}},
+                                {{$house->address}},
                                 @foreach($districts as $district)
-                                    @if($district->id == $address->district_id)
+                                    @if($district->id == $house->district_id)
                                         {{$district->name}},
                                     @endif
                                 @endforeach
@@ -60,8 +55,8 @@
                                 </span></p>
                         </div>
                         <div class="room-detail">
-                            <p>{{$room->max_guest}} khách - {{$room->number_room}} phòng ngủ
-                                - {{$room->number_bath}} phòng tắm</p>
+                            <p>{{$house->max_guest}} khách - {{$house->n_room}} phòng ngủ
+                                - {{$house->n_bath}} phòng tắm</p>
                             <a data-toggle="collapse" href="#collapse-house-desc" aria-expanded="true">
                                 <i class="fa fa-chevron-down pull-right"></i>
                                 Xem chi tiết
@@ -118,9 +113,9 @@
                 </div>
                 <div class="col-sm-12 col-md-4">
                     <div class="contact-owner">
-                        @foreach($host as $host)
-                            <a href="#" class="d-flex mt-1">
-                                @if($host->id == $house->host_id)
+                        @foreach($hosts as $host)
+                            @if($host->id == $house->host_id)
+                                <a href="#" class="d-flex mt-1">
                                     @php
                                         $avatar = json_decode($host->user->avatar);
                                     @endphp
@@ -140,9 +135,9 @@
                                             @endisset
                                         </p>
                                     </div>
-                                @endif
-                            </a>
-                            <p>Tham gia: {{date("d-m-Y",strtotime($host->user->created_at))}}</p>
+                                </a>
+                                <p>Tham gia: {{date("d-m-Y",strtotime($host->user->created_at))}}</p>
+                            @endif
                         @endforeach
                     </div>
                     <div class="form-choose-day">
@@ -163,47 +158,55 @@
                                 <table class="table">
                                     <tr>
                                         <td>Thứ hai - Thứ năm</td>
-                                        <td><span style="font-weight: bold;font-size: 35px;">{{$price_detail->Mon_to_Thus}}₫</span>/đêm
+                                        <td><span
+                                                style="font-weight: bold;font-size: 35px;">{{$house->price_m_to_t}}₫</span>/đêm
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Thứ sáu - Chủ nhật</td>
-                                        <td><span style="font-weight: bold;font-size: 35px;">{{$price_detail->Fri_to_Sun}}₫</span>/đêm
+                                        <td><span
+                                                style="font-weight: bold;font-size: 35px;">{{$house->price_f_to_s}}₫</span>/đêm
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Phí khách tăng thêm</td>
-                                        <td><span style="font-weight: bold;font-size: 35px;">{{$price_detail->Ex_guest}}₫</span>/đêm
-                                            (sau {{$room->max_guest}} khách)
+                                        <td><span
+                                                style="font-weight: bold;font-size: 35px;">{{$house->exGuest_fee}}₫</span>/đêm
+                                            (sau {{$house->max_guest}} khách)
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Số đêm tối thiểu</td>
-                                        <td>{{$price_detail->max_night}} đêm</td>
+                                        <td>{{$house->min_night}} đêm</td>
                                         <input name="max_date" type="hidden"
-                                               value="{{$price_detail->max_night}}"/>
+                                               value="{{$house->min_night}}"/>
                                     </tr>
                                 </table>
                             </div>
                         </div>
-                        @foreach($bills as $bill)
-                            @if($bill->status == 1 && $bill->pay == 1)
-                                @php
-                                    $checkin = date("Y-m-d", strtotime($bill->check_in));
-                                    $checkout = date("Y-m-d", strtotime($bill->check_out));
-                                @endphp
-                                <input type="hidden" name="checkin_booked" value="{{$checkin}}">
-                                <input type="hidden" name="checkout_booked" value="{{$checkout}}">
-                            @endif
-                        @endforeach
+                        @isset($bills)
+                            @foreach($bills as $bill)
+                                @if($bill->status == 1 && $bill->pay == 1)
+                                    @php
+                                        $checkin = date("Y-m-d", strtotime($bill->check_in));
+                                        $checkout = date("Y-m-d", strtotime($bill->check_out));
+                                    @endphp
+                                    <input type="hidden" name="checkin_booked" value="{{$checkin}}">
+                                    <input type="hidden" name="checkout_booked" value="{{$checkout}}">
+                                @endif
+                            @endforeach
+                        @endisset
                         <input type="button" id="btn-showPrice"
-                               @isset(auth()->user()->id) @if(auth()->user()->id == $host->user->id  ) disabled
-                               @endif @endisset class="btn btn-block btn-primary" data-toggle="modal"
+                               @isset(auth()->user()->id)
+                               @foreach($hosts as $host)
+                               @if(auth()->user()->host->id == $house->host_id  ) disabled
+                               @endif
+                               @endforeach
+                               @endisset
+                               class="btn btn-block btn-primary" data-toggle="modal"
                                data-target="#form-order" value="Đặt ngay">
                         @include('house.nav.form_order_nav')
-
                     </div>
-
                 </div>
             </div>
             <div class="similar-house">

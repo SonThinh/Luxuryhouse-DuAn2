@@ -1,14 +1,10 @@
 @extends('index')
-@section('title','password')
+@section('title','member password')
 @section('main')
     <div class="container">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="register-form m-3">
-                    @include('cms.member.menu')
-                </div>
-            </div>
-            <div class="col-md-9">
+        <div class="m-4">
+            @include('cms.member.menu')
+            <div class="content-host">
                 <div class="edit-form m-3">
                     <h2 class="text-center mt-4">Đổi mật khẩu</h2>
                     <form action="{{route('users.updatePass',[$user->id])}}" method="post" class="mt-3"

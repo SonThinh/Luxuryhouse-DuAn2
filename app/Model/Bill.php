@@ -32,4 +32,7 @@ class Bill extends Model
     public function user(){
         return $this->belongsTo(User::class,'guest_id','id');
     }
+    public function host(){
+        return $this->belongsTo(User::class,'host_id','id');
+    }
 }

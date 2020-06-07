@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Model\City;
+use App\Model\Slider;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,6 +17,7 @@ class HomeController extends Controller
     public function index()
     {
         $data['citiesList'] = City::paginate(12);
+        $data['events'] = Slider::all();
         return view('pages.area', $data);
     }
 
@@ -52,6 +54,7 @@ class HomeController extends Controller
             return back()->withInput()->with('error', 'Tài khoản hoặc mật khẩu không đúng');
         }
     }
+
 
     public function postRegister(Request $request)
     {

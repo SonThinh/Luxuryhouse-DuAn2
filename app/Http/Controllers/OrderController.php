@@ -16,7 +16,6 @@ class OrderController extends Controller
 {
     public function showPrice(Request $request, $id)
     {
-        dd($request->all());
         $data['user'] = User::find($request->user_id);
         $data['host'] = Host::find($request->host_member_id);
         $data['house'] = House::find($id);
@@ -32,7 +31,6 @@ class OrderController extends Controller
 
     public function AddBill(Request $request)
     {
-        dd($request->all());
         $code = now('Asia/Ho_Chi_Minh')->timestamp;
         $bill = new Bill;
         $bill->code = $code;
@@ -60,8 +58,8 @@ class OrderController extends Controller
             'total' => $request->total,
             'date_range' => $request->date_range,
         ];
-
-        return redirect()->route('users.showViewBookingComplete',$code);
+        $this->sendBill_detail($data);
+        return redirect()->route('users.showViewBookingComplete', $code);
     }
 
     public function sendBill_detail($data)
@@ -72,11 +70,23 @@ class OrderController extends Controller
         ];
         Mail::to($email)->send(new SendBill($data));
     }
+
     public function showViewBookingComplete($code)
     {
-        $data['bills'] = Bill::query()->where('code',$code)->get();
+        $data['bills'] = Bill::query()->where('code', $code)->get();
         $data['cities'] = City::all();
         $data['districts'] = District::with(['city'])->get();
-        return view('house.success',$data);
+        return view('house.booking_success', $data);
+    }
+
+    public function showPayView($code)
+    {
+        $bills = Bill::query()->where('code', $code)->get();
+        foreach ($bills as $bill) {
+            $bill->pay = 1;
+            $bill->save();
+        }
+        $data['code'] = $code;
+        return view('cms.member.pay_success', $data);
     }
 }
