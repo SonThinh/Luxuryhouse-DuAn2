@@ -52,8 +52,7 @@ class SearchController extends Controller
         return view('pages.search', $data);
     }
 
-    public
-    function searchHouses(Request $request)
+    public function searchHouses(Request $request)
     {
         $data['districts'] = District::all();
         $data['types'] = Type::all();
@@ -131,15 +130,13 @@ class SearchController extends Controller
         return view('pages.search', $data);
     }
 
-    public
-    function searchCityByName(Request $request)
+    public function searchCityByName(Request $request)
     {
         $city = City::query()->where('name', 'like', '%' . $request->value . '%')->get();
         return response()->json($city);
     }
 
-    public
-    function searchHouseByName(Request $request)
+    public function searchHouseByName(Request $request)
     {
         $house = House::query()->where('name', 'like', '%' . $request->value . '%')->get();
         return response()->json($house);

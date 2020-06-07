@@ -15,20 +15,15 @@ use Illuminate\Http\Request;
 
 class HouseController extends Controller
 {
-    public function showDashboardHouse()
-    {
-        return view('admin.pages.admin_dashboard_house');
-    }
-
     public function showViewUtility()
     {
-        $data['utilitiesList'] = Utility::paginate(10);
-        return view('admin.pages.house.utility', $data);
+        $data['utilitiesList'] = Utility::all();
+        return view('admin.pages.house.utility.utility', $data);
     }
 
     public function showViewAddUtility()
     {
-        return view('admin.pages.house.add_utility');
+        return view('admin.pages.house.utility.add_utility');
     }
 
     public function addUtility(UtilityRequest $request)
@@ -38,13 +33,23 @@ class HouseController extends Controller
         $utility->icon = $request->icon;
         $utility->key = $request->key;
         $utility->save();
-        return back()->withInput()->with('success', 'Thêm tiện ích thành công!');
+        if ($utility) {
+            return response()->json([
+                'status' => 'true',
+                'message' => 'Thêm tiện ích thành công',
+                'url' => route('admin.house.showViewUtility'),
+            ]);
+        } else
+            return response()->json([
+                'status' => 'false',
+                'message' => 'Thêm dạng nhà thất bại!',
+            ]);
     }
 
     public function showViewEditUtility($id)
     {
         $data['utility'] = Utility::find($id);
-        return view('admin.pages.house.edit_utility', $data);
+        return view('admin.pages.house.utility.edit_utility', $data);
     }
 
     public function editUtility(UtilityRequest $request, $id)
@@ -54,8 +59,19 @@ class HouseController extends Controller
         $utility->icon = $request->icon;
         $utility->key = $request->key;
         $utility->save();
-        return back()->withInput()->with('success', 'Sửa tiện ích thành công!');
+        if ($utility) {
+            return response()->json([
+                'status' => 'true',
+                'message' => 'Sửa tiện ích  thành công',
+                'url' => route('admin.house.showViewUtility'),
+            ]);
+        } else
+            return response()->json([
+                'status' => 'false',
+                'message' => 'Sửa dạng nhà thất bại!',
+            ]);
     }
+
     public function deleteUtility($id)
     {
         Utility::destroy($id);
@@ -64,34 +80,59 @@ class HouseController extends Controller
 
     public function showViewType()
     {
-        $data['typesList'] = Type::paginate(10);
-        return view('admin.pages.house.house_type', $data);
+        $data['typesList'] = Type::all();
+        return view('admin.pages.house.type.house_type', $data);
     }
 
     public function showViewAddType()
     {
-        return view('admin.pages.house.add_type');
+        return view('admin.pages.house.type.add_type');
     }
 
     public function addType(TypeRequest $request)
     {
         $type = new Type();
         $type->key = $request->key;
-        $type->name =$request->name;
+        $type->name = $request->name;
         $type->save();
-        return back()->withInput()->with('success', 'Thêm dạng nhà thành công!');
+        if ($type) {
+            return response()->json([
+                'status' => 'true',
+                'message' => 'Thêm dạng nhà thành công',
+                'url' => route('admin.house.showViewType'),
+            ]);
+        } else
+            return response()->json([
+                'status' => 'false',
+                'message' => 'Thêm dạng nhà thất bại!',
+            ]);
     }
-    public function showViewEditType($id){
+
+    public function showViewEditType($id)
+    {
         $data['type'] = Type::find($id);
-        return view('admin.pages.house.edit_type', $data);
+        return view('admin.pages.house.type.edit_type', $data);
     }
-    public function editType(TypeRequest $request,$id){
+
+    public function editType(TypeRequest $request, $id)
+    {
         $type = Type::find($id);
         $type->key = $request->key;
-        $type->name =$request->name;
+        $type->name = $request->name;
         $type->save();
-        return back()->withInput()->with('success', 'Sửa dạng nhà thành công!');
+        if ($type) {
+            return response()->json([
+                'status' => 'true',
+                'message' => 'Sửa dạng nhà thành công',
+                'url' => route('admin.house.showViewType'),
+            ]);
+        } else
+            return response()->json([
+                'status' => 'false',
+                'message' => 'Sửa dạng nhà thất bại!',
+            ]);
     }
+
     public function deleteType($id)
     {
         Type::destroy($id);
@@ -100,34 +141,59 @@ class HouseController extends Controller
 
     public function showViewTripType()
     {
-        $data['tripTypeList'] = Trip::paginate(10);
-        return view('admin.pages.house.trip_types', $data);
+        $data['tripTypeList'] = Trip::all();
+        return view('admin.pages.house.trip.trip_types', $data);
     }
 
     public function showViewAddTripType()
     {
-        return view('admin.pages.house.add_trip_type');
+        return view('admin.pages.house.trip.add_trip_type');
     }
 
     public function addTripType(TypeRequest $request)
     {
         $trip = new Trip();
         $trip->key = $request->key;
-        $trip->name =$request->name;
+        $trip->name = $request->name;
         $trip->save();
-        return back()->withInput()->with('success', 'Thêm dạng chuyến đi thành công!');
+        if ($trip) {
+            return response()->json([
+                'status' => 'true',
+                'message' => 'Thêm loại chuyến đi thành công',
+                'url' => route('admin.house.showViewTripType'),
+            ]);
+        } else
+            return response()->json([
+                'status' => 'false',
+                'message' => 'Thêm loại chuyến đi thất bại!',
+            ]);
     }
-    public function showViewEditTripType($id){
+
+    public function showViewEditTripType($id)
+    {
         $data['trip'] = Trip::find($id);
-        return view('admin.pages.house.edit_trip_type', $data);
+        return view('admin.pages.house.trip.edit_trip_type', $data);
     }
-    public function editTripType(TypeRequest $request,$id){
+
+    public function editTripType(TypeRequest $request, $id)
+    {
         $trip = Trip::find($id);
         $trip->key = $request->key;
-        $trip->name =$request->name;
+        $trip->name = $request->name;
         $trip->save();
-        return back()->withInput()->with('success', 'Sửa dạng chuyến đi thành công!');
+        if ($trip) {
+            return response()->json([
+                'status' => 'true',
+                'message' => 'Sửa loại chuyến đi thành công',
+                'url' => route('admin.house.showViewTripType'),
+            ]);
+        } else
+            return response()->json([
+                'status' => 'false',
+                'message' => 'Sửa loại chuyến đi thất bại!',
+            ]);
     }
+
     public function deleteTripType($id)
     {
         Trip::destroy($id);
@@ -136,7 +202,7 @@ class HouseController extends Controller
 
     public function showViewHouses()
     {
-        $data['housesList'] = House::paginate(10);
+        $data['housesList'] = House::all();
         $data['host'] = Host::with(['user'])->get();
         $data['house'] = House::with(['city'])->get();
         $data['district'] = District::with(['city'])->get();
@@ -144,15 +210,19 @@ class HouseController extends Controller
         $data['trip_types'] = Trip::all();
         return view('admin.pages.house.houses', $data);
     }
-    public function deleteHouse($id){
+
+    public function deleteHouse($id)
+    {
         House::destroy($id);
         return back();
     }
-    public function changeStatus(Request $request){
+
+    public function changeStatus(Request $request)
+    {
         $house = House::find($request->id);
         $house->status = $request->status;
         $house->save();
-        return response()->json(['success'=>'Đổi trạng thái thành công.']);
+        return response()->json(['success' => 'Đổi trạng thái thành công.']);
     }
 
 }

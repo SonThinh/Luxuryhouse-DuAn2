@@ -73,10 +73,12 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('/', [Controllers\Admin\UserController::class, 'showUsers'])->name('showUsers');
         });
         Route::group(['prefix' => 'event', 'as' => 'event.'], function () {
-            Route::get('/dashboard', [Controllers\Admin\SliderController::class, 'showDashboard'])->name('showDashboard');
-            Route::get('/view-event', [Controllers\Admin\SliderController::class, 'showViewEvent'])->name('showViewEvent');
-            Route::get('/add-event', [Controllers\Admin\SliderController::class, 'showViewAddEvent'])->name('AddEvent');
-            Route::post('/add-event', [Controllers\Admin\SliderController::class, 'AddEvent'])->name('AddEvent');
+            Route::get('/events', [Controllers\Admin\SliderController::class, 'showViewEvent'])->name('showViewEvent');
+            Route::get('/add-event', [Controllers\Admin\SliderController::class, 'showViewAddEvent'])->name('addEvent');
+            Route::post('/add-event', [Controllers\Admin\SliderController::class, 'addEvent'])->name('addEvent');
+            Route::get('/edit-event/{id}', [Controllers\Admin\SliderController::class, 'showViewEditEvent'])->name('editEvent');
+            Route::post('/edit-event/{id}', [Controllers\Admin\SliderController::class, 'editEvent'])->name('editEvent');
+            Route::get('/delete-event/{id}', [Controllers\Admin\SliderController::class, 'deleteEvent'])->name('deleteEvent');
         });
         Route::group(['prefix' => 'city', 'as' => 'city.'], function () {
             Route::get('/cities', [Controllers\Admin\CityController::class, 'showCities'])->name('showCities');
