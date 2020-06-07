@@ -1,0 +1,11 @@
+<script src="{{asset('../resources/assets/js/jquery-v3.5.1.min.js')}}"></script>
+<script src="{{asset('../resources/assets/js/bootstrap-v4.5.min.js')}}"></script>
+<script src="{{asset('../resources/assets/js/easing.js')}}"></script>
+<script src="{{asset('../resources/assets/js/toastr-v2.1.3.min.js')}}"></script>
+<script src="{{asset('../resources/assets/js/dataTables-v1.10.21.min.js')}}"></script>
+<script src="{{asset('../resources/assets/js/dataTables-v1.10.21.bootstrap4.min.js')}}"></script>
+<script src="{{asset('../resources/assets/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{asset('../resources/assets/js/responsive.bootstrap4.min.js')}}"></script>
+<script src="{{asset('../resources/assets/js/admin/admin.min.js')}}"></script>
+<script src="{{asset('../resources/assets/js/admin/admin-2.js')}}"></script>
+<script src="{{asset('../resources/assets/js/admin/admin-3.js')}}"></script>

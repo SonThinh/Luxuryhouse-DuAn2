@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     public function showUsers()
     {
-        $data['memberList'] = User::paginate(6);
+        $data['memberList'] = User::all();
         return view('admin.pages.admin_users', $data);
     }
 }

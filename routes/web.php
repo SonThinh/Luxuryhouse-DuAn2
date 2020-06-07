@@ -79,8 +79,6 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::post('/add-event', [Controllers\Admin\SliderController::class, 'AddEvent'])->name('AddEvent');
         });
         Route::group(['prefix' => 'city', 'as' => 'city.'], function () {
-            Route::get('/dashboard-city', [Controllers\Admin\CityController::class, 'showDashboard'])->name('showDashboard');
-
             Route::get('/cities', [Controllers\Admin\CityController::class, 'showCities'])->name('showCities');
             Route::get('/add-city', [Controllers\Admin\CityController::class, 'showViewAddCities'])->name('addCities');
             Route::post('/add-city', [Controllers\Admin\CityController::class, 'postAddCities'])->name('addCities');
@@ -96,7 +94,6 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('/delete-area/{id}', [Controllers\Admin\CityController::class, 'deleteAreas'])->name('deleteAreas');
         });
         Route::group(['prefix' => 'house', 'as' => 'house.'], function () {
-            Route::get('/dashboard', [Controllers\Admin\HouseController::class, 'showDashboardHouse'])->name('showDashboard');
             Route::get('/house-manage', [Controllers\Admin\HouseController::class, 'showViewHouses'])->name('showViewHouses');
             Route::get('/delete-house/{id}', [Controllers\Admin\HouseController::class, 'deleteHouse'])->name('deleteHouse');
             Route::get('/change-status', [Controllers\Admin\HouseController::class, 'changeStatus'])->name('changeStatus');
@@ -121,6 +118,9 @@ Route::group(['namespace' => 'Admin'], function () {
             Route::get('/trip-type/edit/{id}', [Controllers\Admin\HouseController::class, 'showViewEditTripType'])->name('editTripType');
             Route::post('/trip-type/edit/{id}', [Controllers\Admin\HouseController::class, 'editTripType'])->name('editTripType');
             Route::get('/trip-type/delete/{id}', [Controllers\Admin\HouseController::class, 'deleteTripType'])->name('deleteTripType');
+        });
+        Route::group(['prefix' => 'bill', 'as' => 'bill.'], function () {
+            Route::get('/', [Controllers\Admin\BillController::class, 'showBills'])->name('showBills');
         });
     });
 });
