@@ -16,8 +16,8 @@
                            id="dataTable" width="100%">
                         <thead>
                         <tr>
-                            <th>Biểu tượng</th>
                             <th>Từ khóa</th>
+                            <th>Biểu tượng</th>
                             <th>Icon</th>
                             <th>Tùy chọn</th>
                         </tr>
@@ -25,9 +25,9 @@
                         <tbody>
                         @foreach($utilitiesList as $utility)
                             <tr {{$utility->id}}>
-                                <td>{{$utility->symbol}}</td>
                                 <td>{{$utility->key}}</td>
-                                <td><i class="{{$utility->icon}}"></i></td>
+                                <td>{{$utility->symbol}}</td>
+                                <td><i class="{{$utility->icon}} font-s-36"></i></td>
                                 <td>
                                     <a href="{{route('admin.house.editUtility',[$utility->id])}}">
                                         <button class="btn btn-primary" name="btn-edit"><i

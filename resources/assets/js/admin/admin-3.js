@@ -56,3 +56,19 @@ var loadFile = function (event) {
         reader.readAsDataURL(event.target.files[0]);
     }
 };
+$(function () {
+    $('.toggle-class').change(function () {
+        let h_status = $(this).prop('checked') == true ? 1 : 0;
+        let house_id = $(this).data('id');
+        let url = $(this).data('url');
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: url,
+            data: {status: h_status, id: house_id},
+            success: function (data) {
+                toastr.success(data.success);
+            }
+        });
+    })
+});

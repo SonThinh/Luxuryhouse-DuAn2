@@ -14,6 +14,13 @@ class SearchController extends Controller
 {
     public function searchView(Request $request)
     {
+        $b = explode(" - ", $request->date_search);
+        $c = [
+            'check_in' => $b[0],
+            'check_out' => $b[1]
+        ];
+        dd($c);
+
         if ($request->location != '') {
             $data['cities'] = City::query()->where('name', 'like', '%' . $request->location . '%')->get();
             $data['houses'] = House::query()->where('name', 'like', '%' . $request->location . '%')->paginate(12);

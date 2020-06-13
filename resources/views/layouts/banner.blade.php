@@ -6,27 +6,18 @@
                 <p class="title">Tìm kiếm</p>
                 <form action="{{route('search')}}" method="GET" autocomplete="off">
                     <div class="form-group" style="display: grid;">
-                        <span class="form-label"><i class="fas fa-location"></i> Địa điểm</span>
+                        <label for="search-input" class="form-label"><i class="fas fa-location"></i> Địa điểm</label>
                         <input type="text" class="form-control" id="search-input" name="location"
                                placeholder="Địa điểm cần tìm">
                     </div>
                     <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label><i class="fas fa-arrow-to-right"></i> Check in</label>
-                                <input name="check_in" class="form-control" autocomplete="off" id="check-in"
-                                       placeholder="dd/mm/YY"/>
-                            </div>
-                            <div class="col-md-6">
-                                <label><i class="fas fa-arrow-alt-from-left"></i> Check out</label>
-                                <input name="check_out" class="form-control" autocomplete="off" id="check-out"
-                                       placeholder="dd/mm/YY"/>
-                            </div>
-                        </div>
+                        <label for="date-search" class="form-label"><i class="fal fa-calendar-alt"></i> Lịch trình</label>
+                        <input type="text" name="date_search" class="form-control" autocomplete="off"
+                               id="date-search"/>
                     </div>
                     <div class="form-group ">
-                        <span class="form-label">Số người</span>
-                        <input type="number" class="form-control" min="1" max="30" name="n_person" value="1">
+                        <label for="n_person" class="form-label"><i class="fas fa-users"></i> Số người</label>
+                        <input type="number" class="form-control" min="1" max="30" id="n_person" name="n_person" value="1">
                     </div>
                     <div class="form-btn">
                         <input type="submit"

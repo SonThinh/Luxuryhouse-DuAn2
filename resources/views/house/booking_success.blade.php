@@ -21,7 +21,7 @@
                                 </div>
                             </div>
 
-                            <a href="{{route('users.booking-profile.showProfileBooking',[auth()->user()->id])}}" type="button" class="btn btn-block btn-primary w-50 m-auto">Quản lý đặt chỗ</a>
+                            <a href="{{route('users.dashboard.booking-profile.showProfileBooking',[auth()->user()->id])}}" type="button" class="btn btn-block btn-primary w-50 m-auto">Quản lý đặt chỗ</a>
                         </div>
                     </div>
                     <div class="col-md-4">

@@ -26,58 +26,6 @@ class HostController extends Controller
         return view('cms.host.register_host', $data);
     }
 
-    public function postRegisterHost(RegisterHostRequest $request, $id)
-    {
-        foreach ($request->file('imgIdCard') as $image) {
-            $file_name = 'ID_Card' . '_' . rand() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads'), $file_name);
-            $id_card [] = [
-                'image_name' => $file_name,
-                'image_path' => 'uploads/' . $file_name
-            ];
-        }
-        $host = new Host;
-        $host->m_id = $id;
-        $host->status = 1;
-        $host->ID_card = $request->id_card;
-        $host->ID_card_image = json_encode($id_card);
-        if ($request->business_license) {
-            if ($request->hasFile('imgBL')) {
-                foreach ($request->file('imgBL') as $image) {
-                    $file_name = 'BL' . '_' . rand() . '.' . $image->getClientOriginalExtension();
-                    $image->move(public_path('uploads'), $file_name);
-                    $business_license [] = [
-                        'image_name' => $file_name,
-                        'image_path' => 'uploads/' . $file_name
-                    ];
-                }
-            }
-            $host->business_license = $request->business_license;
-            $host->business_license_image = json_encode($business_license);
-        }
-        $host->save();
-        return back()->withInput()->with('success', 'Đăng ký host thành công!');
-    }
-
-    public function ViewDashboard($id)
-    {
-        $data['host'] = Host::find($id);
-        $data['bookings'] = Bill::query()->where('host_id', $id)->get();
-        $data['houses'] = House::all();
-        $data['users'] = User::all();
-        return view('cms.host.dashboard', $data);
-    }
-
-    public function viewAddHouse($id)
-    {
-        $data['host'] = Host::with(['user'])->find($id);
-        $data['cities'] = City::all();
-        $data['types'] = Type::all();
-        $data['utilities'] = Utility::all();
-        $data['trips'] = Trip::all();
-        return view('cms.host.house.add_house', $data);
-    }
-
     public function selectDistrict(Request $request)
     {
         $areas = District::query()
@@ -87,6 +35,70 @@ class HostController extends Controller
         return response()->json([
             'data' => $areas,
         ]);
+    }
+    public function postRegisterHost(RegisterHostRequest $request, $id)
+    {
+        if ($request->imgIdCard !== 'undefined') {
+            $image = $request->file('imgIdCard');
+            $file_name = 'ID_Card' . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads'), $file_name);
+            $img_card = [
+                'image_name' => $file_name,
+                'image_path' => 'uploads/' . $file_name
+            ];
+            $host = new Host;
+            $host->m_id = $id;
+            $host->status = 1;
+            $host->ID_card = $request->id_card;
+            $host->ID_card_image = json_encode($img_card);
+            if ($request->business_license) {
+                if ($request->imgBL !== 'undefined') {
+                    $image = $request->file('imgBL');
+                    $file_name = 'BL' . '.' . $image->getClientOriginalExtension();
+                    $image->move(public_path('uploads'), $file_name);
+                    $img_business_license = [
+                        'image_name' => $file_name,
+                        'image_path' => 'uploads/' . $file_name
+                    ];
+                }
+                $host->business_license = $request->business_license;
+                $host->business_license_image = json_encode($img_business_license);
+            }
+            $host->save();
+            if ($host) {
+                $memberId = Host::query()->where('m_id',$id)->get();
+                foreach ($memberId as $mid){
+                    return response()->json([
+                        'status' => 'true',
+                        'message' => 'Đăng ký host thành công!',
+                        'url' => route('users.host.showDashboard', $mid),
+                    ]);
+                }
+            } else {
+                return response()->json([
+                    'status' => 'false',
+                    'message' => 'Đăng ký host thất bại! Vui lòng kiểm tra lại thông tin',
+                ]);
+            }
+        } else{
+            return response()->json([
+                'status' => 'false',
+                'message' => 'Vui lòng kiểm tra lại thông tin',
+            ]);
+        }
+    }
+
+    public function ViewDashboard($id)
+    {
+        $data['host'] = Host::find($id);
+        $data['bookings'] = Bill::query()->where('host_id', $id)->get();
+        $data['houses'] = House::query()->where('host_id',$id)->get();
+        $data['users'] = User::all();
+        $data['cities'] = City::all();
+        $data['types'] = Type::all();
+        $data['utilities'] = Utility::all();
+        $data['trips'] = Trip::all();
+        return view('cms.host.dashboard', $data);
     }
 
     public function postAddHouse(HouseRequest $request)
@@ -127,25 +139,27 @@ class HostController extends Controller
         $house->max_guest = $request->max_guest;
         $house->image = json_encode($house_image);
         $house->status = 0;
-        $house->h_status = 0;
+        $house->h_status = 1;
         $house->save();
         return back()->withInput()->with('success', 'Đăng ký nhà thành công! Đợi duyệt!');
     }
 
     public function ViewHouse($id)
     {
+        $data['houses'] = House::query()->where('host_id',$id)->get();
         $data['housesList'] = House::query()->where('host_id', $id)->where('status', 1)->paginate(10);
         $data['house'] = House::with(['city'])->get();
+        $data['cities'] = City::all();
         $data['districts'] = District::with(['city'])->get();
         $data['types'] = Type::all();
-        $data['trip_types'] = Trip::all();
+        $data['trips'] = Trip::all();
         $data['utilities'] = Utility::all();
         $data['bookings'] = Bill::query()->where('host_id', $id)->get();
         $data['host'] = Host::find($id);
         return view('cms.host.house', $data);
     }
 
-    public function changeStatus(Request $request)
+    public function changeHouseStatus(Request $request)
     {
         $house = House::find($request->id);
         $house->h_status = $request->h_status;
@@ -211,9 +225,14 @@ class HostController extends Controller
 
     public function viewBooking($id)
     {
+        $data['cities'] = City::all();
+        $data['host'] = Host::find($id);
         $data['bookings'] = Bill::query()->where('host_id', $id)->get();
         $data['houses'] = House::all();
         $data['users'] = User::all();
+        $data['types'] = Type::all();
+        $data['trips'] = Trip::all();
+        $data['utilities'] = Utility::all();
         return view('cms.host.booking', $data);
     }
 

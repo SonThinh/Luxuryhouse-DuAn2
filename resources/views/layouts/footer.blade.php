@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-lg-2 col-md-12 text-center">
                 <a href="{{route('place')}}">
-                    <img src="{{asset('../resources/assets/home/images/logo/logo.png')}}" class="w-50">
+                    <img src="{{asset('../resources/assets/images/logo/logo.png')}}" class="w-50">
                     <div class="logo-name text-uppercase">
                         <p>Luxury house</p>
                     </div>

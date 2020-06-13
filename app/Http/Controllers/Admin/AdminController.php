@@ -25,7 +25,7 @@ class AdminController extends Controller
 
     public function getViewAdminDashboard()
     {
-        $data['houses'] = House::all();
+        $data['houses'] = House::query()->where('status',1)->get();
         $data['users'] = User::query()->where('level','!=',0)->get();
         $data['cities'] = City::all();
         return view('admin.pages.admin_dashboard',$data);

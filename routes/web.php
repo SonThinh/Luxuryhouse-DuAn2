@@ -21,26 +21,28 @@ Route::group(['prefix' => 'user', 'as' => 'users.', 'middleware' => 'CheckLoginU
     Route::post('/register', [Controllers\HomeController::class, 'postRegister'])->name('register');
 });
 Route::group(['prefix' => 'user', 'as' => 'users.', 'middleware' => 'CheckLogoutUser'], function () {
-    Route::get('/profile/{id}', [Controllers\MemberController::class, 'showProfile'])->name('showProfile');
-    Route::group(['prefix'=>'booking','as'=>'booking-profile.'],function(){
-        Route::get('/{id}', [Controllers\MemberController::class, 'showProfileBooking'])->name('showProfileBooking');
-        Route::get('{id}/filter/{sort}', [Controllers\MemberController::class, 'filterWith'])->name('filterWith');
-        Route::get('/booking-detail/{code}', [Controllers\MemberController::class, 'bookingDetail'])->name('bookingDetail');
+    Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
+        Route::get('/{id}', [Controllers\MemberController::class, 'showDashboard'])->name('showDashboard');
+        Route::group(['prefix' => 'booking', 'as' => 'booking-profile.'], function () {
+            Route::get('/{id}', [Controllers\MemberController::class, 'showProfileBooking'])->name('showProfileBooking');
+            Route::get('/booking-detail/{code}', [Controllers\MemberController::class, 'bookingDetail'])->name('bookingDetail');
+        });
+        Route::get('/delete-booking/{id}', [Controllers\MemberController::class, 'deleteBooking'])->name('deleteBooking');
+        Route::post('/comment/{id}', [Controllers\MemberController::class, 'postComment'])->name('postComment');
+        Route::post('/edit-user/{id}', [Controllers\MemberController::class, 'updateUser'])->name('updateUser');
+        Route::get('/edit-pass/{id}', [Controllers\MemberController::class, 'showViewUpdatePass'])->name('showViewUpdatePass');
+        Route::post('/edit-pass/{id}', [Controllers\MemberController::class, 'updatePass'])->name('updatePass');
+        Route::get('/pay-history/{id}', [Controllers\MemberController::class, 'showViewPayHistory'])->name('showViewPayHistory');
     });
-    Route::get('/delete-booking/{id}', [Controllers\MemberController::class, 'deleteBooking'])->name('deleteBooking');
-    Route::post('/edit-user/{id}', [Controllers\MemberController::class, 'updateUser'])->name('updateUser');
-    Route::get('/edit-pass/{id}', [Controllers\MemberController::class, 'showViewUpdatePass'])->name('showViewUpdatePass');
-    Route::post('/edit-pass/{id}', [Controllers\MemberController::class, 'updatePass'])->name('updatePass');
-    Route::get('/pay-history/{id}', [Controllers\MemberController::class, 'showViewPayHistory'])->name('showViewPayHistory');
     Route::get('/register-host/{id}', [Controllers\HostController::class, 'showViewRegisterHost'])->name('host');
     Route::post('/register-host/{id}', [Controllers\HostController::class, 'postRegisterHost'])->name('host');
+
     Route::group(['prefix' => 'host', 'as' => 'host.'], function () {
-        Route::get('/dashboard/{id}', [App\Http\Controllers\HostController::class, 'ViewDashboard'])->name('showDashboard');
-        Route::get('/dashboard/{id}/add-house', [App\Http\Controllers\HostController::class, 'viewAddHouse'])->name('addHouse');
-        Route::post('/dashboard/{id}/add-house', [App\Http\Controllers\HostController::class, 'postAddHouse'])->name('addHouse');
+        Route::get('/dashboard/{id}', [Controllers\HostController::class, 'ViewDashboard'])->name('showDashboard');
+        Route::post('/dashboard/{id}/add-house', [Controllers\HostController::class, 'postAddHouse'])->name('addHouse');
         Route::post('/select-district', [Controllers\HostController::class, 'selectDistrict'])->name('selectDistrict');
         Route::get('/house/{id}', [Controllers\HostController::class, 'ViewHouse'])->name('ViewHouse');
-        Route::get('/change-status', [Controllers\HostController::class, 'changeStatus'])->name('changeStatus');
+        Route::get('/change-house-status', [Controllers\HostController::class, 'changeHouseStatus'])->name('changeStatus');
         Route::get('/house/{id}/edit', [Controllers\HostController::class, 'ViewEditHouse'])->name('editHouse');
         Route::post('/house/{id}/edit', [Controllers\HostController::class, 'editHouse'])->name('editHouse');
         Route::get('/house/{id}/delete', [Controllers\HostController::class, 'deleteHouse'])->name('deleteHouse');
@@ -54,6 +56,8 @@ Route::group(['prefix' => 'user', 'as' => 'users.', 'middleware' => 'CheckLogout
     });
     Route::get('/booking-complete/{code}', [Controllers\OrderController::class, 'showViewBookingComplete'])->name('showViewBookingComplete');
     Route::get('/pay/{code}', [Controllers\OrderController::class, 'showPayView'])->name('showPayView');
+    Route::get('/pay/{code}', [Controllers\OrderController::class, 'showPayView'])->name('showPayView');
+    Route::get('/comment/house{id}', [Controllers\MemberController::class, 'comment'])->name('comment');
 });
 
 Route::group(['prefix' => 'user', 'as' => 'users.'], function () {
@@ -126,3 +130,5 @@ Route::group(['namespace' => 'Admin'], function () {
         });
     });
 });
+
+

@@ -1,16 +1,17 @@
 @extends('index')
 @section('title','house detail')
 @section('main')
+    <link rel="stylesheet" href="{{asset('../resources/assets/css/slider-jssort101.css')}}">
+    <link rel="stylesheet" href="{{asset('../resources/assets/css/jssort101.css')}}">
+
     <div class="main p-3">
         <div class="container">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{route('place')}}">Địa điểm</a></li>
-                @foreach($cities as $city)
-                    @if($city->id == $house->city_id)
-                        <li class="breadcrumb-item"><a
-                                href="{{route('places.CityDetail',[$city->id])}}">{{$city->name}}</a></li>
-                    @endif
-                @endforeach
+                @if($city->id == $house->city_id)
+                    <li class="breadcrumb-item"><a
+                            href="{{route('places.CityDetail',[$city->id])}}">{{$city->name}}</a></li>
+                @endif
                 <li class="breadcrumb-item active">{{$house->name}}</li>
             </ul>
             @php
@@ -19,18 +20,12 @@
                 $rules = json_decode($house->rules);
             @endphp
             <div class="slide-home text-center">
-                @foreach($images as $image)
-                    <div class="home-slider">
-                        <img src="{{asset($image->image_path)}}" alt="" class="w-100">
-                    </div>
-                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
-                @endforeach
+                @include('house.nav.slider-js',['images'=>$images])
             </div>
             <div class="row house-detail">
                 <div class="col-sm-12 col-md-8 mt-2">
-                    <h2 class="house-name">{{$house->name}}</h2>
-                    <div class="house-detail p-2">
+                    <h2 class="title font-s-28">Thông tin chi tiết {{$house->name}}</h2>
+                    <div class="house-detail p-3">
                         <div class="house-address d-flex">
                             <i class="far fa-map-marker-alt"></i>
                             <p class="ml-1">
@@ -43,16 +38,17 @@
                                 {{$house->city->name}}
                             </p>
                         </div>
-
                         <div class="house-area d-flex">
                             <i class="fal fa-hotel"></i>
-                            <p class="ml-1"><span class="house-type">
+                            <p class="ml-1">
+                                <span class="house-type">
                                 @foreach($types as $type)
                                         @if($type->key == $house->types)
                                             {{$type->name}}
                                         @endif
                                     @endforeach
-                                </span></p>
+                                </span>
+                            </p>
                         </div>
                         <div class="room-detail">
                             <p>{{$house->max_guest}} khách - {{$house->n_room}} phòng ngủ
@@ -68,18 +64,18 @@
                             </div>
                         </div>
                         <h3>Tiện nghi</h3>
-                        <div class="house-facilities p-3">
-                            <div class="d-flex p-1">
+                        <div class="house-facilities p-1">
+                            <ul class="row">
                                 @foreach($utilities_house as $utility_house)
                                     @foreach($utilities as $utility)
                                         @if($utility->key == $utility_house)
-                                            <p class="ml-2">
-                                                <i class="{{$utility->icon}}"></i>
-                                            </p>
+                                            <li class="col-1 p-3">
+                                                <i class="{{$utility->icon}} fa-i-size-27"></i>
+                                            </li>
                                         @endif
                                     @endforeach
                                 @endforeach
-                            </div>
+                            </ul>
                         </div>
                         <div class="house-rules">
                             <h3>
@@ -112,125 +108,113 @@
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-4">
-                    <div class="contact-owner">
-                        @foreach($hosts as $host)
-                            @if($host->id == $house->host_id)
-                                <a href="#" class="d-flex mt-1">
-                                    @php
-                                        $avatar = json_decode($host->user->avatar);
-                                    @endphp
-                                    <img src="
-                                    @isset($avatar)
-                                    {{asset($avatar->image_path)}}
-                                    @else
-                                    {{asset('../resources/assets/home/images/avatar/avatar-default.png')}}
-                                    @endisset
-                                        " alt="Avatar" class="avatar">
-                                    <div class="contact">
-                                        <p class="owner-name">
-                                            @isset($host->user->username)
-                                                {{$host->user->username}}
-                                            @else
-                                                {{$host->user->email}}
-                                            @endisset
-                                        </p>
-                                    </div>
-                                </a>
-                                <p>Tham gia: {{date("d-m-Y",strtotime($host->user->created_at))}}</p>
-                            @endif
-                        @endforeach
-                    </div>
-                    <div class="form-choose-day">
-                        <div class="form-group">
-                            <h3>Chọn lịch trình</h3>
-                            <div class="d-flex">
-                                <input name="checkin" class="form-control" autocomplete="off" id="txtCheckin"
-                                       placeholder="dd/mm/YY"/>
-                                <p class="m-auto">đến</p>
-                                <input name="checkout" class="form-control" autocomplete="off" id="txtCheckout"
-                                       placeholder="dd/mm/YY"/>
-                            </div>
-                        </div>
-                        <div class="house-price">
-                            <h3>Giá phòng</h3>
-                            <p>Giá có thể tăng vào cuối tuần hoặc ngày lễ</p>
-                            <div class="price-detail">
-                                <table class="table">
-                                    <tr>
-                                        <td>Thứ hai - Thứ năm</td>
-                                        <td><span
-                                                style="font-weight: bold;font-size: 35px;">{{$house->price_m_to_t}}₫</span>/đêm
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Thứ sáu - Chủ nhật</td>
-                                        <td><span
-                                                style="font-weight: bold;font-size: 35px;">{{$house->price_f_to_s}}₫</span>/đêm
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Phí khách tăng thêm</td>
-                                        <td><span
-                                                style="font-weight: bold;font-size: 35px;">{{$house->exGuest_fee}}₫</span>/đêm
-                                            (sau {{$house->max_guest}} khách)
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Số đêm tối thiểu</td>
-                                        <td>{{$house->min_night}} đêm</td>
-                                        <input name="max_date" type="hidden"
-                                               value="{{$house->min_night}}"/>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                        @isset($bills)
-                            @foreach($bills as $bill)
-                                @if($bill->status == 1 && $bill->pay == 1)
-                                    @php
-                                        $checkin = date("Y-m-d", strtotime($bill->check_in));
-                                        $checkout = date("Y-m-d", strtotime($bill->check_out));
-                                    @endphp
-                                    <input type="hidden" name="checkin_booked" value="{{$checkin}}">
-                                    <input type="hidden" name="checkout_booked" value="{{$checkout}}">
+                    <div class="contact-booking">
+                        <div class="contact-owner mb-3">
+                            @foreach($hosts as $host)
+                                @if($host->id == $house->host_id)
+                                    <a href="#">
+                                        <div class="row">
+                                            @php
+                                                $avatar = json_decode($host->user->avatar);
+                                            @endphp
+
+                                            <div class="avatar-contact col-sm-3 m-auto">
+                                                <img
+                                                    src="@isset($avatar){{asset($avatar->image_path)}}@else{{asset('../resources/assets/home/images/avatar/avatar-default.png')}}@endisset"
+                                                    alt="Avatar" class="w-100">
+                                            </div>
+
+                                            <div class="contact col-sm-9">
+                                                <p class="owner-name">
+                                                    @isset($host->user->username)
+                                                        {{$host->user->username}}
+                                                    @else
+                                                        {{$host->user->email}}
+                                                    @endisset
+                                                </p>
+                                                <p style="color:black;">Tham
+                                                    gia: {{\Carbon\Carbon::parse($host->user->created_at)->format('d/m/Y')}}</p>
+                                            </div>
+                                        </div>
+                                    </a>
                                 @endif
                             @endforeach
-                        @endisset
-                        <input type="button" id="btn-showPrice"
-                               @isset(auth()->user()->id)
-                               @foreach($hosts as $host)
-                               @if(auth()->user()->host->id == $house->host_id  ) disabled
-                               @endif
-                               @endforeach
-                               @endisset
-                               class="btn btn-block btn-primary" data-toggle="modal"
-                               data-target="#form-order" value="Đặt ngay">
-                        @include('house.nav.form_order_nav')
+                        </div>
+                        <div class="form-choose-day mt-3">
+                            <div class="form-group">
+                                @isset($bills)
+                                    @foreach($bills as $bill)
+                                        @if($bill->status == 1 && $bill->pay == 1)
+                                            <input type="hidden" name="checkin_booked" value="{{$bill->check_in}}">
+                                            <input type="hidden" name="checkout_booked" value="{{$bill->check_out}}">
+                                        @endif
+                                    @endforeach
+                                @endisset
+                                <h3><i class="fal fa-calendar-alt"></i> Chọn lịch trình</h3>
+                                <div class="input-date-house">
+                                    <input type="text" name="date_book" class="form-control" autocomplete="off"
+                                           id="date-book">
+                                    <input type="hidden" name="check_in">
+                                    <input type="hidden" name="check_out">
+                                </div>
+                            </div>
+                            <div class="house-price">
+                                <h3><i class="far fa-sack-dollar"></i> Giá phòng</h3>
+                                <p>Giá có thể tăng vào cuối tuần hoặc ngày lễ</p>
+                                <div class="price-detail">
+                                    <table class="table">
+                                        <tr>
+                                            <td>Thứ hai - Thứ năm</td>
+                                            <td><span
+                                                    style="font-weight: bold;font-size: 35px;">{{$house->price_m_to_t}}₫</span>/đêm
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Thứ sáu - Chủ nhật</td>
+                                            <td><span
+                                                    style="font-weight: bold;font-size: 35px;">{{$house->price_f_to_s}}₫</span>/đêm
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Phí khách tăng thêm</td>
+                                            <td><span
+                                                    style="font-weight: bold;font-size: 35px;">{{$house->exGuest_fee}}₫</span>/đêm
+                                                (sau {{$house->max_guest}} khách)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Số đêm tối thiểu</td>
+                                            <td>{{$house->min_night}} đêm</td>
+                                            <input name="max_date" type="hidden"
+                                                   value="{{$house->min_night}}"/>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            @if(auth()->check())
+                                <input type="button" id="btn-showPrice"
+                                       @foreach($hosts as $host)
+                                       @isset(auth()->user()->host)
+                                       @if(auth()->user()->host->id == $house->host_id  ) disabled @endisset
+                                       @endif
+                                       @endforeach
+                                       class="btn btn-block btn-primary" data-toggle="modal"
+                                       data-target="#form-order" value="Đặt ngay">
+                                @include('house.nav.form_order_nav')
+                            @else
+                                <a type="button" id="btn-showPrice"
+                                   class="btn btn-block btn-primary" href="{{route('users.login')}}">Đặt ngay</a>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="similar-house">
-                <h2 class="title">Chỗ ở tương tự</h2>
-                <div class="row ml-1">
-                    <div class="col-sm-12 col-md-4 home-content">
-                        <a href="home-detail.html"><img src="images/houses/house1/1.png" alt="" class="w-100"></a>
-                        <p class="home-type">Nhà riêng</p>
-                        <a href="home-detail.html"><p class="home-name">Hana house</p></a>
-                        <div class="home">
-                            <div class="home-detail d-flex">
-                                <p>2 khách-1 phòng ngủ-1 phòng tắm</p>
-                            </div>
-                            <p class="home-price">370,000đ/đêm</p>
-                            <p class="home-address">Số 10, ngõ 61 Đường Đào Duy Từ, Phường 3, Thành phố Đà Lạt, Lâm
-                                Đồng
-                            </p>
-                            <div class="home-star"><i class="fas fa-star" style="color: yellow"></i><i
-                                    class="fal fa-star"></i><i
-                                    class="fal fa-star"></i><i class="fal fa-star"></i><i class="fal fa-star"></i></div>
-                        </div>
-                    </div>
-                </div>
+                @include('house.nav.hint_houses')
             </div>
         </div>
     </div>
+    <script src="{{asset('../resources/assets/js/jssor.slider-28.0.0.min.js')}}" type="text/javascript"></script>
+    <script type="text/javascript">jssor_1_slider_init();</script>
 @endsection
+

@@ -19,10 +19,10 @@
                     <div class="form-group">
                         <p>Lịch trình</p>
                         <div class="d-flex">
-                            <input name="check_in" disabled class="form-control"/>
+                            <input name="check_in_nav" disabled class="form-control"/>
                             <input name="check_in_clone" type="hidden" class="form-control"/>
                             <p class="m-auto">đến</p>
-                            <input name="check_out" disabled class="form-control"/>
+                            <input name="check_out_nav" disabled class="form-control"/>
                             <input name="check_out_clone" type="hidden" class="form-control"/>
                         </div>
                     </div>

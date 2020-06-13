@@ -35,12 +35,13 @@ class PlaceController extends Controller
     public function viewHouseDetail($id)
     {
         $data['house'] = House::find($id);
-        $data['cities'] = City::all();
+        $data['city'] = City::find($data['house']->city->id);
         $data['districts'] = District::with(['city'])->get();
         $data['types'] = Type::all();
         $data['utilities'] = Utility::all();
         $data['hosts'] = Host::with(['user'])->get();
         $data['bills'] = Bill::query()->where('h_id', $id)->get();
+        $data['houses_hint'] = House::query()->where('id', '!=', $data['house']->id)->where('city_id',$data['city']->id)->get();
         return view('house.house_detail', $data);
     }
 
