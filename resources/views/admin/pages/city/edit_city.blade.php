@@ -41,9 +41,9 @@
                                       cols="2">{{$city->description}}</textarea>
                         </div>
                     </div>
-                    <div class="d-flex">
+                    <div class="d-grid btn-form-n-btn">
                         <input type="submit" class="btn btn-block btn-primary m-auto" id="btn-city" value="Sửa">
-                        <a href="{{route('admin.city.showCities')}}" type="submit"
+                        <a href="{{route('admin.city.showCities')}}" type="button"
                            class="btn btn-block btn-danger m-auto"
                            id="cancel">Hủy</a>
                     </div>

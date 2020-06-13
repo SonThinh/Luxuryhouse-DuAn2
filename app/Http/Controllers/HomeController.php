@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\House;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Model\City;
 use App\Model\Slider;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        $data['citiesList'] = City::paginate(12);
+        $data['citiesList'] = City::all();
         $data['events'] = Slider::all();
+        $data['houses'] = House::all();
         return view('pages.area', $data);
     }
 
@@ -39,7 +39,7 @@ class HomeController extends Controller
 
     public function postLogin(LoginRequest $request)
     {
-        if ($request->has('remember') && !empty($request->remember)) {
+        if ($request->remember !== 'undefined') {
             $remember_me = true;
         } else {
             $remember_me = false;
@@ -49,14 +49,21 @@ class HomeController extends Controller
             'password' => $request->password,
         ];
         if (Auth::attempt($data, $remember_me)) {
-            return redirect()->route('users.showProfile', [auth()->user()->id]);
+            return response()->json([
+                'status' => 'true',
+                'message' => 'Đăng nhập thành công',
+                'url' => route('users.dashboard.showDashboard', [auth()->user()->id]),
+            ]);
         } else {
-            return back()->withInput()->with('error', 'Tài khoản hoặc mật khẩu không đúng');
+            return response()->json([
+                'status' => 'false',
+                'message' => 'Sai tài khoản hoặc mật khẩu',
+            ]);
         }
     }
 
 
-    public function postRegister(Request $request)
+    public function postRegister(RegisterRequest $request)
     {
         $user = new User;
         $user->email = $request->email;
@@ -64,6 +71,21 @@ class HomeController extends Controller
         $user->password = Hash::make($request->password);
         $user->level = 1;
         $user->save();
-        return back()->withInput()->with('success', 'Tài khoản đăng ký thành công! Mời đăng nhập!');
+        if ($user) {
+            return response()->json([
+                'status' => 'true',
+                'message' => 'Đăng ký thành công! Mời đăng nhập',
+                'url' => route('users.login'),
+                'data' => [
+                    'email' => $request->email,
+                    'password' => $request->phone
+                ]
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'false',
+                'message' => 'Đăng ký thất bại! Vui lòng kiểm tra lại thông tin',
+            ]);
+        }
     }
 }

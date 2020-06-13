@@ -1,31 +1,64 @@
 img {
     object-fit: cover !important;
 }
-.bg-gradient-lux{
+
+.bg-gradient-lux {
     background: rgb(255,255,255);
-    background: linear-gradient(163deg, rgba(255,255,255,1) 0%, rgba(0,125,255,1) 57%, rgba(9,79,121,1) 87%);
+    background: linear-gradient(109deg, rgba(255,255,255,1) 0%, rgba(3,80,163,1) 19%, rgba(3,80,163,1) 8%);
     background-size: cover;
 }
-.w-15{
+
+.w-15 {
     width: 15% !important;
 }
-.form-middle{
+
+.w-40 {
+    width: 40% !important;
+}
+.font-s-36{
+    font-size: 36px !important;
+}
+.d-grid{
+    display: grid;
+}
+.btn-form-n-btn{
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+}
+.form-middle {
     width: 50%;
     margin: auto;
 }
-.blinking-text{
-    animation:blinkingText 1.5s infinite;
+
+.blinking-text {
+    animation: blinkingText 1.5s infinite;
 }
-@keyframes blinkingText{
-    0%{     color: #000;    }
-    49%{    color: #000; }
-    60%{    color: transparent; }
-    99%{    color:transparent;  }
-    100%{   color: #000;    }
+
+@keyframes blinkingText {
+    0% {
+        color: #000;
+    }
+    49% {
+        color: #000;
+    }
+    60% {
+        color: transparent;
+    }
+    99% {
+        color: transparent;
+    }
+    100% {
+        color: #000;
+    }
 }
-.green{
+
+.green {
     color: green !important;
 }
-.red{
+
+.red {
     color: red !important;
+}
+.d-content{
+    display: contents !important;
 }

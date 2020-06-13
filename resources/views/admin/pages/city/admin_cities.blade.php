@@ -18,8 +18,8 @@
                         <tr>
                             <th>Tên địa danh</th>
                             <th>Hình ảnh</th>
-                            <th>Mô tả</th>
                             <th>Tùy chọn</th>
+                            <th>Mô tả</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -29,8 +29,7 @@
                             @endphp
                             <tr {{$city->id}}>
                                 <td>{{$city->name}}</td>
-                                <td class="text-center"><img src="{{asset($image->image_path)}}" alt="" style="width: 50%"></td>
-                                <td>{{$city->description}}</td>
+                                <td class="text-center"><img src="{{asset($image->image_path)}}" alt="" class="w-50"></td>
                                 <td>
                                     <a href="{{route('admin.city.editCities',[$city->id])}}">
                                         <button class="btn btn-primary" name="btn-edit"><i
@@ -42,6 +41,7 @@
                                                 class="far fa-trash-alt"></i></button>
                                     </a>
                                 </td>
+                                <td>{{Str::limit($city->description,100) }}</td>
                             </tr>
                         @endforeach
                         </tbody>

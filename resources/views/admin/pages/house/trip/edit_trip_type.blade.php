@@ -13,9 +13,7 @@
                     <div class="form-group row">
                         <label class="col-sm-4 control-label">Dạng chuyến đi</label>
                         <div class="col-sm-8">
-                            <div class="d-flex">
-                                <input type="text" class="form-control" name="name" value="{{$trip->name}}">
-                            </div>
+                            <input type="text" class="form-control" name="name" value="{{$trip->name}}">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -24,7 +22,7 @@
                             <input type="text" class="form-control" name="key" value="{{$trip->key}}">
                         </div>
                     </div>
-                    <div class="d-flex">
+                    <div class="d-grid btn-form-n-btn">
                         <input type="submit" class="btn btn-block btn-primary m-auto" id="btn-trip-type" value="Sửa">
                         <a href="{{route('admin.house.showViewTripType')}}" type="submit"
                            class="btn btn-block btn-danger m-auto"

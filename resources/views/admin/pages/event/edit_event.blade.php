@@ -39,7 +39,7 @@
                             <input type="text" class="form-control" name="link" value="{{$event->link}}">
                         </div>
                     </div>
-                    <div class="d-flex">
+                    <div class="d-grid btn-form-n-btn">
                         <input type="submit" class="btn btn-block btn-primary m-auto" id="btn-event" value="Thêm">
                         <a href="{{route('admin.event.showViewEvent')}}" type="submit"
                            class="btn btn-block btn-danger m-auto"

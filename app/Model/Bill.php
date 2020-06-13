@@ -24,6 +24,7 @@ class Bill extends Model
         'total',
         'status',
         'pay',
+        'notify',
     ];
     public function house(){
         return $this->belongsTo(House::class,'h_id','id');

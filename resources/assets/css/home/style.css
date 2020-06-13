@@ -2,10 +2,60 @@
 	Author: SonThinh
 	Theme Name: Luxury house
 --*/
+#header {
+    position: fixed;
+    height: auto;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+}
+
 body {
     font-family: "Times New Roman", Times, serif;
     font-size: 18px;
     background-color: #f2f2f2;
+}
+
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background-image: url('http://localhost/Luxuryhouse-DuAn2/resources/assets/images/background/inf.gif');
+    background-repeat: no-repeat;
+    background-color: #FFF;
+    background-position: center;
+}
+
+.scrollbar {
+    background: #F5F5F5;
+    overflow-y: scroll;
+}
+
+#scrollbar::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #F5F5F5;
+}
+
+#scrollbar::-webkit-scrollbar {
+    width: 5px;
+    background-color: #F5F5F5;
+}
+
+#scrollbar::-webkit-scrollbar-thumb {
+    background-color: #F90;
+    background-image: -webkit-linear-gradient(45deg,
+    rgba(255, 255, 255, .2) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, .2) 50%,
+    rgba(255, 255, 255, .2) 75%,
+    transparent 75%,
+    transparent)
 }
 
 header {
@@ -39,12 +89,23 @@ li {
     list-style: none;
 }
 
+img {
+    object-fit: cover !important;
+}
+
+.p-unset {
+    padding: unset !important;
+}
+
 a:hover {
     text-decoration: none;
 }
 
 /*--header--*/
 
+.cl-both {
+    clear: both;
+}
 
 /*--/navigation --*/
 .navbar-light .navbar-brand {
@@ -76,10 +137,6 @@ li.nav-item a {
 
 li.nav-item a:hover {
     color: #ff5722;
-}
-
-li.nav-item {
-    margin: 0 5px;
 }
 
 .navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .nav-link:focus {
@@ -171,10 +228,13 @@ li.nav-item {
     border: 2px solid gray;
     color: gray;
     background-color: white;
-    padding: 8px 20px;
     border-radius: 8px;
     font-size: 20px;
     font-weight: bold;
+}
+
+.add-house .control-label {
+    margin: auto;
 }
 
 /*--//navigation --*/
@@ -187,45 +247,19 @@ li.nav-item {
     box-shadow: 5px 5px 10px 10px rgba(206, 206, 206, 0.5)
 }
 
-/* style inputs and link buttons */
-.login-form .login-input {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 4px;
-    margin: 5px 0;
-    opacity: 0.85;
-    display: inline-block;
-    font-size: 17px;
-    line-height: 20px;
-    text-decoration: none; /* remove underline from anchors */
-}
-
-.login-form input:hover,
-.login-form .btn:hover {
-    opacity: 1;
+.fb:hover, .google:hover {
+    opacity: 0.8;
 }
 
 /* add appropriate colors to fb, twitter and google buttons */
-.login-form .fb {
-    background-color: #3B5998;
+.login-form .fb, .register-form .fb {
+    background-color: #3b5998;
     color: white;
 }
 
-.login-form .google {
-    background-color: #dd4b39;
+.login-form .google, .register-form .google {
+    background-color: #ea4335;
     color: white;
-}
-
-/* style the submit button */
-.login-form input[type=submit] {
-    background-color: #4CAF50;
-    color: white;
-    cursor: pointer;
-}
-
-.login-form input[type=submit]:hover {
-    background-color: #45a049;
 }
 
 /* Two-column layout */
@@ -249,8 +283,8 @@ li.nav-item {
     position: absolute;
     left: 50%;
     transform: translate(-50%);
-    border: 2px solid #ddd;
-    height: 175px;
+    border: 2px solid #b1b1b1;
+    height: 226px;
 }
 
 /* text inside the vertical line */
@@ -286,47 +320,6 @@ li.nav-item {
     box-shadow: 5px 5px 10px 10px rgba(206, 206, 206, 0.5)
 }
 
-/* style inputs and link buttons */
-.register-form .register-input {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 4px;
-    margin: 5px 0;
-    opacity: 0.85;
-    display: inline-block;
-    font-size: 17px;
-    line-height: 20px;
-    text-decoration: none;
-}
-
-.register-form input:hover,
-.register-form .btn:hover {
-    opacity: 1;
-}
-
-/* add appropriate colors to fb, twitter and google buttons */
-.register-form .fb {
-    background-color: #3B5998;
-    color: white;
-}
-
-.register-form .google {
-    background-color: #dd4b39;
-    color: white;
-}
-
-/* style the submit button */
-.register-form input[type=submit] {
-    background-color: #4CAF50;
-    color: white;
-    cursor: pointer;
-}
-
-.register-form input[type=submit]:hover {
-    background-color: #45a049;
-}
-
 /* Two-column layout */
 .register-form .col {
     float: left;
@@ -349,7 +342,7 @@ li.nav-item {
     left: 50%;
     transform: translate(-50%);
     border: 2px solid #ddd;
-    height: 218px;
+    height: 261px;
 }
 
 /* text inside the vertical line */
@@ -388,15 +381,15 @@ li.nav-item {
 /*//register form*/
 /*banner*/
 .banner {
-    background: url("../images/banner/background-HLB.png") no-repeat;
+    background: url("http://localhost/Luxuryhouse-DuAn2/resources/assets/images/background/background-HLB.png") no-repeat;
     background-size: 100%;
 }
 
 .search {
     background-color: #fff;
     padding: 20px 20px;
-    -webkit-box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.3);
-    box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 5px 20px -5px rgba(0, 0, 0, 0.3);
     border-radius: 4px;
 }
 
@@ -517,38 +510,6 @@ li.nav-item {
     color: #ff5722;
 }
 
-.main .card {
-    position: relative;
-    border-radius: 1px;
-}
-
-.main .card img {
-    vertical-align: middle;
-}
-
-.main .card .card-items {
-    position: absolute;
-    bottom: 0;
-    background: rgb(0, 0, 0);
-    background: rgba(0, 0, 0, 0.5);
-    color: #f1f1f1;
-    width: 100%;
-    padding: 0 20px;
-    left: 0;
-    right: 0;
-    overflow: hidden;
-    height: 0;
-    transition: .5s ease;
-}
-
-.main .card:hover .card-items {
-    height: 25%;
-}
-
-.main .card .card-items .card-body {
-    text-align: center;
-}
-
 .main .services img {
     max-height: 200px;
 }
@@ -569,17 +530,84 @@ li.nav-item {
 .main .filter ul {
     padding: 10px;
 }
-.tt-menu .top-list-search{
+
+.top-destination-item {
+    background: #FFF;
+    border: 1px solid #E6E6E6;
+    -webkit-box-shadow: 0px 0px 12px -3px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0px 0px 12px -3px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 0px 12px -3px rgba(0, 0, 0, 0.15);
+    border-bottom: 2px solid #DEDEDE;
+    transition: .5s ease;
+    -webkit-transition: .5s ease;
+    margin: 0 0 20px;
+    padding-top: 1px;
+}
+
+.top-destination-item:hover {
+    -webkit-box-shadow: 0px 0px 12px -3px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0px 0px 12px -3px rgba(0, 0, 0, 0.4);
+    box-shadow: 0px 0px 12px -3px rgba(0, 0, 0, 0.4);
+    border-bottom: 2px solid #ff5722;;
+}
+
+.top-destination-item .img-place {
+    overflow: hidden;
+    margin: 4px 5px 0;
+}
+
+.top-destination-item a {
+    color: #777;
+    display: block;
+}
+
+.top-destination-item a:hover {
+    color: #ff5722;
+    text-decoration: none;
+}
+
+.top-destination-item .content {
+    padding: 17px 5px 12px;
+}
+
+.top-destination-item .content .place {
+    margin: auto;
+}
+
+.top-destination-item .content .place h4 {
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.top-destination-item .content .price {
+    text-align: right;
+    padding-top: 1px;
+}
+
+.top-destination-item .img-place img {
+    transition: all .3s ease-in-out;
+}
+
+.top-destination-item .img-place:hover img {
+    transform: scale(1.15) rotate(5deg);
+    -ms-transform: scale(1.15) rotate(5deg);
+    -ms-transform: scale(1.15) rotate(5deg);
+}
+
+.tt-menu .top-list-search {
     margin: 0 20px 5px 20px;
     padding: 3px 0;
 }
-.tt-menu{
+
+.tt-menu {
     width: 100%;
     background: #cecaca;
 }
-.list-group-item:hover{
+
+.list-group-item:hover {
     cursor: pointer;
 }
+
 .price-slider {
     padding: 10px;
 }
@@ -588,25 +616,25 @@ li.nav-item {
     display: flex;
     margin-top: 10px;
 }
-.price-slider .price-box input{
+
+.price-slider .price-box input {
     text-align: center;
     position: relative;
     padding-right: 23px;
 }
-.price-slider .price-box .left-currency{
+
+.price-slider .price-box .left-currency {
     position: absolute;
     z-index: 1;
     padding: 5px;
     right: 150px;
 }
-.price-slider .price-box .right-currency{
+
+.price-slider .price-box .right-currency {
     position: absolute;
     z-index: 1;
     padding: 5px;
     right: 50px;
-}
-.ui-state-default {
-    border-radius: 20px;
 }
 
 .main .home-content {
@@ -634,68 +662,6 @@ li.nav-item {
 
 .main .home-content .home-address {
     font-size: 16px;
-}
-
-.slide-home .home-slider {
-    display: none;
-}
-
-.slide-home .home-slider img {
-    width: 100%;
-}
-
-.slide-home .prev,
-.slide-home .next {
-    cursor: pointer;
-    position: absolute;
-    top: 80%;
-    width: auto;
-    padding: 10px;
-    margin-top: -50px;
-    font-weight: bold;
-    font-size: 20px;
-}
-
-.slide-home .next {
-    right: 9%;
-    border-radius: 3px 0 0 3px;
-}
-
-.slide-home .prev {
-    left: 9%;
-    border-radius: 3px 0 0 3px;
-}
-
-.slide-home .prev:hover,
-.slide-home .next:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-}
-
-.slide-home .row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-.slide-home .column-thumbnail-image {
-    float: left;
-    width: 16.66%;
-}
-
-.slide-home .thumbnail-image {
-    opacity: 0.6;
-    cursor: pointer;
-    width: 100%;
-}
-
-.slide-home .row-thumbnail-image {
-    width: 100%;
-    margin: auto;
-}
-
-.slide-home .active,
-.slide-home .thumbnail-image:hover {
-    opacity: 1;
 }
 
 .main .house-detail .house-name {
@@ -727,38 +693,54 @@ li.nav-item {
     font-weight: bold;
 }
 
-.contact-owner {
+.contact-booking {
     background: #fff;
     margin-top: 15px;
     padding: 20px;
     border-radius: 10px;
 }
 
-.contact-owner .avatar {
+.contact-booking .contact-owner .avatar-contact {
     vertical-align: middle;
-    width: 50px;
     height: 50px;
-    border-radius: 50%;
+    width: 50px;
 }
 
-.contact-owner .owner-name {
-    margin: 10px;
+.contact-booking .contact-owner .avatar-contact img {
+    border-radius: 50%;
+    transition: all .3s ease-in-out;
+}
+
+.contact-booking .contact-owner .avatar-contact img:hover {
+    border-radius: 50%;
+    transform: scale(1.15) rotate(5deg);
+    -ms-transform: scale(1.15) rotate(5deg);
+    -ms-transform: scale(1.15) rotate(5deg);
+}
+
+.contact-booking .contact-owner .owner-name {
     color: black;
     font-weight: bold;
 }
 
-.contact-owner .owner-name:hover {
+.contact-booking .contact-owner .owner-name:hover {
     color: #ff5722;
     font-weight: bold;
 }
 
-.contact-owner .owner-phone {
+.contact-booking .contact-owner .owner-phone {
     margin: 10px;
     color: black;
 }
 
 .similar-house .title {
     font-size: 28px;
+}
+.font-s-28{
+    font-size: 28px;
+}
+.check-in-time table tbody tr td {
+    border: unset ;
 }
 
 /*main*/
@@ -840,43 +822,57 @@ li.nav-item {
     text-align: center;
 }
 
-.menu-host a {
+.menu-top a {
+    border-radius: 5px 5px 0 0;
     box-sizing: border-box;
     display: inline-block;
-    padding: 15px 25px;
-    color: #ccc;
+    padding: 10px 76px;
+    color: #fff;
     margin-bottom: -1px;
-    margin-left: -1px;
+    background: #ff5722;
+    margin-top: 11px;
 }
 
-.menu-host a:hover {
-    color: #888;
+.menu-top a:hover {
+    opacity: 0.8;
     cursor: pointer;
 }
 
-.menu-host .active {
-    color: #000;
+.menu-top .active {
+    color: #ff5722;;
     background: #fff;
-    border: 1px solid #bbb;
+    border: 1px solid #ff5722;
     border-bottom: 1px solid #fff;
-    border-radius: 5px 5px 0 0;
+    padding: 15px 84px;
+    margin-top: 0 !important;
+    margin-left: 0 !important;
 }
 
-.menu-host .active:after {
+.menu-top .active:after {
     display: block;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    box-shadow: 0 0 0px #939393;
+    box-shadow: 0 0 0 #939393;
 }
 
-.content-host {
-    background: #fff;
-    border-top: 1px solid #bbb;
+.menu-top p:nth-child(2n) {
+    margin-left: 10px;
+}
+
+.menu-top p:nth-child(2n) a.active {
+    padding: 15px 77px;
+}
+
+.content-host, .content-user-profile {
+    border-top: 1px solid #ff5722;
     padding: 15px;
-    display: block;
-    box-shadow: 0 0 15px #939393;
+}
+
+.avatar-profile {
+    background: #f2f2f2f2;
+    margin: auto;
 }
 
 .content-bookingDetail {
@@ -888,11 +884,12 @@ li.nav-item {
     z-index: -2;
     position: relative;
 }
-.content-bottom-bookingDetail{
+
+.content-bottom-bookingDetail {
     background: #fff;
     padding: 15px;
     display: block;
-    box-shadow: 0 0 15px #939393;
+    box-shadow: 0 10px 15px #939393;
 }
 
 .progressbar {
@@ -971,13 +968,6 @@ li.nav-item {
     width: 24%;
 }
 
-.form-choose-day {
-    background: #fff;
-    margin-top: 15px;
-    padding: 20px;
-    border-radius: 10px;
-}
-
 .information-booking {
     background: #fff;
     margin-top: 15px;
@@ -992,9 +982,11 @@ li.nav-item {
 .information-booking a:hover {
     color: #ff5722;
 }
-.detail-booking{
+
+.detail-booking {
     color: black;
 }
+
 .detail-booking:hover {
     color: #ff5722;
 }
@@ -1009,7 +1001,7 @@ li.nav-item {
 
 .sticky-box {
     position: sticky;
-    top: 0;
+    top: 74px;
 }
 
 .complete-booking h2 {
@@ -1046,6 +1038,15 @@ li.nav-item {
     color: white;
     opacity: 0.9;
 }
+.btn-noti{
+    color: #fff;
+    border-color: #f99a57;
+    background-color: #f99a57;
+}
+.btn-noti:hover{
+    opacity: 0.8;
+    color: #fff;
+}
 
 .house-d-booking {
     color: #212529;
@@ -1056,7 +1057,7 @@ li.nav-item {
 }
 
 .pay-booking {
-    color: red;
+    color: red !important;
 }
 
 .pay-booking:hover {
@@ -1074,11 +1075,166 @@ li.nav-item {
 .breadcrumb {
     font-size: 14px;
 }
-.content-top{
+
+.content-top {
     margin: auto;
     padding: 75px;
     background: #fff;
     border-radius: 20px;
+}
+
+.mar-top-0 {
+    margin-top: 0 !important;
+}
+
+.top-nav-menu, .bottom-nav-menu {
+    padding: 15px;
+    border: 1px solid white;
+    border-radius: 12px;
+    margin-left: -14px;
+    background: white;
+}
+
+.profile-detail li:last-child {
+    margin-top: 10px;
+    display: block;
+}
+
+.profile-detail li:first-child {
+    margin-bottom: 10px;
+    display: block;
+}
+
+.profile-detail li {
+    display: flex;
+}
+
+.btn-lux {
+    background-color: #ff5722 !important;
+    border: 1px solid #ff5722 !important;
+    color: #fff;
+}
+
+.btn-pay-profile {
+    background-color: #e6df44 !important;
+    border: 1px solid #e6df44 !important;
+    color: #fff;
+}
+
+.btn-lux:hover {
+    opacity: 0.8;
+    color: #fff;
+}
+
+.btn-pay-profile:hover {
+    opacity: 0.8;
+    color: #fff;
+}
+
+.profile-setting li {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 0.25rem;
+}
+
+.content-user-middle, .content-user-right {
+    background: #fff;
+    margin-left: -14px;
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.notify .content-notify .empty-notify {
+    border: 1px dashed #ff5722;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 10px;
+    text-align: center;
+    color: #ff5722;
+}
+
+.blinking-text {
+    animation: blinkingText 1.5s infinite;
+}
+
+.inf-notify .inf-bill {
+    position: relative;
+    background: #f2f2f2f2;
+    margin: auto;
+    padding: 10px;
+    text-align: center;
+    border-radius: 12px;
+}
+
+.inf-notify .inf-bill label {
+    font-weight: bold;
+}
+
+.inf-notify .inf-bill p {
+    font-size: 16px;
+}
+
+.inf-notify .inf-bill .close-btn-notify {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 5px;
+}
+
+.inf-notify .inf-bill .close-btn-notify:hover {
+    opacity: 0.8;
+}
+
+@keyframes blinkingText {
+    0% {
+        color: #000;
+    }
+    49% {
+        color: transparent;
+    }
+    50% {
+        color: transparent;
+    }
+    99% {
+        color: transparent;
+    }
+    100% {
+        color: #000;
+    }
+}
+
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
+}
+
+.d-grid {
+    display: grid;
+}
+
+.btn-form-n-btn {
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+}
+
+.image-house {
+    white-space: unset !important;
+}
+
+.w-32 {
+    width: 32% !important;
+}
+
+.form-choose-day .input-date-house input {
+    border: unset !important;
+    text-align: center;
+}
+
+.fa-i-size-27 {
+    font-size: 27px;
 }
 
 /*-- footer --*/
@@ -1161,7 +1317,7 @@ footer .follow-us #ins i:hover {
     height: 40px;
     border: none;
     text-indent: 100%;
-    background: url(../images/button/arr.png) no-repeat 0px 0px;
+    background: url(http://localhost/Luxuryhouse-DuAn2/resources/assets/images/button/arr.png) no-repeat 0px 0px;
 }
 
 #toTopHover {
@@ -1251,6 +1407,12 @@ footer .follow-us #ins i:hover {
 }
 
 @media (max-width: 768px) {
+    footer .logo-bottom {
+        width: 30% !important;
+    }
+
+    footer .follow-us li {
+    }
 }
 
 @media (max-width: 736px) {

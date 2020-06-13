@@ -10,10 +10,11 @@
                 <div class="col-md-3">
                     @include('layouts.search_nav_left_search')
                 </div>
+
                 <div class="col-md-9 content">
                     <div class="d-inline-block w-100">
                         <h2 class="float-left">{{count($houses)}} homestay
-                            @isset($cities) @if($cities->count() != 0 ) @foreach($cities as $city) {{$city->name}} @endforeach @else @endif @endisset</h2>
+                            @isset($cities) @if($cities->count() != 0 ) @foreach($cities as $city) tại {{$city->name}} @endforeach @endif @else tại Luxury House @endisset</h2>
                     </div>
                     <div class="row ml-1 mt-2">
                         @foreach($houses as $house)

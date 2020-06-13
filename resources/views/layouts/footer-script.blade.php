@@ -1,0 +1,17 @@
+<script type="text/javascript" src="{{asset('../resources/assets/js/jquery-v3.5.1.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('../resources/assets/js/jquery-UI-v1.12.1.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('../resources/assets/js/dataTables-v1.10.21.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('../resources/assets/js/dataTables-v1.10.21.bootstrap4.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('../resources/assets/js/dataTables.responsive.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('../resources/assets/js/responsive.bootstrap4.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('../resources/assets/js/popper.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('../resources/assets/js/bootstrap-v4.5.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('../resources/assets/js/moment.js')}}"></script>
+<script type="text/javascript" src="{{asset('../resources/assets/js/move-top.js')}}"></script>
+<script type="text/javascript" src="{{asset('../resources/assets/js/easing.js')}}"></script>
+<script type="text/javascript" src="{{asset('../resources/assets/js/toastr-v2.1.3.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('../resources/assets/js/typeahead.js')}}"></script>
+<script type="text/javascript" src="{{asset('../resources/assets/js/toggle-bt4.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('../resources/assets/js/daterangepicker.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('../resources/assets/js/home/script.js')}}"></script>
+<script type="text/javascript" src="{{asset('../resources/assets/js/home/script-form.js')}}"></script>

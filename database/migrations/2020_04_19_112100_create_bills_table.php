@@ -27,6 +27,7 @@ class CreateBillsTable extends Migration
             $table->integer('total');
             $table->tinyInteger('status');
             $table->tinyInteger('pay');
+            $table->tinyInteger('notify');
             $table->timestamps();
         });
     }

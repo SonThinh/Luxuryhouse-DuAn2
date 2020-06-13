@@ -208,6 +208,7 @@ class HouseController extends Controller
         $data['district'] = District::with(['city'])->get();
         $data['types'] = Type::all();
         $data['trip_types'] = Trip::all();
+        $data['utilities'] = Utility::all();
         return view('admin.pages.house.houses', $data);
     }
 
@@ -223,6 +224,7 @@ class HouseController extends Controller
         $house->status = $request->status;
         $house->save();
         return response()->json(['success' => 'Đổi trạng thái thành công.']);
+
     }
 
 }

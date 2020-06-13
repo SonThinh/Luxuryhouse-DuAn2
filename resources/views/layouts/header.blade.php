@@ -1,10 +1,10 @@
-<header>
+<header id="header">
     <div class="top-nav">
         <div class="container-fluid">
             <nav class="navbar navbar-expand-lg navbar-light">
                 <a href="{{route('place')}}">
                     <div class="logo d-flex">
-                        <img src="{{asset('../resources/assets/home/images/logo/logo.png')}}">
+                        <img src="{{asset('../resources/assets/images/logo/logo.png')}}">
                         <div class="logo-name text-uppercase ml-1 mt-2 d-block">
                             <p>Luxury<br>house</p>
                         </div>
@@ -15,45 +15,30 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse justify-content-center pr-md-4" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->segment(1) == 'place') ? 'active' : '' }}"
-                               href="{{route('place')}}"><span>Địa điểm</span></a>
+                               href="@if((request()->segment(1) == 'place')) javascript:void(0) @else {{route('place')}} @endif"><span>Địa điểm</span></a>
                         </li>
                         @if(Auth::check())
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   href="@if((request()->segment(2) == 'dashboard')) javascript:void(0) @else {{route('users.dashboard.showDashboard',[auth()->user()->id])}} @endif">
                                     @php
                                         $image = json_decode(auth()->user()->avatar);
                                     @endphp
-                                    @isset($image)
-                                        <img src="{{asset($image->image_path)}}" class="avatar" alt="">
-                                    @else
-                                        <img
-                                            src="{{asset('../resources/assets/home/images/avatar/avatar-default.png')}}"
-                                            class="avatar" alt="">
-                                    @endisset
-                                    <span>{{isset(auth()->user()->username) ? auth()->user()->username : auth()->user()->email}}</span>
-                                    <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="{{route('users.showProfile',[auth()->user()->id])}}"><i
-                                                class="fal fa-id-card"></i> Hồ sơ cá nhân</a></li>
-                                    <li><a href="{{route('users.logout')}}"><i class="fal fa-sign-out-alt"></i> Đăng
-                                            xuất</a></li>
-                                </ul>
+                                    <img
+                                        src="{{isset($image) ? asset($image->image_path) : asset('../resources/assets/images/avatar/avatar-default.png')}}"
+                                        class="avatar" alt="">
+                                    <span>{{isset(auth()->user()->name) ? auth()->user()->name : auth()->user()->email}}</span>
+                                    <b class="caret"></b>
+                                </a>
                             </li>
-                            @isset(auth()->user()->host)
-                                <li class="nav-item">
-                                    <a class="nav-link {{ (request()->segment(2) == 'host') ? 'active' : '' }}"
-                                       href="{{route('users.host.showDashboard',[auth()->user()->host->id])}}"><span>Host</span></a>
-                                </li>
-                            @else
-                                <li class="nav-item host">
-                                    <a href="{{route('users.host',[auth()->user()->id])}}" type="submit"
-                                       class="btn btn-block btn-host">Host</a>
-                                </li>
-                            @endisset
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('users.logout')}}"><span><i
+                                            class="fal fa-sign-out-alt"></i> Đăng xuất</span></a>
+                            </li>
                         @else
                             <li class="nav-item">
                                 <a class="nav-link {{ (request()->segment(2) == 'login') ? 'active' : '' }}"

@@ -16,6 +16,7 @@
                            id="dataTable" width="100%">
                         <thead>
                         <tr>
+                            <th>STT</th>
                             <th>Tên khu vực</th>
                             <th>Tên tỉnh thành</th>
                             <th>Tùy chọn</th>
@@ -23,7 +24,8 @@
                         </thead>
                         <tbody>
                         @foreach($areaList as $area)
-                            <tr {{$area->id}}>
+                            <tr>
+                                <td>{{$area->id}}</td>
                                 <td>{{$area->name}}</td>
                                 <td>{{$area->city->name}}</td>
                                 <td>

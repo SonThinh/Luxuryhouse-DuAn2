@@ -33,7 +33,7 @@
                         @foreach($housesList as $house)
                             @php
                                 $images = json_decode($house->image);
-                                $utilities = json_decode($house->utilities);
+                                $utilities_house = json_decode($house->utilities);
                                 $rules = json_decode($house->rules);
                             @endphp
                             <tr {{$house->id}}>
@@ -47,7 +47,7 @@
                                     @endif
                                 @endforeach
                                 <td>{{$house->name}}</td>
-                                <td class="text-center w-75">
+                                <td class="text-center d-content w-75">
                                     @foreach($images as $image)
                                         <img src="{{asset($image->image_path)}}" alt="" width="25%">
                                     @endforeach
@@ -58,9 +58,18 @@
                                             {{$d->name}}
                                         @endif
                                     @endforeach
-                                    ,{{$house->city->name}}</td>
+                                    ,{{$house->city->name}}
+                                </td>
                                 <td>
-                                    @if($book->status === 1)
+                                    <input data-id="{{$house->id}}"
+                                           data-url="{{route('admin.house.changeStatus')}}"
+                                           class="toggle-class" type="checkbox"
+                                           data-onstyle="success" data-offstyle="danger" data-toggle="toggle"
+                                           data-on="Mở" data-off="Khóa"
+                                        {{ $house->status ? 'checked' : '' }}>
+                                </td>
+                                <td>
+                                    @if($house->h_status === 1)
                                         <p class="green">
                                             <i class="far fa-check"></i> Đang hoạt động
                                         </p>
@@ -70,14 +79,6 @@
                                             Ngừng hoạt động
                                         </p>
                                     @endif
-                                </td>
-                                <td>
-                                    <input data-id="{{$house->id}}"
-                                           data-url="{{route('admin.house.changeStatus')}}"
-                                           class="toggle-class" type="checkbox"
-                                           data-onstyle="success" data-offstyle="danger" data-toggle="toggle"
-                                           data-on="Mở" data-off="Khóa"
-                                        {{ $house->status ? 'checked' : '' }}>
                                 </td>
                                 <td>
                                     <a href="{{route('admin.house.deleteHouse',[$house->id])}}"
@@ -116,12 +117,16 @@
                                 <td>
                                     Thứ 2-5: {{$house->price_m_to_t}}đ<br>
                                     Thứ 6-cn: {{$house->price_f_to_s}}đ<br>
-                                    Giá khách thêm: {{$house->exGuest}}đ<br>
+                                    Giá khách thêm: {{$house->exGuest_fee}}đ<br>
                                     Số đêm tối thiểu: {{$house->min_night}}
                                 </td>
                                 <td>
                                     @foreach($utilities as $utility)
-                                        {{$utility}},
+                                        @foreach($utilities_house as $utility_house)
+                                            @if($utility->key === $utility_house)
+                                                {{$utility->symbol}},
+                                            @endif
+                                        @endforeach
                                     @endforeach
                                 </td>
                             </tr>

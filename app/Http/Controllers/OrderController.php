@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Host;
 use App\House;
+use App\Mail\SendPaySuccess;
 use App\Model\Bill;
 use App\Model\City;
 use App\Model\District;
@@ -45,6 +46,7 @@ class OrderController extends Controller
         $bill->total = $request->total;
         $bill->status = 0;
         $bill->pay = 0;
+        $bill->notify = 1;
         $bill->save();
         $data = [
             'n_person' => $request->n_person,
@@ -79,14 +81,25 @@ class OrderController extends Controller
         return view('house.booking_success', $data);
     }
 
+    public function sendPay($data)
+    {
+        $email = [
+            $data['email'],
+            'pst269@gmail.com'
+        ];
+        Mail::to($email)->send(new SendPaySuccess($data));
+    }
     public function showPayView($code)
     {
         $bills = Bill::query()->where('code', $code)->get();
         foreach ($bills as $bill) {
             $bill->pay = 1;
             $bill->save();
+            $user = User::find($bill->guest_id);
+            $data['email'] = $user->email;
         }
         $data['code'] = $code;
+        $this->sendPay($data);
         return view('cms.member.pay_success', $data);
     }
 }
