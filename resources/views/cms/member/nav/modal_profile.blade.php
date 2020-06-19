@@ -20,7 +20,7 @@
                             <input name="avatar" type="file" accept="image/*" onchange="loadFile(event)"
                                    class="d-none">
                             @isset($image)
-                                <img id="img-old" src="{{asset($image->image_path)}}" alt=""
+                                <img id="img-old" src="{{asset($image->image_path)}}" alt="avatar"
                                      style="width: 25%"/>
                                 <img id="output" alt=""
                                      style="width: 50%;"/>

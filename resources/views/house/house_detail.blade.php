@@ -83,11 +83,11 @@
                             </h3>
                             <div class="cance p-2">
                                 <h4>Chính sách hủy phòng</h4>
-                                <p>{{$rules->cancel_rule}}</p>
+                                <p class="p-2">{{$rules->cancel_rule}}</p>
                             </div>
                             <div class="attention p-2">
                                 <h4>Lưu ý</h4>
-                                <p>
+                                <p class="p-2">
                                     {{$rules->attention}}
                                 </p>
                             </div>
@@ -121,13 +121,13 @@
                                             <div class="avatar-contact col-sm-3 m-auto">
                                                 <img
                                                     src="@isset($avatar){{asset($avatar->image_path)}}@else{{asset('../resources/assets/home/images/avatar/avatar-default.png')}}@endisset"
-                                                    alt="Avatar" class="w-100">
+                                                    alt="Avatar" class="w-100 h-55" >
                                             </div>
 
                                             <div class="contact col-sm-9">
                                                 <p class="owner-name">
-                                                    @isset($host->user->username)
-                                                        {{$host->user->username}}
+                                                    @isset($host->user->name)
+                                                        {{$host->user->name}}
                                                     @else
                                                         {{$host->user->email}}
                                                     @endisset
@@ -141,17 +141,17 @@
                             @endforeach
                         </div>
                         <div class="form-choose-day mt-3">
-                            <div class="form-group">
+                            <div>
                                 @isset($bills)
                                     @foreach($bills as $bill)
                                         @if($bill->status == 1 && $bill->pay == 1)
-                                            <input type="hidden" name="checkin_booked" value="{{$bill->check_in}}">
-                                            <input type="hidden" name="checkout_booked" value="{{$bill->check_out}}">
+                                            <input type="hidden" name="checkin_booked[]" value="{{$bill->check_in}}">
+                                            <input type="hidden" name="checkout_booked[]" value="{{$bill->check_out}}">
                                         @endif
                                     @endforeach
                                 @endisset
-                                <h3><i class="fal fa-calendar-alt"></i> Chọn lịch trình</h3>
-                                <div class="input-date-house">
+                                <div class="input-date-house mt-3">
+                                    <h3><i class="fal fa-calendar-alt"></i> Chọn lịch trình</h3>
                                     <input type="text" name="date_book" class="form-control" autocomplete="off"
                                            id="date-book">
                                     <input type="hidden" name="check_in">
@@ -209,8 +209,15 @@
                     </div>
                 </div>
             </div>
-            <div class="similar-house">
+            <div class="similar-house mb-4">
                 @include('house.nav.hint_houses')
+            </div>
+            <div class="similar-house my-4">
+                @foreach($hosts as $host)
+                    @if($host->id == $house->host_id)
+                        @include('house.nav.same_host',['host'=>$host])
+                    @endif
+                @endforeach
             </div>
         </div>
     </div>

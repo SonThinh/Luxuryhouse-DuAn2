@@ -37,19 +37,11 @@
                                 $rules = json_decode($house->rules);
                             @endphp
                             <tr {{$house->id}}>
-                                @foreach($host as $h)
-                                    @if($h->id == $house->host_id)
-                                        @isset($h->user->username)
-                                            <td>{{$h->user->username}}</td>
-                                        @else
-                                            <td>{{$h->user->email}}</td>
-                                        @endisset
-                                    @endif
-                                @endforeach
+                                <td>{{isset($house->host->user->name) ? $house->host->user->name : $house->host->user->email}}</td>
                                 <td>{{$house->name}}</td>
                                 <td class="text-center d-content w-75">
                                     @foreach($images as $image)
-                                        <img src="{{asset($image->image_path)}}" alt="" width="25%">
+                                        <img src="{{asset($image->image_path)}}" alt="" width="25%" height="50px">
                                     @endforeach
                                 </td>
                                 <td>{{$house->address}},

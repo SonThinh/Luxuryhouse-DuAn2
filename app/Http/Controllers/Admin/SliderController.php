@@ -23,13 +23,13 @@ class SliderController extends Controller
 
     public function addEvent(EventRequest $request)
     {
-        if ($request->image_event !== 'undefined'){
+        if ($request->image_event !== 'undefined') {
             $image = $request->file('image_event');
             $file_name = $request->key . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads'), $file_name);
+            $image->move(public_path('uploads/event/' . $request->key), $file_name);
             $data = [
                 'image_name' => $file_name,
-                'image_path' => 'uploads/' . $file_name
+                'image_path' => 'uploads/event/' . $request->key . '/' . $file_name
             ];
             $event = new Slider();
             $event->types = $request->key;
@@ -54,6 +54,7 @@ class SliderController extends Controller
             ]);
         }
     }
+
     public function showViewEditEvent($id)
     {
         $data['event'] = Slider::find($id);
@@ -67,11 +68,11 @@ class SliderController extends Controller
         $event->link = $request->link;
         if ($request->image_event !== 'undefined') {
             $image = $request->file('image_event');
-            $file_name = $request->city_name . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads'), $file_name);
+            $file_name = $request->key . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/event/' . $request->key), $file_name);
             $data = [
                 'image_name' => $file_name,
-                'image_path' => 'uploads/' . $file_name
+                'image_path' => 'uploads/event/' . $request->key . '/' . $file_name
             ];
             $event->image = json_encode($data);
         }

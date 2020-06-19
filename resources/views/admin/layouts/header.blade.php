@@ -38,8 +38,7 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Quản lý tài khoản:</h6>
                     <a class="collapse-item" href="{{route('admin.user.showUsers')}}">Member</a>
-                    <a class="collapse-item" href="#">Host</a>
-                    <a class="collapse-item" href="#">Phân quyền</a>
+                    <a class="collapse-item" href="{{route('admin.host.showHosts')}}">Host</a>
                 </div>
             </div>
         </li>

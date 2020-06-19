@@ -20,8 +20,8 @@
                 <tr {{$bill->id}}>
                     <td>{{$bill->code}}</td>
                     <td>{{$bill->house->name}}</td>
-                    <td>@isset($bill->user->username){{$bill->user->username}}@else{{$bill->user->email}}@endisset</td>
-                    <td>@isset($bill->host->username) {{$bill->host->username}}@else {{$bill->host->email}}@endisset</td>
+                    <td>@isset($bill->user->name){{$bill->user->name}}@else{{$bill->user->email}}@endisset</td>
+                    <td>@isset($bill->host->user->name) {{$bill->host->user->name}}@else {{$bill->host->user->email}}@endisset</td>
                     <td>{{$bill->total}}đ</td>
                     <td>
                         {{date("d-m-Y h:m:i",strtotime($bill->updated_at))}}

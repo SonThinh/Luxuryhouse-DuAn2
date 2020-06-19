@@ -14,7 +14,7 @@
         <li>
             <label class="mr-1"><i class="fas fa-user-shield"></i> Host:</label>
             <p>
-                @isset($user->host) Đã đăng ký @else Chưa đăng ký @endisset
+                @isset($user->host) @if($user->host->status === 1) Đã đăng ký @endif @else Chưa đăng ký @endisset
             </p>
         </li>
         <li>

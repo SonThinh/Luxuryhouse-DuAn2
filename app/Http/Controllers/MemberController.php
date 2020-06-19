@@ -23,13 +23,15 @@ class MemberController extends Controller
         return view('cms.member.member_dashboard', $data);
     }
 
-    public function bookingDetail($code)
+    public function bookingDetail($id, $code)
     {
         $data['bookings'] = Bill::query()->where('code', $code)->get();
         $data['houses'] = House::all();
         $data['cities'] = City::all();
         $data['districts'] = District::with(['city'])->get();
         $data['comments'] = Comment::all();
+        $data['user'] = User::find($id);
+
         return view('cms.member.booking_detail', $data);
     }
 
@@ -56,13 +58,14 @@ class MemberController extends Controller
         if ($request->avatar !== 'undefined') {
             $image = $request->file('avatar');
             $file_name = 'user' . $id . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads'), $file_name);
+            $image->move(public_path('uploads/member/' . $id), $file_name);
             $data = [
                 'image_name' => $file_name,
-                'image_path' => 'uploads/' . $file_name
+                'image_path' => 'uploads/member/' . $id . '/' . $file_name
             ];
             $user->avatar = json_encode($data);
         }
+
         $user->save();
 
         if ($user) {

@@ -37,7 +37,7 @@ class House extends Model
         'min_night',
     ];
     public function host(){
-        return $this->belongsTo(House::class,'host_id','id');
+        return $this->belongsTo(Host::class,'host_id','id');
     }
     public function city(){
         return $this->belongsTo(City::class,'city_id','id');
