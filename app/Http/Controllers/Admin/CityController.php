@@ -32,10 +32,10 @@ class CityController extends Controller
         if ($request->image_city !== 'undefined') {
             $image = $request->file('image_city');
             $file_name = $request->city_name . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads'), $file_name);
+            $image->move(public_path('uploads/city/' . $request->city_name), $file_name);
             $data = [
                 'image_name' => $file_name,
-                'image_path' => 'uploads/' . $file_name
+                'image_path' => 'uploads/city/' . $request->city_name . '/' . $file_name
             ];
             $cities = new City;
             $cities->name = $request->city_name;
@@ -69,10 +69,10 @@ class CityController extends Controller
         if ($request->image_city !== 'undefined') {
             $image = $request->file('image_city');
             $file_name = $request->city_name . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads'), $file_name);
+            $image->move(public_path('uploads/city/' . $request->city_name), $file_name);
             $data = [
                 'image_name' => $file_name,
-                'image_path' => 'uploads/' . $file_name
+                'image_path' => 'uploads/city/' . $request->city_name . '/' . $file_name
             ];
             $cities->image = json_encode($data);
         }

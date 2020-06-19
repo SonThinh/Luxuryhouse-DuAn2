@@ -25,7 +25,7 @@ Route::group(['prefix' => 'user', 'as' => 'users.', 'middleware' => 'CheckLogout
         Route::get('/{id}', [Controllers\MemberController::class, 'showDashboard'])->name('showDashboard');
         Route::group(['prefix' => 'booking', 'as' => 'booking-profile.'], function () {
             Route::get('/{id}', [Controllers\MemberController::class, 'showProfileBooking'])->name('showProfileBooking');
-            Route::get('/booking-detail/{code}', [Controllers\MemberController::class, 'bookingDetail'])->name('bookingDetail');
+            Route::get('/user/{id}/booking-detail/{code}', [Controllers\MemberController::class, 'bookingDetail'])->name('bookingDetail');
         });
         Route::get('/delete-booking/{id}', [Controllers\MemberController::class, 'deleteBooking'])->name('deleteBooking');
         Route::post('/comment/{id}', [Controllers\MemberController::class, 'postComment'])->name('postComment');
@@ -43,9 +43,7 @@ Route::group(['prefix' => 'user', 'as' => 'users.', 'middleware' => 'CheckLogout
         Route::post('/select-district', [Controllers\HostController::class, 'selectDistrict'])->name('selectDistrict');
         Route::get('/house/{id}', [Controllers\HostController::class, 'ViewHouse'])->name('ViewHouse');
         Route::get('/change-house-status', [Controllers\HostController::class, 'changeHouseStatus'])->name('changeStatus');
-        Route::get('/house/{id}/edit', [Controllers\HostController::class, 'ViewEditHouse'])->name('editHouse');
         Route::post('/house/{id}/edit', [Controllers\HostController::class, 'editHouse'])->name('editHouse');
-        Route::get('/house/{id}/delete', [Controllers\HostController::class, 'deleteHouse'])->name('deleteHouse');
         Route::get('/house/{id}/delete', [Controllers\HostController::class, 'deleteHouse'])->name('deleteHouse');
         Route::get('/booking/{id}', [Controllers\HostController::class, 'viewBooking'])->name('viewBooking');
         Route::get('/change-booking', [Controllers\HostController::class, 'changeStatusBooking'])->name('changeStatusBooking');
@@ -127,6 +125,10 @@ Route::group(['namespace' => 'Admin'], function () {
         });
         Route::group(['prefix' => 'bill', 'as' => 'bill.'], function () {
             Route::get('/', [Controllers\Admin\BillController::class, 'showBills'])->name('showBills');
+        });
+        Route::group(['prefix' => 'host', 'as' => 'host.'], function () {
+            Route::get('/', [Controllers\Admin\UserController::class, 'showHosts'])->name('showHosts');
+            Route::get('/change-status', [Controllers\Admin\UserController::class, 'changeStatus'])->name('changeStatus');
         });
     });
 });

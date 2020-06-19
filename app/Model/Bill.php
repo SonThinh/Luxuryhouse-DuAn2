@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\Host;
 use App\House;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
@@ -34,6 +35,6 @@ class Bill extends Model
         return $this->belongsTo(User::class,'guest_id','id');
     }
     public function host(){
-        return $this->belongsTo(User::class,'host_id','id');
+        return $this->belongsTo(Host::class,'host_id','id');
     }
 }

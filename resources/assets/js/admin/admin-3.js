@@ -72,3 +72,19 @@ $(function () {
         });
     })
 });
+$(function () {
+    $('.change-host').change(function () {
+        let host_status = $(this).prop('checked') == true ? 1 : 0;
+        let host_id = $(this).data('id');
+        let url = $(this).data('url');
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            url: url,
+            data: {status: host_status, id: host_id},
+            success: function (data) {
+                toastr.success(data.success);
+            }
+        });
+    })
+});

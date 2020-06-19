@@ -26,13 +26,15 @@
             @foreach($bookings as $booking)
                 <tr {{$booking->id}}>
                     <td><a class="house-d-booking"
-                           href="{{route('users.dashboard.booking-profile.bookingDetail',[$booking->code])}}">{{$booking->code}}</a>
+                           href="{{route('users.dashboard.booking-profile.bookingDetail',['id'=>$booking->user->id,'code'=>$booking->code])}}">{{$booking->code}}</a>
                     </td>
                     <td><a class="house-d-booking"
                            href="{{route('places.HouseDetail',[$booking->house->id])}}">{{$booking->house->name}}</a>
                     </td>
-                    <td>@if($booking->pay == 0)
-                            <a class="pay-booking" href="{{route('users.showPayView',[$booking->code])}}">Chưa
+                    <td>
+                        @if($booking->pay === 0)
+                            <a class="pay-booking"
+                               href="@if($booking->status === 1){{route('users.showPayView',[$booking->code])}} @else javascript:void(0) @endif">Chưa
                                 thanh toán</a>
                         @else
                             <p style="color:green;">
@@ -44,7 +46,7 @@
                     <td>
                         {{\Carbon\Carbon::parse($booking->created_at)->format('d/m/Y h:m:i')}}
                     </td>
-                    <td>@if($booking->status == 0)
+                    <td>@if($booking->status === 0)
                             <p style="color:red;">
                                 Chưa đồng ý
                             </p>
@@ -56,7 +58,7 @@
                         @endif
                     </td>
                     <td>
-                        @if($booking->status == 0)
+                        @if($booking->status === 0)
                             <a
                                 style="margin-top: 5px"
                                 onclick="return confirm('Bạn có muốn xóa không?')">

@@ -23,7 +23,7 @@
                     <td>{{$house->name}}</td>
                     <td class="image-house">
                         @foreach($images as $image)
-                            <img src="{{asset($image->image_path)}}" alt="" class="w-32">
+                            <img src="{{asset($image->image_path)}}" alt="" class="w-32" style="height: 65px">
                         @endforeach
                     </td>
                     <td>
@@ -36,14 +36,13 @@
                             {{ $house->h_status ? 'checked' : '' }}>
                     </td>
                     <td>
-                        <a href="{{route('users.host.editHouse',[$house->id])}}">
-                            <button class="btn btn-primary" name="btn-edit"><i
-                                    class="far fa-edit"></i></button>
+                        <a href="#" data-toggle="modal" data-target="#form-edit-house" class="btn btn-primary"
+                           name="btn-edit">
+                            <i class="far fa-edit"></i>
                         </a>
                         <a href="{{route('users.host.deleteHouse',[$house->id])}}"
-                           onclick="return confirm('Bạn có muốn xóa không?')">
-                            <button class="btn btn-danger" name="btn-delete"><i
-                                    class="far fa-trash-alt"></i></button>
+                           onclick="return confirm('Bạn có muốn xóa không?')" class="btn btn-danger" name="btn-delete">
+                            <i class="far fa-trash-alt"></i>
                         </a>
                     </td>
                     <td>
@@ -59,5 +58,7 @@
             @endforeach
             </tbody>
         </table>
-    </div>
+    @foreach($housesList as $house)
+        @include('cms.host.house.edit_house',['house'=>$house])
+    @endforeach
 @endsection

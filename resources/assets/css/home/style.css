@@ -90,6 +90,8 @@ li {
 }
 
 img {
+    max-width: 100%;
+    height: auto;
     object-fit: cover !important;
 }
 
@@ -205,6 +207,7 @@ li.nav-item a:hover {
     width: 30px;
     height: 30px;
     border-radius: 50%;
+    display: unset;
 }
 
 .btn-register-host {
@@ -498,9 +501,6 @@ li.nav-item a:hover {
 
 /*banner*/
 /*main*/
-.main {
-
-}
 
 .main .title {
     font-size: 22px;
@@ -564,6 +564,11 @@ li.nav-item a:hover {
 .top-destination-item a:hover {
     color: #ff5722;
     text-decoration: none;
+    transition: .5s ease;
+    -webkit-transition: .5s ease;
+    transform: scale(1.15) rotate(5deg);
+    -ms-transform: scale(1.15) rotate(5deg);
+    -ms-transform: scale(1.15) rotate(5deg);
 }
 
 .top-destination-item .content {
@@ -608,29 +613,114 @@ li.nav-item a:hover {
     cursor: pointer;
 }
 
-.price-slider {
-    padding: 10px;
+.filter .title-filter {
+    margin-bottom: 10px;
+    position: relative;
+    text-transform: uppercase;
+    padding-left: 27px;
+    border-bottom: 2px solid #ff5722;
+    padding-bottom: 2px;
+    font-weight: bold;
+    font-size: 20px;
+    letter-spacing: 1px;
+    color: #ff5722;
 }
 
-.price-slider .price-box {
+.filter .title-filter .icon {
+    width: 36px;
+    height: 36px;
+    border: 2px solid #ff5722;
+    position: absolute;
+    display: block;
+    top: -8.5px;
+    left: -20px;
+    text-align: center;
+    line-height: 34px;
+    border-radius: 50%;
+    color: #ff5722;
+    font-size: 16px;
+}
+
+.filter .price .price-slider-wrap {
+    padding-top: 5px;
+    margin-bottom: 16px;
+    margin-top: 16px;
+}
+
+.price-slider {
+    display: block;
+    border: 0;
+    background: none;
+    height: 6px;
+    border-radius: 0;
+    width: calc(100% - 8px);
+    z-index: 9;
+}
+
+.price-slider:after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    right: -8px;
+    top: 0;
+    height: 100%;
+    background-color: #D4D4D4;
+    z-index: -1;
+}
+
+.price-slider .ui-slider-range {
+    background: none;
+    background-color: #ff5722;
+    border-radius: 0;
+}
+
+.price-slider .ui-slider-handle {
+    width: 8px;
+    height: 10px;
+    background: none;
+    background-color: #ff5722;
+    border-radius: 0;
+    border: 0;
+    top: 50%;
+    margin: 0;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    -webkit-transition: none;
+    -moz-transition: none;
+    -ms-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+
+.ui-widget-content {
+    border: unset !important;
+    background: unset !important;
+    color: unset !important;
+}
+
+.price-slider-wrap .price-box {
     display: flex;
     margin-top: 10px;
 }
 
-.price-slider .price-box input {
+.price-slider-wrap .price-box input {
     text-align: center;
     position: relative;
     padding-right: 23px;
 }
 
-.price-slider .price-box .left-currency {
+.price-slider-wrap .price-box .left-currency {
     position: absolute;
     z-index: 1;
     padding: 5px;
     right: 150px;
 }
 
-.price-slider .price-box .right-currency {
+.price-slider-wrap .price-box .right-currency {
     position: absolute;
     z-index: 1;
     padding: 5px;
@@ -638,12 +728,49 @@ li.nav-item a:hover {
 }
 
 .main .home-content {
-    min-height: 400px;
+    min-height: 300px;
+    background: #FFF;
+    border: 1px solid #E6E6E6;
+    -webkit-box-shadow: 0px 0px 12px -3px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0px 0px 12px -3px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 0px 12px -3px rgba(0, 0, 0, 0.15);
+    border-bottom: 2px solid #DEDEDE;
+    transition: all .35s ease-in-out;
+    -webkit-transition: all .35s ease-in-out;
+    height: 100%;
+    border-radius: 6px;
+    padding-top: 1px;
+}
+
+.main .home-content a {
+    color: #636363;
+    display: block;
+}
+
+.main .home-content a .home {
+    margin: 5px;
+    padding: 5px;
+}
+
+.main .home-content .image {
+    overflow: hidden;
+    margin: 4px 5px 0;
+}
+
+.main .home-content .image img {
+    transition: all .3s ease-in-out;
+}
+
+.main .home-content .image:hover img {
+    transform: scale(1.15) rotate(5deg);
+    -ms-transform: scale(1.15) rotate(5deg);
+    -ms-transform: scale(1.15) rotate(5deg);
 }
 
 .main .home-content .home-type {
     font-size: 15px;
     color: #888888;
+    margin-left: 5px;
 }
 
 .main .home-content .home-name {
@@ -651,17 +778,39 @@ li.nav-item a:hover {
     text-align: center;
 }
 
+.main .home-content .home-star {
+    font-size: 15px;
+    letter-spacing: -1px;
+}
+
 .main .home-content .home-detail {
-    font-size: 16px;
+    font-size: 15px;
+    justify-content: center;
 }
 
 .main .home-content .home-price {
     font-weight: bold;
     font-size: 16px;
+    padding: 5px 10px;
+    text-align: center;
+}
+
+.main .home-content .home-price span {
+    font-size: 25px;
+
 }
 
 .main .home-content .home-address {
     font-size: 16px;
+}
+
+.main .home-content .home-name {
+    font-size: 16px;
+    color: #ff5722;
+}
+
+.main .home-content .home-name:hover {
+    opacity: 0.8;
 }
 
 .main .house-detail .house-name {
@@ -736,11 +885,13 @@ li.nav-item a:hover {
 .similar-house .title {
     font-size: 28px;
 }
-.font-s-28{
+
+.font-s-28 {
     font-size: 28px;
 }
+
 .check-in-time table tbody tr td {
-    border: unset ;
+    border: unset;
 }
 
 /*main*/
@@ -1038,12 +1189,14 @@ li.nav-item a:hover {
     color: white;
     opacity: 0.9;
 }
-.btn-noti{
+
+.btn-noti {
     color: #fff;
     border-color: #f99a57;
     background-color: #f99a57;
 }
-.btn-noti:hover{
+
+.btn-noti:hover {
     opacity: 0.8;
     color: #fff;
 }
@@ -1088,9 +1241,9 @@ li.nav-item a:hover {
 }
 
 .top-nav-menu, .bottom-nav-menu {
-    padding: 15px;
+    padding: 10px;
     border: 1px solid white;
-    border-radius: 12px;
+    border-radius: 6px;
     margin-left: -14px;
     background: white;
 }
@@ -1185,6 +1338,10 @@ li.nav-item a:hover {
     opacity: 0.8;
 }
 
+.h-55 {
+    height: 55px;
+}
+
 @keyframes blinkingText {
     0% {
         color: #000;
@@ -1235,6 +1392,61 @@ li.nav-item a:hover {
 
 .fa-i-size-27 {
     font-size: 27px;
+}
+
+.top-banner .background img {
+    position: relative;
+    height: 580px;
+}
+
+.top-banner .search-place {
+    position: absolute;
+    color: #fff;
+    top: 30%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.top-banner .search-place .desc-city {
+    background-color: rgb(0 0 0 / 15%);
+}
+
+.top-banner .search-place .search-form {
+    background-color: rgba(0, 0, 0, 0.8);
+    margin: auto;
+    padding: 30px 40px;
+}
+
+.top-banner .city-name h1 {
+    font-size: 70px;
+    color: #ff5722;
+}
+
+.house-list .content .view-switch {
+    padding: 0 10px;
+    float: right;
+}
+
+.house-list .content .view-switch .view-item {
+    float: left;
+    padding: 10px;
+}
+
+.house-list .content .view-switch .view-item a {
+    color: #666;
+}
+
+.house-list .content .view-switch .view-item a:hover {
+    color: #ff5722;
+}
+
+.house-list .content .view-switch .view-item.view-active a {
+    color: #ff5722;
+}
+
+.d-contents {
+    display: contents !important;
 }
 
 /*-- footer --*/

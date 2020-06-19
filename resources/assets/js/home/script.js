@@ -2,7 +2,10 @@ $(window).on('load', function () {
     $('.preloader').fadeOut(1000);
     setTimeout(function () {
         let divHeight = $('#header').height();
+        $('.banner').css('margin-top', divHeight + 'px');
+        $('.top-banner').css('margin-top', divHeight + 'px');
         $('.container').css('margin-top', divHeight + 'px');
+        $('footer').css('margin-top', divHeight + 'px');
     }, 500);
 });
 $(".slider > div:gt(0)").hide();
@@ -106,7 +109,7 @@ $(document).ready(function () {
     ]);
     //max price
     let max = $('input[name=max]').val();
-    $("#price-slider").slider({
+    $(".price-slider").slider({
         range: true,
         min: 0,
         max: max,
@@ -117,8 +120,8 @@ $(document).ready(function () {
         }
     });
 
-    $("#price-min").val($("#price-slider").slider("values", 0));
-    $("#price-max").val($("#price-slider").slider("values", 1));
+    $("#price-min").val($(".price-slider").slider("values", 0));
+    $("#price-max").val($(".price-slider").slider("values", 1));
 
     $("#price-min").change(function () {
         $("#price-slider").slider('values', 0, $(this).val());
@@ -188,24 +191,32 @@ $(function () {
     let today = new Date(moment());
     let min_night = $('input[name=max_date]').val();
     let i;
-    let start_date;
     let ListDate = [];
-    let obj = {};
-    let obj2 = [];
-    $('input[name=checkin_booked]').each(function(){
-        obj[this.name] = this.value;
-        obj2.push(obj);
-    });
-
-    console.log(obj2);
-    let checkin_booked = reverseDate($('input[name=checkin_booked]').val());
-    let checkout_booked = reverseDate($('input[name=checkout_booked]').val());
-    let check_in = [
-        moment(checkin_booked, 'YYYY/MM/DD')
-    ];
-    let check_out = [
-        moment(checkout_booked, 'YYYY/MM/DD')
-    ];
+    let checkin_booked = [];
+    let checkout_booked = [];
+    let check_in = [];
+    let check_out = [];
+    //disable//
+    let date_checkIn = $("input[name='checkin_booked[]']").map(function () {
+        return $(this).val();
+    }).get();
+    let date_checkOut = $("input[name='checkout_booked[]']").map(function () {
+        return $(this).val();
+    }).get();
+    for (i = 0; i < date_checkIn.length; i++) {
+        checkin_booked.push(reverseDate(date_checkIn[i]));
+    }
+    for (i = 0; i < date_checkOut.length; i++) {
+        checkout_booked.push(reverseDate(date_checkOut[i]));
+    }
+    for (i = 0; i < checkin_booked.length; i++) {
+        let list = moment(checkin_booked[i]);
+        check_in.push(list);
+    }
+    for (i = 0; i < checkout_booked.length; i++) {
+        let list = moment(checkout_booked[i]);
+        check_out.push(list);
+    }
 
     for (i = 0; i < check_in.length; i++) {
         let dates = getDates(check_in[i], check_out[i]);
@@ -214,18 +225,28 @@ $(function () {
             ListDate.push(dateList);
         });
     }
-    // ListDate.forEach(function (date) {
-    //     start_date = moment(date).startOf('day').add(ListDate.length, 'day')
-    //     // if (moment().format('DD/MM/YYYY') === date) {
-    //     //
-    //     // } else {
-    //     //     start_date = today;
-    //     // }
-    //     console.log(start_date)
-    // });
+    //end-disable//
+    let lastDate = [];
+    let startDate = [];
+    let start_date;
+    checkout_booked.forEach(function (date) {
+        lastDate = moment(date).startOf('day').add(1, 'day');
+        startDate.push(lastDate);
+    });
+    start_date = startDate[0];
+    // for (i = 0; i < startDate.length; i++) {
+    //     if (moment() === startDate[i]) {
+    //         start_date = startDate[i];
+    //     }
+    // }
+    // console.log(start_date)
+    // console.log(startDate)
+    // console.log(check_in)
+
     $('input[name=date_search]').daterangepicker({
         opens: 'center',
         minDate: today,
+        autoApply: true,
         locale: {
             "format": "DD/MM/YYYY",
             "separator": " - ",
@@ -263,8 +284,8 @@ $(function () {
         opens: 'center',
         autoApply: true,
         minDate: today,
-        startDate: today,
-        endDate: moment().startOf('day').add(min_night, 'day'),
+        startDate: start_date,
+        endDate: moment(start_date).startOf('day').add(min_night, 'day'),
         isInvalidDate: function (ele) {
             let currDate = moment(ele._d).format('DD/MM/YYYY');
             return ListDate.indexOf(currDate) !== -1;
@@ -306,20 +327,20 @@ $(function () {
         $('input[name=check_out]').val(end.format('DD/MM/YYYY'));
     });
 });
-var loadFile = function (event) {
-    var old = document.getElementById('img-old');
+let loadFile = function (event) {
+    let old = document.getElementById('img-old');
     if (old) {
         old.remove();
-        var reader = new FileReader();
+        let reader = new FileReader();
         reader.onload = function () {
-            var output = document.getElementById('output');
+            let output = document.getElementById('output');
             output.src = reader.result;
         };
         reader.readAsDataURL(event.target.files[0]);
     } else {
-        var reader = new FileReader();
+        let reader = new FileReader();
         reader.onload = function () {
-            var output = document.getElementById('output');
+            let output = document.getElementById('output');
             output.src = reader.result;
         };
         reader.readAsDataURL(event.target.files[0]);
@@ -327,14 +348,14 @@ var loadFile = function (event) {
 };
 
 function previewIDImages() {
-    var $preview = $('#preview_id_card').empty();
+    let $preview = $('#preview_id_card').empty();
     if (this.files) $.each(this.files, readAndPreview);
 
     function readAndPreview(i, file) {
         if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
             return alert(file.name + " Không phải hình ảnh");
         }
-        var reader = new FileReader();
+        let reader = new FileReader();
         $(reader).on("load", function () {
             $preview.append($("<img/>", {src: this.result, height: 100}));
         });
@@ -346,14 +367,14 @@ function previewIDImages() {
 $('#id_card_image').on("change", previewIDImages);
 
 function previewBLImages() {
-    var $preview = $('#preview_business_license').empty();
+    let $preview = $('#preview_business_license').empty();
     if (this.files) $.each(this.files, readAndPreview);
 
     function readAndPreview(i, file) {
         if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
             return alert(file.name + " Không phải hình ảnh");
         }
-        var reader = new FileReader();
+        let reader = new FileReader();
         $(reader).on("load", function () {
             $preview.append($("<img/>", {src: this.result, height: 100}));
         });
@@ -365,16 +386,16 @@ function previewBLImages() {
 $('#business_license_image').on("change", previewBLImages);
 
 function previewHouseImages() {
-    var $preview = $('#preview_house').empty();
+    let $preview = $('#preview_house').empty();
     if (this.files) $.each(this.files, readAndPreview);
 
     function readAndPreview(i, file) {
         if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
             return alert(file.name + " Không phải hình ảnh");
         }
-        var reader = new FileReader();
+        let reader = new FileReader();
         $(reader).on("load", function () {
-            $preview.append($("<img/>", {src: this.result, height: 100}));
+            $preview.append($("<img/>", {src: this.result, width: 165, height: 100}));
         });
         reader.readAsDataURL(file);
 
@@ -456,4 +477,7 @@ $(document).on('click', '#btn-showPrice', function () {
 
 $(document).on('click', '.close-btn-notify', function () {
     $(this).parents('.inf-bill').remove();
+});
+$(document).on('click', '#btn-host', function () {
+    toastr.info('Đang đợi duyệt!')
 });

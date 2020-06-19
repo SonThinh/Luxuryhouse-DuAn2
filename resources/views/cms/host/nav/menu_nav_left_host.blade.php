@@ -14,11 +14,11 @@
         <li>
             <label class="mr-1"><i class="fal fa-home-alt"></i> Số căn hộ đang quản lý: </label>
             <p>
-                {{count($houses)}}
+                {{count($houses->where('status',1))}}
             </p>
         </li>
         <li>
-            <label class="mr-1"><i class="fal fa-id-card"></i> Số chứng minh:</label>
+            <label class="mr-1"><i class="fal fa-id-card"></i> CMND:</label>
             <p>{{$host->ID_card}}</p>
         </li>
         <li class="btn-update">

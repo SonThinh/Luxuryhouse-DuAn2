@@ -68,7 +68,6 @@ class OrderController extends Controller
     {
         $email = [
             $data['email'],
-            'pst269@gmail.com'
         ];
         Mail::to($email)->send(new SendBill($data));
     }
@@ -85,10 +84,10 @@ class OrderController extends Controller
     {
         $email = [
             $data['email'],
-            'pst269@gmail.com'
         ];
         Mail::to($email)->send(new SendPaySuccess($data));
     }
+
     public function showPayView($code)
     {
         $bills = Bill::query()->where('code', $code)->get();
@@ -99,7 +98,9 @@ class OrderController extends Controller
             $data['email'] = $user->email;
         }
         $data['code'] = $code;
+        $data['user_id'] = $user->id;
         $this->sendPay($data);
+
         return view('cms.member.pay_success', $data);
     }
 }

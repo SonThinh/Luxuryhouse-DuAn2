@@ -203,7 +203,6 @@ class HouseController extends Controller
     public function showViewHouses()
     {
         $data['housesList'] = House::all();
-        $data['host'] = Host::with(['user'])->get();
         $data['house'] = House::with(['city'])->get();
         $data['district'] = District::with(['city'])->get();
         $data['types'] = Type::all();

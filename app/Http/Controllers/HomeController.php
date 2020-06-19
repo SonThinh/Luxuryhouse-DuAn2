@@ -17,7 +17,7 @@ class HomeController extends Controller
     {
         $data['citiesList'] = City::all();
         $data['events'] = Slider::all();
-        $data['houses'] = House::all();
+        $data['houses'] = House::query()->where('status',1)->where('h_status',1)->get();
         return view('pages.area', $data);
     }
 
@@ -76,10 +76,6 @@ class HomeController extends Controller
                 'status' => 'true',
                 'message' => 'Đăng ký thành công! Mời đăng nhập',
                 'url' => route('users.login'),
-                'data' => [
-                    'email' => $request->email,
-                    'password' => $request->phone
-                ]
             ]);
         } else {
             return response()->json([

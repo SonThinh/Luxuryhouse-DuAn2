@@ -1,5 +1,5 @@
 <!--banner-->
-<div class="banner p-3">
+<div class="banner py-3">
     <div class="container">
         <div class="row p-3">
             <div class="search col-sm-12 col-md-4">
