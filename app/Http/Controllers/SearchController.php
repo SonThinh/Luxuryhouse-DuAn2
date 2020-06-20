@@ -19,7 +19,8 @@ class SearchController extends Controller
             'check_in' => $b[0],
             'check_out' => $b[1]
         ];
-        dd($c);
+        $data = Bill::query()->where('check_in', '!=', $c['check_in'])->get();
+        dd($c, $data);
 
         if ($request->location != '') {
             $data['cities'] = City::query()->where('name', 'like', '%' . $request->location . '%')->get();
@@ -44,9 +45,9 @@ class SearchController extends Controller
         if (date_format(now(), 'l') == 'Friday' ||
             date_format(now(), 'l') == 'Saturday' ||
             date_format(now(), 'l') == 'Sunday') {
-            $data['max_price'] = $data['houses']->max('price_f_to_s');
+            $data['max_price'] = $data['houses']->get()->max('price_f_to_s');
         } else {
-            $data['max_price'] = $data['houses']->max('price_m_to_t');
+            $data['max_price'] = $data['houses']->get()->max('price_m_to_t');
         }
         $data['checkin'] = $request->check_in;
         $data['location'] = $request->location;
@@ -95,9 +96,9 @@ class SearchController extends Controller
         }
         if (date_format(now(), 'l') == 'Friday' || date_format(now(), 'l') == 'Saturday' || date_format(now(), 'l') == 'Sunday') {
             if (isset($h)) {
-                $data['max_price'] = $h->max('price_f_to_s');
+                $data['max_price'] = $h->get()->max('price_f_to_s');
             } else {
-                $data['max_price'] = $houses->max('price_f_to_s');
+                $data['max_price'] = $houses->get()->max('price_f_to_s');
             }
             if ($request->price_max == $data['max_price']) {
                 $house = $houses->where('price_f_to_s', '>=', (int)$request->price_min);
@@ -110,9 +111,9 @@ class SearchController extends Controller
             }
         } else {
             if (isset($h)) {
-                $data['max_price'] = $h->max('price_m_to_t');
+                $data['max_price'] = $h->get()->max('price_m_to_t');
             } else {
-                $data['max_price'] = $houses->max('price_m_to_t');
+                $data['max_price'] = $houses->get()->max('price_m_to_t');
             }
             if ($request->price_max == $data['max_price']) {
                 $house = $houses->where('price_m_to_t', '>=', (int)$request->price_min);
@@ -125,7 +126,15 @@ class SearchController extends Controller
             }
         }
 
-        if ($request->district) {
+        if ($request->district && $request->house_type && $request->trip_type) {
+            $data['houses'] = $house->where('district_id', $request->district)->where('types', $request->house_type)->where('trip_type', $request->trip_type)->paginate(12);
+        } else if ($request->district && $request->house_type) {
+            $data['houses'] = $house->where('district_id', $request->district)->where('types', $request->house_type)->paginate(12);
+        } else if ($request->district && $request->trip_type) {
+            $data['houses'] = $house->where('district_id', $request->district)->where('trip_type', $request->trip_type)->paginate(12);
+        } else if ($request->house_type && $request->trip_type) {
+            $data['houses'] = $house->where('trip_type', $request->trip_type)->where('types', $request->house_type)->paginate(12);
+        } else if ($request->district) {
             $data['houses'] = $house->where('district_id', $request->district)->paginate(12);
         } else if ($request->house_type) {
             $data['houses'] = $house->where('types', $request->house_type)->paginate(12);
