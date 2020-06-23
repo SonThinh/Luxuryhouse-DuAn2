@@ -1031,8 +1031,8 @@ li.nav-item a:hover {
     border-top: 1px solid #bbb;
     padding: 15px;
     display: block;
-    box-shadow: 0 0 15px #939393;
-    z-index: -2;
+    box-shadow: 0 -10px 15px #939393;
+    z-index: 0;
     position: relative;
 }
 
