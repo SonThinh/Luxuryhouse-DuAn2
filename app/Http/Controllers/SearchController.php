@@ -19,8 +19,8 @@ class SearchController extends Controller
             'check_in' => $b[0],
             'check_out' => $b[1]
         ];
-        $data = Bill::query()->where('check_in', '!=', $c['check_in'])->get();
-        dd($c, $data);
+        $bills = Bill::query()->where('check_in', '!=', $c['check_in'])->get();
+        dd($bills);
 
         if ($request->location != '') {
             $data['cities'] = City::query()->where('name', 'like', '%' . $request->location . '%')->get();
@@ -49,6 +49,7 @@ class SearchController extends Controller
         } else {
             $data['max_price'] = $data['houses']->get()->max('price_m_to_t');
         }
+        dd($data['houses']->get()->max('price_f_to_s'));
         $data['checkin'] = $request->check_in;
         $data['location'] = $request->location;
         $data['checkout'] = $request->check_out;

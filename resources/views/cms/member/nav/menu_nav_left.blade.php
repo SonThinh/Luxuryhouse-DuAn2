@@ -5,7 +5,7 @@
             alt="" class="w-100">
     </div>
     <ul class="profile-detail">
-        <li class="text-center"><h5>@isset($user->name) {{$user->name}} @else {{$user->email}} @endisset</h5>
+        <li class="text-center"><h5>{{isset($user->name) ? $user->name : $user->email}}</h5>
         </li>
         <li>
             <label class="mr-1"><i class="fal fa-envelope"></i> Email:</label>
@@ -14,7 +14,7 @@
         <li>
             <label class="mr-1"><i class="fas fa-user-shield"></i> Host:</label>
             <p>
-                @isset($user->host) @if($user->host->status === 1) Đã đăng ký @endif @else Chưa đăng ký @endisset
+                {{isset($user->host) ? (($user->host->status === 1) ? 'Đã đăng ký' : 'Đang đợi duyệt') : 'Chưa đăng ký'}}
             </p>
         </li>
         <li>
@@ -40,21 +40,21 @@
             </a>
         </li>
         <li>
-            <a href="@if((request()->segment(3) == 'edit-pass')) javascript:void(0) @else {{route('users.dashboard.showViewUpdatePass',[auth()->user()->id])}} @endif"
+            <a href="{{(request()->segment(3) == 'edit-pass') ? 'javascript:void(0)' : route('users.dashboard.showViewUpdatePass',[auth()->user()->id])}}"
                class="btn btn-block btn-primary">
                 <i class="far fa-key"></i>
                 Đổi mật khẩu
             </a>
         </li>
         <li>
-            <a href="@if((request()->segment(3) == 'booking')) javascript:void(0) @else {{route('users.dashboard.booking-profile.showProfileBooking',[auth()->user()->id])}} @endif"
+            <a href="{{(request()->segment(3) == 'booking') ? 'javascript:void(0)' : route('users.dashboard.booking-profile.showProfileBooking',[auth()->user()->id])}}"
                class="btn btn-block btn-success">
                 <i class="fal fa-list"></i>
                 Thông tin đặt phòng
             </a>
         </li>
         <li>
-            <a href="@if((request()->segment(3) == 'pay-history')) javascript:void(0) @else {{route('users.dashboard.showViewPayHistory',[auth()->user()->id])}} @endif"
+            <a href="{{(request()->segment(3) == 'pay-history') ? 'javascript:void(0)' : route('users.dashboard.showViewPayHistory',[auth()->user()->id])}}"
                class="btn btn-block btn-pay-profile">
                 <i class="far fa-donate"></i>
                 Lịch sử thanh toán

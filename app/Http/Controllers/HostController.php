@@ -137,7 +137,7 @@ class HostController extends Controller
         $house->max_guest = $request->max_guest;
         $house->image = json_encode($house_image);
         $house->status = 0;
-        $house->h_status = 1;
+        $house->h_status = 0;
         $house->save();
         if ($house) {
             $host_id = Host::find($request->host);
