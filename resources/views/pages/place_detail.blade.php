@@ -59,9 +59,9 @@
                                 <div class="home-content">
                                     <a href="{{route('places.HouseDetail',[$house->id])}}">
                                         <div class="image">
-                                            <img src="{{asset($images["0"]->image_path)}}" alt="" class="w-100">
+                                            <img src="{{asset($images["0"]->image_path)}}" alt="" class="w-100"
+                                                 style="max-height: 158px">
                                         </div>
-
                                         <p class="home-type">
                                             @foreach($types as $type)
                                                 @if($type->key == $house->types)
@@ -77,22 +77,12 @@
                                             </div>
                                             <p class="home-address">
                                                 {{$house->address}},
-                                                @foreach($districts as $district)
-                                                    @if($district->id == $house->district_id)
-                                                        {{$district->name}}
-                                                    @endif
-                                                @endforeach
+                                                {{$house->district->name}}
                                                 ,{{$house->city->name}}
                                             </p>
                                             <div class="home-price">
                                                 <p>
-                                                    @if(\Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('l') == 'Sunday' ||
-                                                        \Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('l') == 'Saturday' ||
-                                                        \Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('l') == 'Friday')
-                                                        <span>{{$house->price_f_to_s}}</span> đ/đêm
-                                                    @else
-                                                        <span>{{$house->price_m_to_t}}</span> đ/đêm
-                                                    @endif
+                                                    <span>{{$house->price}}</span> đ/đêm
                                                 </p>
                                             </div>
                                             <div class="bottom-field row">
@@ -105,7 +95,9 @@
                                                 </div>
                                                 <div class="comment col-6 text-right">
                                                     <i class="far fa-comment-alt-lines"></i>
-                                                    <span>1</span>
+                                                    <span>
+                                                       {{isset($comments) ? count($comments->where('h_id',$house->id)) : '0'}}
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>

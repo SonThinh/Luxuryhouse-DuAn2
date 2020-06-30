@@ -20,11 +20,11 @@
                 <tr {{$bill->id}}>
                     <td>{{$bill->code}}</td>
                     <td>{{$bill->house->name}}</td>
-                    <td>@isset($bill->user->name){{$bill->user->name}}@else{{$bill->user->email}}@endisset</td>
-                    <td>@isset($bill->host->user->name) {{$bill->host->user->name}}@else {{$bill->host->user->email}}@endisset</td>
+                    <td>{{isset($bill->user->name) ? $bill->user->name : $bill->user->email}}</td>
+                    <td>{{isset($bill->host->user->name) ? $bill->host->user->name : $bill->host->user->email}}</td>
                     <td>{{$bill->total}}đ</td>
                     <td>
-                        {{date("d-m-Y h:m:i",strtotime($bill->updated_at))}}
+                        {{\Carbon\Carbon::parse($bill->updated_at)->format('d-m-Y h:m:i')}}
                     </td>
                 </tr>
             @endforeach

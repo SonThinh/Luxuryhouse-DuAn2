@@ -37,11 +37,7 @@
                                         <h4>{{$bill->house->name}}</h4>
                                         <p style="font-size: 14px"><i class="far fa-map-marker-check"></i>
                                             {{$bill->house->address}},
-                                            @foreach($districts as $district)
-                                                @if($district->id == $bill->house->district_id)
-                                                    {{$district->name}},
-                                                @endif
-                                            @endforeach
+                                            {{$bill->house->district->name}},
                                             {{$bill->house->city->name}}</p>
                                     </div>
                                     <div class="col-md-6">

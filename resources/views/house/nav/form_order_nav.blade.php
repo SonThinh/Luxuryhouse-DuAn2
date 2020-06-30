@@ -7,11 +7,9 @@
                     <h4 class="modal-title">Đặt lịch trình</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                    @foreach($hosts as $host)
-                        @if($host->id == $house->host_id)
-                            <input type="hidden" name="host_member_id" value="{{$host->id}}">
-                        @endif
-                    @endforeach
+                    @if($host->id === $house->host_id)
+                        <input type="hidden" name="host_member_id" value="{{$host->id}}">
+                    @endif
                     <input type="hidden" name="user_id"
                            value="@isset(auth()->user()->id){{auth()->user()->id}}@endisset">
                 </div>
@@ -29,7 +27,7 @@
                     <div class="form-group">
                         <label>Giá thuê 1 đêm</label>
                         <input type="number" class="form-control" disabled
-                               value="@if(\Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('l') == 'Sunday' ||\Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('l') == 'Saturday' ||\Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('l') == 'Friday'){{$house->price_f_to_s}}@else{{$house->price_m_to_t}}@endif"
+                               value="{{$house->price}}"
                                name="price" min="0">
                     </div>
                     <div class="form-group">
@@ -38,7 +36,7 @@
                         <input type="hidden" name="dates_range">
                     </div>
                     <div class="form-group">
-                        <label>Số Khách</label>
+                        <label>Số khách</label>
                         <input type="number" name="n_person" class="form-control" value="1" min="1"
                                max="{{$house->max_guest+1}}">
                         <input type="hidden" name="max_guest" class="form-control" value="{{$house->max_guest}}">

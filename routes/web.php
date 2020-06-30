@@ -3,6 +3,7 @@
 use App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/', [Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/place', [Controllers\HomeController::class, 'index'])->name('place');
 Route::get('/search', [Controllers\SearchController::class, 'searchView'])->name('search');
 Route::get('/search-city/name', [Controllers\SearchController::class, 'searchCityByName']);
@@ -28,12 +29,12 @@ Route::group(['prefix' => 'user', 'as' => 'users.', 'middleware' => 'CheckLogout
             Route::get('/user/{id}/booking-detail/{code}', [Controllers\MemberController::class, 'bookingDetail'])->name('bookingDetail');
         });
         Route::get('/delete-booking/{id}', [Controllers\MemberController::class, 'deleteBooking'])->name('deleteBooking');
-        Route::post('/comment/{id}', [Controllers\MemberController::class, 'postComment'])->name('postComment');
         Route::post('/edit-user/{id}', [Controllers\MemberController::class, 'updateUser'])->name('updateUser');
         Route::get('/edit-pass/{id}', [Controllers\MemberController::class, 'showViewUpdatePass'])->name('showViewUpdatePass');
         Route::post('/edit-pass/{id}', [Controllers\MemberController::class, 'updatePass'])->name('updatePass');
         Route::get('/pay-history/{id}', [Controllers\MemberController::class, 'showViewPayHistory'])->name('showViewPayHistory');
     });
+    Route::post('{id}/booking/{code}/comment', [Controllers\MemberController::class, 'postComment'])->name('postComment');
     Route::get('/register-host/{id}', [Controllers\HostController::class, 'showViewRegisterHost'])->name('host');
     Route::post('/register-host/{id}', [Controllers\HostController::class, 'postRegisterHost'])->name('host');
 
@@ -47,6 +48,7 @@ Route::group(['prefix' => 'user', 'as' => 'users.', 'middleware' => 'CheckLogout
         Route::get('/house/{id}/delete', [Controllers\HostController::class, 'deleteHouse'])->name('deleteHouse');
         Route::get('/booking/{id}', [Controllers\HostController::class, 'viewBooking'])->name('viewBooking');
         Route::get('/change-booking', [Controllers\HostController::class, 'changeStatusBooking'])->name('changeStatusBooking');
+        Route::get('/show-bills/{id}', [Controllers\HostController::class, 'viewBills'])->name('viewBills');
     });
     Route::group(['prefix' => 'house', 'as' => 'house.'], function () {
         Route::post('/booking-house/{id}', [Controllers\OrderController::class, 'showPrice'])->name('showPrice');

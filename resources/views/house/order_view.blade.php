@@ -51,7 +51,7 @@
                             <div class="form-group">
                                 <label>Tên khách hàng<span style="color:red;">*</span></label>
                                 <input type="text" class="form-control" name="guest_name"
-                                       value="@isset($user->username){{$user->username}}@else {{$user->email}} @endisset">
+                                       value="{{isset($user->name) ? $user->name : $user->email}}">
                                 <input type="hidden" name="guest_id" value="{{$user->id}}">
                             </div>
                             <div class="form-group d-flex">
@@ -84,11 +84,7 @@
                                         <h4>{{$house->name}}</h4>
                                         <p style="font-size: 14px"><i class="far fa-map-marker-check"></i>
                                             {{$house->address}},
-                                            @foreach($districts as $district)
-                                                @if($district->id == $house->district_id)
-                                                    {{$district->name}},
-                                                @endif
-                                            @endforeach
+                                            {{$house->district->name}},
                                             {{$house->city->name}}</p>
                                     </div>
                                     <div class="col-md-6">
@@ -124,10 +120,12 @@
                     <div class="form-group m-auto">
                         <label class="form-check-label">
                             <input type="checkbox" name="agree" class="form-check-input"> Đồng ý với <a
-                                href="#cancel_rule">chính sách hủy phòng</a> và <a href="#attention">các quy định chỗ ở</a>
+                                href="#cancel_rule">chính sách hủy phòng</a> và <a href="#attention">các quy định chỗ
+                                ở</a>
                         </label>
                         <input id="btn-dis" class="btn btn-block btn-success" disabled value="Gửi yêu cầu đặt phòng">
-                        <input id="btn-agree" class=" btn btn-block btn-success d-none m-auto" type="submit" value="Gửi yêu cầu đặt phòng">
+                        <input id="btn-agree" class=" btn btn-block btn-success d-none m-auto" type="submit"
+                               value="Gửi yêu cầu đặt phòng">
                     </div>
                 </div>
             </form>

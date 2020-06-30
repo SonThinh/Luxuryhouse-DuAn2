@@ -2,7 +2,7 @@
 @section('title','host dashboard')
 @section('main-host')
     <div class="table-responsive">
-        <h2 class="title mb-2">Chổ của bạn</h2>
+        <h2 class="title mb-2">Chỗ của bạn</h2>
         <table class="table table-striped table-bordered dt-responsive nowrap"
                id="dataTable" width="100%">
             <thead>

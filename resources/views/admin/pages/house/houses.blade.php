@@ -107,8 +107,7 @@
                                     Check out:{{$rules->check_out}}
                                 </td>
                                 <td>
-                                    Thứ 2-5: {{$house->price_m_to_t}}đ<br>
-                                    Thứ 6-cn: {{$house->price_f_to_s}}đ<br>
+                                    Giá phòng: {{$house->price}}đ<br>
                                     Giá khách thêm: {{$house->exGuest_fee}}đ<br>
                                     Số đêm tối thiểu: {{$house->min_night}}
                                 </td>

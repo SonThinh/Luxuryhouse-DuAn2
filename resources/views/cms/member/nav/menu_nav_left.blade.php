@@ -5,11 +5,11 @@
             alt="" class="w-100">
     </div>
     <ul class="profile-detail">
-        <li class="text-center"><h5>{{isset($user->name) ? $user->name : $user->email}}</h5>
+        <li class="text-center"><h5>{{isset($user->name) ? $user->name : Str::limit($user->email,16)}}</h5>
         </li>
         <li>
             <label class="mr-1"><i class="fal fa-envelope"></i> Email:</label>
-            <p>{{$user->email}}</p>
+            <p>{{Str::limit($user->email,16)}}</p>
         </li>
         <li>
             <label class="mr-1"><i class="fas fa-user-shield"></i> Host:</label>
@@ -19,7 +19,7 @@
         </li>
         <li>
             <label class="mr-1"><i class="far fa-phone-square"></i> Số điện thoại:</label>
-            <p>{{$user->phone}}</p>
+            <p>{{Str::limit($user->phone,10)}}</p>
         </li>
         <li class="btn-update">
             <a href="#" class="btn btn-block btn-lux" data-toggle="modal" data-target="#form-update-user">

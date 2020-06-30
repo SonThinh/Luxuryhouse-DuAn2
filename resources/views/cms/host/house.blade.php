@@ -2,7 +2,7 @@
 @section('title','host dashboard')
 @section('main-host')
     <div class="table-responsive">
-        <h2 class="title mb-2">Chổ của bạn</h2>
+        <h2 class="title mb-2">Chỗ của bạn</h2>
         <table class="table table-striped table-bordered dt-responsive nowrap"
                id="dataTable" width="100%">
             <thead>
@@ -21,9 +21,9 @@
                 @endphp
                 <tr {{$house->id}}>
                     <td>{{$house->name}}</td>
-                    <td class="image-house">
+                    <td class="image-house d-contents">
                         @foreach($images as $image)
-                            <img src="{{asset($image->image_path)}}" alt="" class="w-32" style="height: 65px">
+                            <img src="{{asset($image->image_path)}}" alt="" class="w-32" style="height: 50px">
                         @endforeach
                     </td>
                     <td>
@@ -37,21 +37,17 @@
                     </td>
                     <td>
                         <a href="#" data-toggle="modal" data-target="#form-edit-house" class="btn btn-primary"
-                           name="btn-edit">
+                           id="btn-edit">
                             <i class="far fa-edit"></i>
                         </a>
                         <a href="{{route('users.host.deleteHouse',[$house->id])}}"
-                           onclick="return confirm('Bạn có muốn xóa không?')" class="btn btn-danger" name="btn-delete">
+                           onclick="return confirm('Bạn có muốn xóa không?')" class="btn btn-danger" id="btn-delete">
                             <i class="far fa-trash-alt"></i>
                         </a>
                     </td>
                     <td>
                         {{$house->address}},
-                        @foreach($districts as $district)
-                            @if($district->id == $house->district_id)
-                                {{$district->name}}
-                            @endif
-                        @endforeach
+                        {{$house->district->name}}
                         ,{{$house->city->name}}
                     </td>
                 </tr>

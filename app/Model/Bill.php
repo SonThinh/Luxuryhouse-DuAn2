@@ -37,4 +37,7 @@ class Bill extends Model
     public function host(){
         return $this->belongsTo(Host::class,'host_id','id');
     }
+    public function comment(){
+        return $this->hasMany(Comment::class,'b_id','id');
+    }
 }

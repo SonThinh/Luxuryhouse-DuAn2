@@ -13,7 +13,7 @@
         </div>
         <div class="col-md-2">
             <input type="submit"
-                   class="btn btn-block btn-primary" id="search-btn" value="Tìm kiếm">
+                   class="btn btn-block btn-lux" id="search-btn" value="Tìm kiếm">
         </div>
     </div>
 </form>

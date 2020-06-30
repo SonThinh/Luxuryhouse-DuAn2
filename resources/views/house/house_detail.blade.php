@@ -6,14 +6,16 @@
 
     <div class="main p-3">
         <div class="container">
-            <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{route('place')}}">Địa điểm</a></li>
-                @if($city->id == $house->city_id)
-                    <li class="breadcrumb-item"><a
-                            href="{{route('places.CityDetail',[$city->id])}}">{{$city->name}}</a></li>
-                @endif
-                <li class="breadcrumb-item active">{{$house->name}}</li>
-            </ul>
+            @isset($city)
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{route('place')}}">Địa điểm</a></li>
+                    @if($city->id == $house->city_id)
+                        <li class="breadcrumb-item"><a
+                                href="{{route('places.CityDetail',[$city->id])}}">{{$city->name}}</a></li>
+                    @endif
+                    <li class="breadcrumb-item active">{{$house->name}}</li>
+                </ul>
+            @endisset
             @php
                 $images = json_decode($house->image);
                 $utilities_house = json_decode($house->utilities);
@@ -30,11 +32,7 @@
                             <i class="far fa-map-marker-alt"></i>
                             <p class="ml-1">
                                 {{$house->address}},
-                                @foreach($districts as $district)
-                                    @if($district->id == $house->district_id)
-                                        {{$district->name}},
-                                    @endif
-                                @endforeach
+                                {{$house->district->name}},
                                 {{$house->city->name}}
                             </p>
                         </div>
@@ -81,7 +79,7 @@
                             <h3>
                                 Nội quy chỗ ở
                             </h3>
-                            <div class="cance p-2">
+                            <div class="cancel p-2">
                                 <h4>Chính sách hủy phòng</h4>
                                 <p class="p-2">{{$rules->cancel_rule}}</p>
                             </div>
@@ -105,40 +103,76 @@
                                 </table>
                             </div>
                         </div>
+                        <div class="users-comments">
+                            <h3>Bình luận về {{$house->name}}</h3>
+                            @foreach($comments as $comment)
+                                <div class="row p-2 mb-3">
+                                    @php
+                                        $avatar = json_decode($comment->user->avatar);
+                                    @endphp
+
+                                    <div class="avatar-comment col-sm-2 text-right">
+                                        <img
+                                            src="@isset($avatar){{asset($avatar->image_path)}}@else{{asset('../resources/assets/images/avatar/avatar-default.png')}}@endisset"
+                                            alt="Avatar" class="w-55 h-55">
+                                    </div>
+
+                                    <div class="content-comment col-sm-10">
+                                        <p class="user-comment-name">
+                                            {{isset($comment->user->name) ? $comment->user->name : $comment->user->email}}
+                                            <span>{{\Carbon\Carbon::parse($comment->created_at)->diffForHumans(\Carbon\Carbon::now('Asia/Ho_Chi_Minh'))}}</span>
+                                        </p>
+                                        <p>{{$comment->content}} </p>
+                                        {{--                                        <ul class="d-flex">--}}
+                                        {{--                                            <li class="mr-2">--}}
+                                        {{--                                                <div class="d-flex">--}}
+                                        {{--                                                    <i class="fas fa-thumbs-up"></i>--}}
+                                        {{--                                                    <p class="ml-2">0</p>--}}
+                                        {{--                                                </div>--}}
+                                        {{--                                            </li>--}}
+                                        {{--                                            <li>--}}
+                                        {{--                                                <div class="d-flex">--}}
+                                        {{--                                                    <i class="fas fa-thumbs-down mt-1"></i>--}}
+                                        {{--                                                    <p class="ml-2">0</p>--}}
+                                        {{--                                                </div>--}}
+                                        {{--                                            </li>--}}
+                                        {{--                                        </ul>--}}
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-4">
                     <div class="contact-booking">
                         <div class="contact-owner mb-3">
-                            @foreach($hosts as $host)
-                                @if($host->id == $house->host_id)
-                                    <a href="#">
-                                        <div class="row">
-                                            @php
-                                                $avatar = json_decode($host->user->avatar);
-                                            @endphp
+                            @if($host->id === $house->host_id)
+                                <a href="#">
+                                    <div class="row">
+                                        @php
+                                            $avatar = json_decode($host->user->avatar);
+                                        @endphp
 
-                                            <div class="avatar-contact col-sm-3 m-auto">
-                                                <img
-                                                    src="@isset($avatar){{asset($avatar->image_path)}}@else{{asset('../resources/assets/home/images/avatar/avatar-default.png')}}@endisset"
-                                                    alt="Avatar" class="w-100 h-55" >
-                                            </div>
-
-                                            <div class="contact col-sm-9">
-                                                <p class="owner-name">
-                                                    @isset($host->user->name)
-                                                        {{$host->user->name}}
-                                                    @else
-                                                        {{$host->user->email}}
-                                                    @endisset
-                                                </p>
-                                                <p style="color:black;">Tham
-                                                    gia: {{\Carbon\Carbon::parse($host->user->created_at)->format('d/m/Y')}}</p>
-                                            </div>
+                                        <div class="avatar-contact col-sm-3 m-auto">
+                                            <img
+                                                src="@isset($avatar){{asset($avatar->image_path)}}@else{{asset('../resources/assets/images/avatar/avatar-default.png')}}@endisset"
+                                                alt="Avatar" class="w-100 h-55">
                                         </div>
-                                    </a>
-                                @endif
-                            @endforeach
+
+                                        <div class="contact col-sm-9">
+                                            <p class="owner-name">
+                                                @isset($host->user->name)
+                                                    {{$host->user->name}}
+                                                @else
+                                                    {{$host->user->email}}
+                                                @endisset
+                                            </p>
+                                            <p style="color:black;">Tham
+                                                gia: {{\Carbon\Carbon::parse($host->user->created_at)->format('d/m/Y')}}</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            @endif
                         </div>
                         <div class="form-choose-day mt-3">
                             <div>
@@ -164,21 +198,15 @@
                                 <div class="price-detail">
                                     <table class="table">
                                         <tr>
-                                            <td>Thứ hai - Thứ năm</td>
+                                            <td>Giá phòng</td>
                                             <td><span
-                                                    style="font-weight: bold;font-size: 35px;">{{$house->price_m_to_t}}₫</span>/đêm
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Thứ sáu - Chủ nhật</td>
-                                            <td><span
-                                                    style="font-weight: bold;font-size: 35px;">{{$house->price_f_to_s}}₫</span>/đêm
+                                                    style="font-weight: bold;font-size: 32px;">{{$house->price}}₫</span>/đêm
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Phí khách tăng thêm</td>
                                             <td><span
-                                                    style="font-weight: bold;font-size: 35px;">{{$house->exGuest_fee}}₫</span>/đêm
+                                                    style="font-weight: bold;font-size: 32px;">{{$house->exGuest_fee}}₫</span>/đêm
                                                 (sau {{$house->max_guest}} khách)
                                             </td>
                                         </tr>
@@ -193,17 +221,15 @@
                             </div>
                             @if(auth()->check())
                                 <input type="button" id="btn-showPrice"
-                                       @foreach($hosts as $host)
                                        @isset(auth()->user()->host)
-                                       @if(auth()->user()->host->id == $house->host_id  ) disabled @endisset
+                                       @if(auth()->user()->host->id === $house->host_id) disabled @endisset
                                        @endif
-                                       @endforeach
-                                       class="btn btn-block btn-primary" data-toggle="modal"
+                                       class="btn btn-block btn-lux" data-toggle="modal"
                                        data-target="#form-order" value="Đặt ngay">
                                 @include('house.nav.form_order_nav')
                             @else
                                 <a type="button" id="btn-showPrice"
-                                   class="btn btn-block btn-primary" href="{{route('users.login')}}">Đặt ngay</a>
+                                   class="btn btn-block btn-lux" href="{{route('users.login')}}">Đặt ngay</a>
                             @endif
                         </div>
                     </div>
@@ -213,11 +239,7 @@
                 @include('house.nav.hint_houses')
             </div>
             <div class="similar-house my-4">
-                @foreach($hosts as $host)
-                    @if($host->id == $house->host_id)
-                        @include('house.nav.same_host',['host'=>$host])
-                    @endif
-                @endforeach
+                @include('house.nav.same_host',['host'=>$host])
             </div>
         </div>
     </div>
