@@ -32,8 +32,7 @@ class CreateHousesTable extends Migration
             $table->tinyInteger('status');
             $table->tinyInteger('h_status');
             $table->string('trip_type');
-            $table->string('price_m_to_t');
-            $table->string('price_f_to_s');
+            $table->string('price');
             $table->string('exGuest_fee');
             $table->string('min_night');
             $table->timestamps();

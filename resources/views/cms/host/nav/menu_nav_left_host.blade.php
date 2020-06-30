@@ -5,11 +5,11 @@
             alt="" class="w-100">
     </div>
     <ul class="profile-detail">
-        <li class="text-center"><h5>@isset($user->name) {{$user->name}} @else {{$user->email}} @endisset</h5>
+        <li class="text-center"><h5>{{isset($user->name) ? $user->name : Str::limit($user->email,16)}}</h5>
         </li>
         <li>
             <label class="mr-1"><i class="fal fa-envelope"></i> Email:</label>
-            <p>{{$user->email}}</p>
+            <p>{{Str::limit($user->email,16)}}</p>
         </li>
         <li>
             <label class="mr-1"><i class="fal fa-home-alt"></i> Số căn hộ đang quản lý: </label>
@@ -19,7 +19,7 @@
         </li>
         <li>
             <label class="mr-1"><i class="fal fa-id-card"></i> CMND:</label>
-            <p>{{$host->ID_card}}</p>
+            <p>{{Str::limit($host->ID_card,16)}}</p>
         </li>
         <li class="btn-update">
             <a href="#" class="btn btn-block btn-lux" data-toggle="modal" data-target="">
@@ -35,31 +35,31 @@
 <div class="bottom-nav-menu mt-3">
     <ul class="profile-setting">
         <li>
-            <a href="@if((request()->segment(3) == 'dashboard')) javascript:void(0) @else {{route('users.host.showDashboard',[auth()->user()->host->id])}} @endif"
+            <a href="{{(request()->segment(3) == 'dashboard') ? 'javascript:void(0)' : route('users.host.showDashboard',[auth()->user()->host->id])}}"
                class="btn btn-block btn-noti">
                 <i class="far fa-envelope"></i>
                 Thông báo
             </a>
         </li>
         <li>
-            <a href="@if((request()->segment(3) == 'house')) javascript:void(0) @else {{route('users.host.ViewHouse',[auth()->user()->host->id])}} @endif"
+            <a href="{{(request()->segment(3) == 'house') ?'javascript:void(0)' : route('users.host.ViewHouse',[auth()->user()->host->id])}}"
                class="btn btn-block btn-primary">
                 <i class="far fa-hotel"></i>
                 Chỗ của bạn
             </a>
         </li>
         <li>
-            <a href="@if((request()->segment(3) == 'booking')) javascript:void(0) @else {{route('users.host.viewBooking',[auth()->user()->host->id])}} @endif"
+            <a href="{{(request()->segment(3) == 'booking') ? 'javascript:void(0)' : route('users.host.viewBooking',[auth()->user()->host->id])}}"
                class="btn btn-block btn-success">
                 <i class="fal fa-list"></i>
                 Đặt phòng
             </a>
         </li>
         <li>
-            <a href="#"
+            <a href="{{(request()->segment(3) == 'show-bills') ? 'javascript:void(0)' : route('users.host.viewBills',[auth()->user()->host->id])}}"
                class="btn btn-block btn-pay-profile">
                 <i class="fal fa-money-check-alt"></i>
-                Thanh toán
+                Quản lý doanh thu
             </a>
         </li>
     </ul>

@@ -8,7 +8,7 @@
             <div class="home-content">
                 <a href="{{route('places.HouseDetail',[$house_hint->id])}}">
                     <div class="image">
-                        <img src="{{asset($images["0"]->image_path)}}" alt="" class="w-100">
+                        <img src="{{asset($images["0"]->image_path)}}" alt="" class="w-100" style="height: 159px;">
                     </div>
 
                     <p class="home-type">
@@ -26,22 +26,12 @@
                         </div>
                         <p class="home-address">
                             {{$house_hint->address}},
-                            @foreach($districts as $district)
-                                @if($district->id == $house_hint->district_id)
-                                    {{$district->name}}
-                                @endif
-                            @endforeach
+                            {{$house_hint->district->name}}
                             ,{{$house_hint->city->name}}
                         </p>
                         <div class="home-price">
                             <p>
-                                @if(\Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('l') == 'Sunday' ||
-                                    \Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('l') == 'Saturday' ||
-                                    \Carbon\Carbon::now('Asia/Ho_Chi_Minh')->format('l') == 'Friday')
-                                    <span>{{$house_hint->price_f_to_s}}</span> đ/đêm
-                                @else
-                                    <span>{{$house_hint->price_m_to_t}}</span> đ/đêm
-                                @endif
+                                <span>{{$house_hint->price}}</span> đ/đêm
                             </p>
                         </div>
                         <div class="bottom-field row">
@@ -54,7 +44,7 @@
                             </div>
                             <div class="comment col-6 text-right">
                                 <i class="far fa-comment-alt-lines"></i>
-                                <span>1</span>
+                                <span>{{isset($comments_list) ? count($comments_list->where('h_id',$house_hint->id)) : '0'}}</span>
                             </div>
                         </div>
                     </div>

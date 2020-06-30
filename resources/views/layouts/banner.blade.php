@@ -21,7 +21,7 @@
                     </div>
                     <div class="form-btn">
                         <input type="submit"
-                               class="btn btn-block btn-primary" id="search-btn" value="Tìm kiếm">
+                               class="btn btn-block btn-lux" id="search-btn" value="Tìm kiếm">
                     </div>
                 </form>
             </div>

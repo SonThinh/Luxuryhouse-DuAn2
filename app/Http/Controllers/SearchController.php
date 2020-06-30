@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\House;
 use App\Model\Bill;
 use App\Model\City;
+use App\Model\Comment;
 use App\Model\District;
 use App\Model\Trip;
 use App\Model\Type;
@@ -19,11 +20,8 @@ class SearchController extends Controller
             'check_in' => $b[0],
             'check_out' => $b[1]
         ];
-        $bills = Bill::query()->where('check_in', '!=', $c['check_in'])->get();
-        dd($bills);
-
         if ($request->location != '') {
-            $data['cities'] = City::query()->where('name', 'like', '%' . $request->location . '%')->get();
+            $data['cities'] = City::query()->where('name', 'like', '%' . $request->location . '%')->paginate(12);
             $data['houses'] = House::query()->where('name', 'like', '%' . $request->location . '%')->paginate(12);
 
             foreach ($data['cities'] as $city) {
@@ -31,112 +29,85 @@ class SearchController extends Controller
                     $data['houses'] = House::query()
                         ->where('status', 1)
                         ->where('city_id', $city->id)
-                        ->where('h_status', 0)
+                        ->where('h_status', 1)
                         ->where('max_guest', '>=', (int)$request->n_person)->paginate(12);
+                    $h = House::query()
+                        ->where('status', 1)
+                        ->where('h_status', 1)
+                        ->where('city_id', $city->id)->get();
                 }
             }
         } else {
+            $h = House::query()
+                ->where('status', 1)
+                ->where('h_status', 1)->get();
             $data['houses'] = House::query()
+//                ->select('houses.*', 'bills.*')
+//                ->join('bills', 'bills.h_id', '=', 'houses.id')
+//                ->where('bills.check_in', '!=', $c['check_in'])
                 ->where('houses.status', 1)
-                ->where('houses.h_status', 0)
+                ->where('houses.h_status', 1)
                 ->where('houses.max_guest', '>=', (int)$request->n_person)->paginate(12);
+        }
 
-        }
-        if (date_format(now(), 'l') == 'Friday' ||
-            date_format(now(), 'l') == 'Saturday' ||
-            date_format(now(), 'l') == 'Sunday') {
-            $data['max_price'] = $data['houses']->get()->max('price_f_to_s');
-        } else {
-            $data['max_price'] = $data['houses']->get()->max('price_m_to_t');
-        }
-        dd($data['houses']->get()->max('price_f_to_s'));
-        $data['checkin'] = $request->check_in;
+
+        $data['max_price'] = $h->max('price');
         $data['location'] = $request->location;
-        $data['checkout'] = $request->check_out;
         $data['n_person'] = $request->n_person;
+        $data['date_search'] = $request->date_search;
         $data['types'] = Type::all();
         $data['trips'] = Trip::all();
         $data['districts'] = District::with(['city'])->get();
+        $data['comments'] = Comment::all();
 
         return view('pages.search', $data);
     }
 
     public function searchHouses(Request $request)
     {
-        $data['districts'] = District::all();
+
+        $data['districts'] = District::with(['city'])->get();
         $data['types'] = Type::all();
         $data['trips'] = Trip::all();
         $cities = City::all();
-        $data['checkin'] = $request->check_in;
         $data['location'] = $request->location;
-        $data['checkout'] = $request->check_out;
         $data['n_person'] = $request->n_person;
-
+        $data['date_search'] = $request->date_search;
+        $data['comments'] = Comment::all();
+        $h = House::query()
+            ->where('status', 1)
+            ->where('h_status', 1);
+        $data['max_price'] = $h->max('price');
         if ($request->location !== null) {
             foreach ($cities as $city) {
                 if ($city->name === $request->location) {
-                    $h = House::query()
-                        ->where('status', 1)
-                        ->where('city_id', $city->id);
+                    $data['cities'] = City::query()->where('name', 'like', '%' . $request->location . '%')->get();
                     if ($request->district) {
-                        $houses = House::query()
-                            ->where('status', 1)
+                        $houses = $h
                             ->where('city_id', $city->id)
                             ->where('district_id', $request->district);
                     } else {
-                        $houses = House::query()
-                            ->where('status', 1)
+                        $houses = $h
                             ->where('city_id', $city->id);
                     }
-                    $data['cities'] = City::query()->where('name', 'like', '%' . $request->location . '%')->get();
                 }
             }
         } else {
-            $houses = House::query()
-                ->where('status', 1);
-        }
-        if (date_format(now(), 'l') == 'Friday' || date_format(now(), 'l') == 'Saturday' || date_format(now(), 'l') == 'Sunday') {
-            if (isset($h)) {
-                $data['max_price'] = $h->get()->max('price_f_to_s');
-            } else {
-                $data['max_price'] = $houses->get()->max('price_f_to_s');
-            }
-            if ($request->price_max == $data['max_price']) {
-                $house = $houses->where('price_f_to_s', '>=', (int)$request->price_min);
-            } elseif ($request->price_min == 0) {
-                $house = $houses->where('price_f_to_s', '<=', (int)$request->price_max);
-            } else {
-                $house = $houses
-                    ->where('price_f_to_s', '>=', (int)$request->price_min)
-                    ->where('price_f_to_s', '<=', (int)$request->price_max);
-            }
-        } else {
-            if (isset($h)) {
-                $data['max_price'] = $h->get()->max('price_m_to_t');
-            } else {
-                $data['max_price'] = $houses->get()->max('price_m_to_t');
-            }
-            if ($request->price_max == $data['max_price']) {
-                $house = $houses->where('price_m_to_t', '>=', (int)$request->price_min);
-            } elseif ($request->price_min == 0) {
-                $house = $houses->where('price_m_to_t', '<=', (int)$request->price_max);
-            } else {
-                $house = $houses
-                    ->where('price_m_to_t', '>=', (int)$request->price_min)
-                    ->where('price_m_to_t', '<=', (int)$request->price_max);
-            }
+            $houses = $h;
         }
 
-        if ($request->district && $request->house_type && $request->trip_type) {
-            $data['houses'] = $house->where('district_id', $request->district)->where('types', $request->house_type)->where('trip_type', $request->trip_type)->paginate(12);
-        } else if ($request->district && $request->house_type) {
-            $data['houses'] = $house->where('district_id', $request->district)->where('types', $request->house_type)->paginate(12);
-        } else if ($request->district && $request->trip_type) {
-            $data['houses'] = $house->where('district_id', $request->district)->where('trip_type', $request->trip_type)->paginate(12);
-        } else if ($request->house_type && $request->trip_type) {
+        if ($request->price_max === $data['max_price']) {
+            $house = $houses->where('price', '>=', (int)$request->price_min);
+        } elseif ($request->price_min === 0) {
+            $house = $houses->where('price', '<=', (int)$request->price_max);
+        } else {
+            $house = $houses
+                ->where('price', '>=', (int)$request->price_min)
+                ->where('price', '<=', (int)$request->price_max);
+        }
+
+        if ($request->house_type && $request->trip_type) {
             $data['houses'] = $house->where('trip_type', $request->trip_type)->where('types', $request->house_type)->paginate(12);
-        } else if ($request->district) {
-            $data['houses'] = $house->where('district_id', $request->district)->paginate(12);
         } else if ($request->house_type) {
             $data['houses'] = $house->where('types', $request->house_type)->paginate(12);
         } else if ($request->trip_type) {

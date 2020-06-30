@@ -209,3 +209,28 @@ $('#btn-reg-host').on('click', function (e) {
 //     form.append('min_night', $('input[name=min_night]').val());
 //     console.log(form)
 // });
+$('#btn-comment').on('click', function (e) {
+    e.preventDefault();
+    let form = new FormData();
+    form.append('comment', $('input[name=comment]').val());
+    form.append('_token', $('input[name=_token]').val());
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        url: $('#comment').attr('action'),
+        processData: false,
+        contentType: false,
+        data: form,
+        success: function (data) {
+            if (data.status === 'true') {
+                toastr.success(data.message);
+                setTimeout(
+                    function () {
+                        window.location.replace(data.url);
+                    }, 1000);
+            } else {
+                toastr.error(data.message);
+            }
+        }
+    });
+});

@@ -39,7 +39,7 @@
                     </div>
                     <div class="form-group">
                         <input class="form-control" type="text" name="name" placeholder="Tên"
-                               value="{{$user->username}}">
+                               value="{{$user->name}}">
                     </div>
                     <div class="form-group">
                         <input class="form-control" type="text" name="address" placeholder="Địa chỉ"

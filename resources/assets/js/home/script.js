@@ -409,7 +409,6 @@ $('select[name="selectCity"]').change(function (e) {
     let city_id = $('select[name="selectCity"]').val();
     let token = $("input[name='_token']").val();
     let url = $('select[name="selectCity"]').data('url');
-    console.log(url);
     $.ajax({
         url: url,
         method: 'POST',
@@ -443,8 +442,8 @@ $(document).on('click', '#btn-showPrice', function () {
     $('input[name=check_in_clone]').val(checkin);
     $('input[name=check_out_nav]').val(checkout);
     $('input[name=check_out_clone]').val(checkout);
-    let check_in = moment(checkin, 'DD/MM/YYYY')
-    let check_out = moment(checkout, 'DD/MM/YYYY')
+    let check_in = moment(checkin, 'DD/MM/YYYY');
+    let check_out = moment(checkout, 'DD/MM/YYYY');
     let days_range = check_out.diff(check_in, 'days');
     $('input[name=dates_range]').val(days_range);
     $("#hire_dates").append("Giá cho thuê " + days_range + " đêm");

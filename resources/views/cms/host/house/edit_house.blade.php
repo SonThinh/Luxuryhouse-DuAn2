@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="text-center">Thêm chỗ ở</h4>
+                <h4 class="text-center">Sửa thông tin chỗ ở</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
             </div>
@@ -182,12 +182,9 @@
                         <label class="col-sm-4 control-label">Bảng giá</label>
                         <div class="col-sm-8">
                             <div class="form-check-inline w-100">
-                                <input type="number" min="0" class="form-control" name="m_to_t"
-                                       value="{{$house->price_m_to_t}}"
-                                       placeholder="Thứ 2-thứ 5">
-                                <input type="number" min="0" class="form-control" name="f_to_s"
-                                       value="{{$house->price_f_to_s}}"
-                                       placeholder="Thứ 6-chủ nhật">
+                                <input type="number" min="0" class="form-control" name="price"
+                                       value="{{$house->price}}"
+                                       placeholder="Giá phòng">
                             </div>
                             <div class="form-check-inline w-100">
                                 <input type="number" min="0" class="form-control" name="exGuest_fee"

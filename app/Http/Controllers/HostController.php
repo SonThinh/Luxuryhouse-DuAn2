@@ -130,8 +130,7 @@ class HostController extends Controller
         $house->n_room = $request->n_room;
         $house->n_bath = $request->n_bath;
         $house->n_bed = $request->n_bed;
-        $house->price_m_to_t = $request->m_to_t;
-        $house->price_f_to_s = $request->f_to_s;
+        $house->price = $request->price;
         $house->exGuest_fee = $request->exGuest_fee;
         $house->min_night = $request->min_night;
         $house->max_guest = $request->max_guest;
@@ -203,8 +202,7 @@ class HostController extends Controller
         $house->n_room = $request->n_room;
         $house->n_bath = $request->n_bath;
         $house->n_bed = $request->n_bed;
-        $house->price_m_to_t = $request->m_to_t;
-        $house->price_f_to_s = $request->f_to_s;
+        $house->price = $request->price;
         $house->exGuest_fee = $request->exGuest_fee;
         $house->min_night = $request->min_night;
         $house->max_guest = $request->max_guest;
@@ -248,5 +246,16 @@ class HostController extends Controller
         $bill->status = $request->status;
         $bill->save();
         return response()->json(['success' => 'Đã đổi trạng thái đơn đặt phòng']);
+    }
+    public function viewBills($id){
+        $data['cities'] = City::all();
+        $data['houses'] = House::all();
+        $data['users'] = User::all();
+        $data['types'] = Type::all();
+        $data['trips'] = Trip::all();
+        $data['utilities'] = Utility::all();
+        $data['host'] = Host::find($id);
+        $data['bookings'] = Bill::query()->where('host_id', $id)->where('status', 1)->where('pay', 1)->get();
+        return view('cms.host.bills', $data);
     }
 }

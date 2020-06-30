@@ -783,8 +783,28 @@ li.nav-item a:hover {
     letter-spacing: -1px;
 }
 
+.w-55 {
+    width: 55px !important;
+}
+.my-105-25{
+    margin-top: 105px;
+    margin-bottom: 25px;
+}
+.users-comments .avatar-comment img {
+    border-radius: 50%;
+}
+
+.users-comments .content-comment .user-comment-name {
+    font-weight: bold;
+}
+
+.users-comments .content-comment .user-comment-name span {
+    font-size: 14px;
+    font-weight: 200 !important;
+}
+
 .main .home-content .home-detail {
-    font-size: 15px;
+    font-size: 14px;
     justify-content: center;
 }
 
@@ -1501,17 +1521,19 @@ footer .follow-us i {
 footer .about-us {
     margin-bottom: 10px;
 }
-
-footer .follow-us #fb i:hover {
+footer .follow-us #fb i{
     color: #4c6ef5;
 }
 
-footer .follow-us #yt i:hover {
+footer .follow-us #yt i{
     color: #ff0000;
 }
 
-footer .follow-us #ins i:hover {
+footer .follow-us #ins i{
     color: #ff0000;
+}
+footer .follow-us #fb i:hover,footer .follow-us #yt i:hover,footer .follow-us #ins i:hover {
+    opacity: 0.8;
 }
 
 /*-- footer --*/
@@ -1529,7 +1551,7 @@ footer .follow-us #ins i:hover {
     height: 40px;
     border: none;
     text-indent: 100%;
-    background: url(http://localhost/Luxuryhouse-DuAn2/resources/assets/images/button/arr.png) no-repeat 0px 0px;
+    background: url(http://localhost/Luxuryhouse-DuAn2/resources/assets/images/button/top.png) no-repeat 0px 0px;
 }
 
 #toTopHover {

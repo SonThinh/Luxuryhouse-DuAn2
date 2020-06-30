@@ -162,10 +162,8 @@
                         <label class="col-sm-4 control-label">Bảng giá</label>
                         <div class="col-sm-8">
                             <div class="form-check-inline w-100">
-                                <input type="number" min="0" class="form-control" name="m_to_t"
-                                       placeholder="Thứ 2-thứ 5">
-                                <input type="number" min="0" class="form-control" name="f_to_s"
-                                       placeholder="Thứ 6-chủ nhật">
+                                <input type="number" min="0" class="form-control" name="price"
+                                       placeholder="Giá phòng">
                             </div>
                             <div class="form-check-inline w-100">
                                 <input type="number" min="0" class="form-control" name="exGuest_fee"

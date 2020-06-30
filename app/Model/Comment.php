@@ -14,6 +14,7 @@ class Comment extends Model
     protected $fillable = [
         'm_id',
         'h_id',
+        'b_id',
         'content',
         'status'
     ];
@@ -23,5 +24,8 @@ class Comment extends Model
 
     public function user(){
         return $this->belongsTo(User::class,'m_id','id');
+    }
+    public function bill(){
+        return $this->belongsTo(Bill::class,'b_id','id');
     }
 }

@@ -31,8 +31,7 @@ class House extends Model
         'h_status',
         'h_status',
         'trip_type',
-        'price_m_to_t',
-        'price_f_to_s',
+        'price',
         'exGuest_fee',
         'min_night',
     ];

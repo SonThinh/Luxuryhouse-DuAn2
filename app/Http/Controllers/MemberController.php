@@ -26,10 +26,13 @@ class MemberController extends Controller
     public function bookingDetail($id, $code)
     {
         $data['bookings'] = Bill::query()->where('code', $code)->get();
+        foreach ($data['bookings'] as $booking){
+            $h_id = $booking->h_id;
+        }
         $data['houses'] = House::all();
         $data['cities'] = City::all();
         $data['districts'] = District::with(['city'])->get();
-        $data['comments'] = Comment::all();
+        $data['comments'] = Comment::query()->where('m_id',\auth()->id())->where('h_id',$h_id)->get();
         $data['user'] = User::find($id);
 
         return view('cms.member.booking_detail', $data);
@@ -116,14 +119,33 @@ class MemberController extends Controller
         return view('cms.member.pay_history', $data);
     }
 
-    public function postComment(Request $request, $m_id)
+    public function postComment(Request $request, $m_id, $code)
     {
-        $comment = new Comment;
-        $comment->m_id = $m_id;
-        $comment->h_id = $request->house_id;
-        $comment->content = $request->comment;
-        $comment->status = 1;
-        $comment->save();
-        return back()->withInput()->with('success', 'Đăng đánh giá thành công!');
+        if ($request->comment !== null) {
+            $booking = Bill::query()->where('code', $code)->get();
+            foreach ($booking as $bill) {
+                $h_id = $bill->h_id;
+                $b_id = $bill->id;
+            }
+            $comment = new Comment;
+            $comment->m_id = $m_id;
+            $comment->h_id = $h_id;
+            $comment->b_id = $b_id;
+            $comment->content = $request->comment;
+            $comment->status = 1;
+            $comment->save();
+            if ($comment) {
+                return response()->json([
+                    'status' => 'true',
+                    'message' => 'Đăng đánh giá thành công!',
+                    'url' => route('places.HouseDetail', [$h_id]),
+                ]);
+            }
+        } else {
+            return response()->json([
+                'status' => 'false',
+                'message' => 'Đăng đánh giá thất bại! Vui lòng kiểm tra lại thông tin',
+            ]);
+        }
     }
 }

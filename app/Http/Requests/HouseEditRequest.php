@@ -41,8 +41,7 @@ class HouseEditRequest extends FormRequest
             'check_in' => 'required',
             'check_out' => 'required',
             'house_utilities' => 'required',
-            'm_to_t' => 'required',
-            'f_to_s' => 'required',
+            'price' => 'required',
             'exGuest_fee' => 'required',
             'min_night' => 'required'
         ];
@@ -64,8 +63,7 @@ class HouseEditRequest extends FormRequest
             'check_in.required' => 'Chưa chọn thời gian nhận phòng',
             'check_out.required' => 'Chưa chọn thời gian trả phòng',
             'house_utilities.required' => 'Chưa chọn các tiện ích',
-            'm_to_t.required' => 'Chưa nhập giá thứ 2 tới thứ 5',
-            'f_to_s.required' => 'Chưa nhập giá thứ 6 tới chủ nhật',
+            'price.required' => 'Chưa nhập giá',
             'exGuest_fee.required' => 'Chưa nhập giá khách thêm',
             'min_night.required' => 'Chưa nhập số đêm tối thiểu',
         ];
