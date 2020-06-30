@@ -1,8 +1,8 @@
 @extends('index')
 @section('title','house detail')
 @section('main')
-    <link rel="stylesheet" href="{{asset('../resources/assets/css/slider-jssort101.css')}}">
-    <link rel="stylesheet" href="{{asset('../resources/assets/css/jssort101.css')}}">
+    <link rel="stylesheet" href="{{asset('/css/slider-jssort101.css')}}">
+    <link rel="stylesheet" href="{{asset('/css/jssort101.css')}}">
 
     <div class="main p-3">
         <div class="container">
@@ -113,7 +113,7 @@
 
                                     <div class="avatar-comment col-sm-2 text-right">
                                         <img
-                                            src="@isset($avatar){{asset($avatar->image_path)}}@else{{asset('../resources/assets/images/avatar/avatar-default.png')}}@endisset"
+                                            src="{{isset($avatar) ? asset($avatar->image_path) : asset('/images/avatar/avatar-default.png')}}"
                                             alt="Avatar" class="w-55 h-55">
                                     </div>
 
@@ -155,7 +155,7 @@
 
                                         <div class="avatar-contact col-sm-3 m-auto">
                                             <img
-                                                src="@isset($avatar){{asset($avatar->image_path)}}@else{{asset('../resources/assets/images/avatar/avatar-default.png')}}@endisset"
+                                                src="{{isset($avatar) ? asset($avatar->image_path) : asset('/images/avatar/avatar-default.png')}}"
                                                 alt="Avatar" class="w-100 h-55">
                                         </div>
 
@@ -243,7 +243,7 @@
             </div>
         </div>
     </div>
-    <script src="{{asset('../resources/assets/js/jssor.slider-28.0.0.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('/js/jssor.slider-28.0.0.min.js')}}" type="text/javascript"></script>
     <script type="text/javascript">jssor_1_slider_init();</script>
 @endsection
 

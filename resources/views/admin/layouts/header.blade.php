@@ -4,7 +4,7 @@
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('admin.dashboard')}}">
             <div class="sidebar-brand-icon">
-                <img src="{{asset('../resources/assets/images/logo/logo.ico')}}" alt="" class="w-100">
+                <img src="{{asset('/images/logo/logo.ico')}}" alt="" class="w-100">
             </div>
             <div class="sidebar-brand-text mx-3">Luxury Admin<sup>1</sup></div>
         </a>
@@ -165,7 +165,7 @@
                             <span
                                 class="mr-2 d-none d-lg-inline text-gray-600 small">{{auth()->user()->name ?? auth()->user()->email}}</span>
                             <img class="img-profile rounded-circle"
-                                 src="@isset($image->image_path){{asset($image->image_path)}}@else{{asset('../resources/assets/images/avatar/avatar-default.png')}} @endisset"
+                                 src="@isset($image->image_path){{asset($image->image_path)}}@else{{asset('/images/avatar/avatar-default.png')}} @endisset"
                                  alt="">
                         </a>
                         <!-- Dropdown - User Information -->

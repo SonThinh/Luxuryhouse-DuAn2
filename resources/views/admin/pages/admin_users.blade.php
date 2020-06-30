@@ -35,11 +35,11 @@
                                     <td>{{$members->username}}</td>
                                     <td>{{$members->email}}</td>
                                     <td class="text-center w-15"><img
-                                            src="@isset($image->image_path){{asset($image->image_path)}}@else{{asset('../resources/assets/home/images/avatar/avatar-default.png')}} @endisset"
+                                            src="{{isset($image) ? asset($image->image_path) : asset('/home/images/avatar/avatar-default.png')}}"
                                             alt="" style="width: 100%"></td>
                                     <td>{{$members->address}}</td>
                                     <td>{{$members->gender}}</td>
-                                    <td>{{date('d-m-Y',strtotime($members->birth))}}</td>
+                                    <td>{{\Carbon\Carbon::parse($members->birth)->format('d-m-Y')}}</td>
                                     <td>{{$members->phone}}</td>
                                     <td>{{$members->google}}</td>
                                     <td>{{$members->facebook}}</td>

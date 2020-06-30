@@ -4,7 +4,7 @@
             <nav class="navbar navbar-expand-lg navbar-light">
                 <a href="{{route('home')}}">
                     <div class="logo d-flex">
-                        <img src="{{asset('../resources/assets/images/logo/logo.png')}}">
+                        <img src="{{asset('/images/logo/logo.png')}}">
                         <div class="logo-name text-uppercase ml-1 mt-2 d-block">
                             <p>Luxury<br>house</p>
                         </div>
@@ -29,7 +29,7 @@
                                         $image = json_decode(auth()->user()->avatar);
                                     @endphp
                                     <img
-                                        src="{{isset($image) ? asset($image->image_path) : asset('../resources/assets/images/avatar/avatar-default.png')}}"
+                                        src="{{isset($image) ? asset($image->image_path) : asset('/images/avatar/avatar-default.png')}}"
                                         class="avatar" alt="">
                                     <span>{{isset(auth()->user()->name) ? auth()->user()->name : auth()->user()->email}}</span>
                                     <b class="caret"></b>

@@ -229,7 +229,7 @@
      style="">
     <!-- Loading Screen -->
     <div data-u="loading" class="jssorl-009-spin">
-        <img src="{{asset('../resources/assets/images/button/spin.svg')}}"/>
+        <img src="{{asset('/images/button/spin.svg')}}"/>
     </div>
     <div data-u="slides" class="slider-box">
         @foreach($images as $image)

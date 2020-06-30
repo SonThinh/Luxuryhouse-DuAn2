@@ -45,7 +45,7 @@
                                 </td>
                                 <td>{{$host->business_license}}</td>
                                 <td class="text-center d-content">
-                                        <img src="@isset($image_BL->image_path){{asset($image_BL->image_path)}}@else{{asset('../resources/assets/home/images/avatar/avatar-default.png')}} @endisset" alt="" width="25%">
+                                        <img src="@isset($image_BL->image_path){{asset($image_BL->image_path)}}@else{{asset('/home/images/avatar/avatar-default.png')}} @endisset" alt="" width="25%">
                                 </td>
                             </tr>
                         @endforeach

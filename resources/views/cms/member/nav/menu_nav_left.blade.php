@@ -1,7 +1,7 @@
 <div class="top-nav-menu">
     <div class="avatar-profile">
         <img
-            src="{{asset($image->image_path ?? '../resources/assets/images/avatar/avatar-default.png')}}"
+            src="{{asset($image->image_path ?? '/images/avatar/avatar-default.png')}}"
             alt="" class="w-100">
     </div>
     <ul class="profile-detail">

@@ -7,11 +7,11 @@
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-    <link href="{{asset('../resources/assets/css/bootstrap-v4.5.min.css')}}" rel="stylesheet">
-    <link href="{{asset('../resources/assets/css/admin/admin.min.css')}}" rel="stylesheet">
-    <link href="{{asset('../resources/assets/css/toastr-v2.1.3.min.css')}}" rel="stylesheet">
-    <link href="{{asset('../resources/assets/css/admin/admin-style-1.css')}}" rel="stylesheet">
-    <link rel="icon" type="image/ico" href="{{asset('../resources/assets/images/logo/logo.ico')}}"/>
+    <link href="{{asset('/css/bootstrap-v4.5.min.css')}}" rel="stylesheet">
+    <link href="{{asset('/css/admin/admin.min.css')}}" rel="stylesheet">
+    <link href="{{asset('/css/toastr-v2.1.3.min.css')}}" rel="stylesheet">
+    <link href="{{asset('/css/admin/admin-style-1.css')}}" rel="stylesheet">
+    <link rel="icon" type="image/ico" href="{{asset('/images/logo/logo.ico')}}"/>
 </head>
 
 <body class="bg-gradient-primary">
@@ -57,10 +57,10 @@
     </div>
 </div>
 
-<script src="{{asset('../resources/assets/js/jquery-v3.5.1.min.js')}}"></script>
-<script src="{{asset('../resources/assets/js/toastr-v2.1.3.min.js')}}"></script>
-<script src="{{asset('../resources/assets/js/admin/admin.min.js')}}"></script>
-<script src="{{asset('../resources/assets/js/admin/admin-2.js')}}"></script>
+<script src="{{asset('/js/jquery-v3.5.1.min.js')}}"></script>
+<script src="{{asset('/js/toastr-v2.1.3.min.js')}}"></script>
+<script src="{{asset('/js/admin/admin.min.js')}}"></script>
+<script src="{{asset('/js/admin/admin-2.js')}}"></script>
 
 </body>
 </html>

@@ -26,7 +26,7 @@
                                      style="width: 50%;"/>
                             @else
                                 <img id="img-old" alt=""
-                                     src="{{asset('../resources/assets/images/avatar/avatar-default.png')}}"
+                                     src="{{asset('/images/avatar/avatar-default.png')}}"
                                      style="width: 50%;"/>
                                 <img id="output" alt=""
                                      style="width: 50%;"/>
