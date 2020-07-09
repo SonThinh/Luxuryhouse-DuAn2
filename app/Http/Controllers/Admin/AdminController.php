@@ -29,11 +29,11 @@ class AdminController extends Controller
     {
         $data['houses'] = House::query()->where('status', 1)->get();
         $data['users'] = User::query()->where('level', '!=', 0)->get();
-        $data['cities'] = City::all();
         $data['hosts'] = Host::query()->where('status', 0)->get();
         $data['houses'] = House::query()->where('status', 0)->get();
         $data['house_all'] = House::query()->where('status', 1)->get();
         $data['district'] = District::with(['city'])->get();
+        $data['cities'] = City::all();
         return view('admin.pages.admin_dashboard', $data);
     }
 
@@ -70,7 +70,7 @@ class AdminController extends Controller
 
     public function checkLevelByEmail(String $email)
     {
-        $email = User::all()->where('email', $email)->where('level', 0);
+        $email = User::query()->where('email', $email)->where('level', 0);
         if ($email->count() > 0)
             return true;
         return false;

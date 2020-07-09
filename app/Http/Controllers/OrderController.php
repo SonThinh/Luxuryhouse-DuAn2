@@ -60,7 +60,7 @@ class OrderController extends Controller
             'total' => $request->total,
             'date_range' => $request->date_range,
         ];
-        $this->sendBill_detail($data);
+//        $this->sendBill_detail($data);
         return redirect()->route('users.showViewBookingComplete', $code);
     }
 
@@ -99,7 +99,7 @@ class OrderController extends Controller
         }
         $data['code'] = $code;
         $data['user_id'] = $user->id;
-        $this->sendPay($data);
+//        $this->sendPay($data);
 
         return view('cms.member.pay_success', $data);
     }

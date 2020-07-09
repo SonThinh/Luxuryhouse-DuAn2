@@ -160,7 +160,7 @@ class HostController extends Controller
     public function ViewHouse($id)
     {
         $data['houses'] = House::query()->where('host_id', $id)->get();
-        $data['housesList'] = House::query()->where('host_id', $id)->where('status', 1)->paginate(10);
+        $data['housesList'] = House::query()->where('host_id', $id)->where('status', 1)->get();
         $data['house'] = House::with(['city'])->get();
         $data['cities'] = City::all();
         $data['districts'] = District::with(['city'])->get();

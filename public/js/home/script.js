@@ -26,7 +26,7 @@ $(document).ready(function () {
     $().UItoTop({easingType: 'easeOutQuart'});
     //toggle
     $('.toggle-house-status').change(function () {
-        let h_status = $(this).prop('checked') == true ? 1 : 0;
+        let h_status = $(this).prop('checked') === true ? 1 : 0;
         let house_id = $(this).data('id');
         let url = $(this).data('url');
         $.ajax({
@@ -40,7 +40,7 @@ $(document).ready(function () {
         });
     })
     $('.toggle-book-status').change(function () {
-        let status = $(this).prop('checked') == true ? 1 : 0;
+        let status = $(this).prop('checked') === true ? 1 : 0;
         let book_id = $(this).data('id');
         let url = $(this).data('url');
         $.ajax({

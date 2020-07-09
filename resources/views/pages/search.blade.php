@@ -39,12 +39,12 @@
                             @php
                                 $images = json_decode($house->image);
                             @endphp
-                            <div class="col-sm-12 col-md-4">
+                            <div class="col-sm-12 col-md-4 my-3">
                                 <div class="home-content">
                                     <a href="{{route('places.HouseDetail',[$house->id])}}">
                                         <div class="image">
                                             <img src="{{asset($images["0"]->image_path)}}" alt="" class="w-100"
-                                                 style="max-height: 158px">
+                                                 style="height: 158px">
                                         </div>
                                         <p class="home-type">
                                             @foreach($types as $type)
@@ -90,7 +90,7 @@
                             </div>
                         @endforeach
                     </div>
-                    {{$houses->render()}}
+                    {{$houses->links()}}
                 </div>
             </div>
         </div>

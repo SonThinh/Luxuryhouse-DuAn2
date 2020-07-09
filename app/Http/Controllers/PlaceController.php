@@ -12,6 +12,7 @@ use App\Model\Trip;
 use App\Model\Type;
 use App\Model\Utility;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 class PlaceController extends Controller
 {
@@ -38,8 +39,8 @@ class PlaceController extends Controller
         $data['utilities'] = Utility::all();
         $data['host'] = Host::with(['user'])->find($data['house']->host->id);
         $data['bills'] = Bill::query()->where('h_id', $id)->get();
-        $data['houses_hint'] = House::query()->where('id', '!=', $data['house']->id)->where('city_id', $data['city']->id)->where('status', 1)->where('h_status', 1)->take(3)->get();
-        $data['houses_same'] = House::query()->where('id', '!=', $data['house']->id)->where('status', 1)->where('h_status', 1)->where('host_id', $data['house']->host_id)->take(1)->get();
+        $data['houses_hint'] = House::query()->where('id', '!=', $data['house']->id)->where('city_id', $data['city']->id)->where('status', 1)->where('h_status', 1)->take(4)->get();
+        $data['houses_same'] = House::query()->where('id', '!=', $data['house']->id)->where('status', 1)->where('h_status', 1)->where('host_id', $data['house']->host_id)->take(4)->get();
         $data['comments'] = Comment::query()->where('h_id', $id)->paginate(6);
         $data['comments_list'] = Comment::all();
 
@@ -73,15 +74,16 @@ class PlaceController extends Controller
         }
 
         if ($request->house_type && $request->trip_type) {
-            $data['houseList'] = $house->where('trip_type', $request->trip_type)->where('types', $request->house_type)->paginate(12);
+            $listHouse = $house->where('trip_type', $request->trip_type)
+                ->where('types', $request->house_type);
         } else if ($request->house_type) {
-            $data['houseList'] = $house->where('types', $request->house_type)->paginate(12);
+            $listHouse = $house->where('types', $request->house_type);
         } else if ($request->trip_type) {
-            $data['houseList'] = $house->where('trip_type', $request->trip_type)->paginate(12);
+            $listHouse = $house->where('trip_type', $request->trip_type);
         } else {
-            $data['houseList'] = $house->paginate(12);
+            $listHouse = $house;
         }
-
+        $data['houseList'] = $listHouse->paginate(12)->appends(request()->except('page'));
         return view('pages.place_detail', $data);
     }
 

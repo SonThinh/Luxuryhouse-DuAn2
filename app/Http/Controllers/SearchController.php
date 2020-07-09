@@ -10,6 +10,7 @@ use App\Model\District;
 use App\Model\Trip;
 use App\Model\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 class SearchController extends Controller
 {
@@ -20,38 +21,47 @@ class SearchController extends Controller
             'check_in' => $b[0],
             'check_out' => $b[1]
         ];
+        if ($c['check_in'] === $c['check_out']) {
+            $bills = Bill::query()
+                ->select('h_id')
+                ->where('check_in', $c['check_in'])
+                ->groupBy('h_id')
+                ->havingRaw('COUNT(h_id) > 1')
+                ->get();
+        } else {
+            $bills = Bill::query()
+                ->select('h_id')
+                ->where('check_in', $c['check_in'])
+                ->where('check_out', $c['check_out'])
+                ->groupBy('h_id')
+                ->havingRaw('COUNT(h_id) > 1')
+                ->get();
+        }
+
+        $houses = House::query()
+            ->where('status', 1)
+            ->where('h_status', 1);
         if ($request->location != '') {
-            $data['cities'] = City::query()->where('name', 'like', '%' . $request->location . '%')->paginate(12);
-            $data['houses'] = House::query()->where('name', 'like', '%' . $request->location . '%')->paginate(12);
+            $data['cities'] = City::query()->where('name', 'like', '%' . $request->location . '%')->paginate(12)->appends(request()->except('page'));
+            $listHouse = House::query()->where('name', 'like', '%' . $request->location . '%');
 
             foreach ($data['cities'] as $city) {
                 if ($city->name === $request->location) {
-                    $data['houses'] = House::query()
-                        ->where('status', 1)
-                        ->where('city_id', $city->id)
-                        ->where('h_status', 1)
-                        ->where('max_guest', '>=', (int)$request->n_person)->paginate(12);
-                    $h = House::query()
-                        ->where('status', 1)
-                        ->where('h_status', 1)
-                        ->where('city_id', $city->id)->get();
+                    $listHouse = $houses->where('city_id', $city->id)->where('max_guest', '>=', (int)$request->n_person);
+
                 }
             }
         } else {
-            $h = House::query()
-                ->where('status', 1)
-                ->where('h_status', 1)->get();
-            $data['houses'] = House::query()
-//                ->select('houses.*', 'bills.*')
-//                ->join('bills', 'bills.h_id', '=', 'houses.id')
-//                ->where('bills.check_in', '!=', $c['check_in'])
-                ->where('houses.status', 1)
-                ->where('houses.h_status', 1)
-                ->where('houses.max_guest', '>=', (int)$request->n_person)->paginate(12);
+            if (count($bills) !== 0) {
+                foreach ($bills as $bill) {
+                    $listHouse = $houses->where('max_guest', '>=', (int)$request->n_person)->where('houses.id', '!=', $bill->h_id);
+                }
+            } else {
+                $listHouse = $houses->where('max_guest', '>=', (int)$request->n_person);
+            }
         }
-
-
-        $data['max_price'] = $h->max('price');
+        $data['houses'] = $listHouse->paginate(12)->appends(request()->except('page'));
+        $data['max_price'] = $houses->get()->max('price');
         $data['location'] = $request->location;
         $data['n_person'] = $request->n_person;
         $data['date_search'] = $request->date_search;
@@ -59,13 +69,11 @@ class SearchController extends Controller
         $data['trips'] = Trip::all();
         $data['districts'] = District::with(['city'])->get();
         $data['comments'] = Comment::all();
-
         return view('pages.search', $data);
     }
 
     public function searchHouses(Request $request)
     {
-
         $data['districts'] = District::with(['city'])->get();
         $data['types'] = Type::all();
         $data['trips'] = Trip::all();
@@ -77,7 +85,7 @@ class SearchController extends Controller
         $h = House::query()
             ->where('status', 1)
             ->where('h_status', 1);
-        $data['max_price'] = $h->max('price');
+        $data['max_price'] = $h->get()->max('price');
         if ($request->location !== null) {
             foreach ($cities as $city) {
                 if ($city->name === $request->location) {
@@ -107,14 +115,15 @@ class SearchController extends Controller
         }
 
         if ($request->house_type && $request->trip_type) {
-            $data['houses'] = $house->where('trip_type', $request->trip_type)->where('types', $request->house_type)->paginate(12);
+            $listHouse = $house->where('trip_type', $request->trip_type)->where('types', $request->house_type);
         } else if ($request->house_type) {
-            $data['houses'] = $house->where('types', $request->house_type)->paginate(12);
+            $listHouse = $house->where('types', $request->house_type);
         } else if ($request->trip_type) {
-            $data['houses'] = $house->where('trip_type', $request->trip_type)->paginate(12);
+            $listHouse = $house->where('trip_type', $request->trip_type);
         } else {
-            $data['houses'] = $house->paginate(12);
+            $listHouse = $house;
         }
+        $data['houses'] = $listHouse->paginate(12)->appends(request()->except('page'));
         return view('pages.search', $data);
     }
 

@@ -223,7 +223,6 @@ class HouseController extends Controller
         $house->status = $request->status;
         $house->save();
         return response()->json(['success' => 'Đổi trạng thái thành công.']);
-
     }
 
 }
