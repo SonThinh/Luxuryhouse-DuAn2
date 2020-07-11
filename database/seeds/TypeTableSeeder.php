@@ -13,7 +13,7 @@ class TypeTableSeeder extends Seeder
     public function run()
     {
         DB::statement('
-        INSERT INTO `types` (`id`, `key`, `name`, `created_at`, `updated_at`) VALUES
+        INSERT INTO types (id, key, name, created_at, updated_at) VALUES
         (1, \'ks\', \'Khách sạn\', \'2020-06-13 06:20:34\', \'2020-06-13 06:21:31\'),
         (2, \'cc\', \'Chung cư\', \'2020-06-13 06:23:59\', \'2020-06-13 06:23:59\'),
         (3, \'dv\', \'Căn hộ dịch vụ\', \'2020-06-13 06:24:14\', \'2020-06-13 06:24:14\'),

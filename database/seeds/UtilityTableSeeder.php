@@ -13,7 +13,7 @@ class UtilityTableSeeder extends Seeder
     public function run()
     {
         DB::statement('
-        INSERT INTO `utilities` (`id`, `key`, `symbol`, `icon`, `created_at`, `updated_at`) VALUES
+        INSERT INTO utilities (id, key, symbol, icon, created_at, updated_at) VALUES
         (1, \'lvs\', \'Lò vi sóng\', \'far fa-microwave\', \'2020-06-13 06:31:23\', \'2020-06-13 06:31:23\'),
         (2, \'tl\', \'Tủ lạnh\', \'far fa-refrigerator\', \'2020-06-13 06:31:37\', \'2020-06-13 06:31:37\'),
         (3, \'tv\', \'Tivi\', \'fal fa-tv-alt\', \'2020-06-13 06:31:48\', \'2020-06-13 06:31:48\'),
