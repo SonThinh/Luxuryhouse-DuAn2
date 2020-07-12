@@ -26,7 +26,6 @@ class CreateHousesTable extends Migration
             $table->string('n_bed');
             $table->string('n_bath');
             $table->string('max_guest');
-            $table->string('image', 6000)->nullable();
             $table->longText('description');
             $table->longText('rules');
             $table->tinyInteger('status');

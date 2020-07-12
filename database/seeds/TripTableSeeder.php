@@ -13,7 +13,7 @@ class TripTableSeeder extends Seeder
     public function run()
     {
         DB::statement('
-            INSERT INTO trips (id, name, key, created_at, updated_at) VALUES
+            INSERT INTO `trips` (`id`, `name`, `key`, `created_at`, `updated_at`) VALUES
             (1, \'Gia đình\', \'gd\', \'2020-06-13 06:27:35\', \'2020-06-13 06:27:35\'),
             (2, \'Cặp đôi\', \'cd\', \'2020-06-13 06:27:42\', \'2020-06-13 06:27:42\'),
             (3, \'Party\', \'pt\', \'2020-06-13 06:27:49\', \'2020-06-13 06:27:49\'),
