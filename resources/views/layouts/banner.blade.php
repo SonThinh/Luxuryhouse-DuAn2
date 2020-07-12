@@ -11,13 +11,15 @@
                                placeholder="Địa điểm cần tìm">
                     </div>
                     <div class="form-group">
-                        <label for="date-search" class="form-label"><i class="fal fa-calendar-alt"></i> Lịch trình</label>
+                        <label for="date-search" class="form-label"><i class="fal fa-calendar-alt"></i> Lịch
+                            trình</label>
                         <input type="text" name="date_search" class="form-control" autocomplete="off"
                                id="date-search"/>
                     </div>
                     <div class="form-group ">
                         <label for="n_person" class="form-label"><i class="fas fa-users"></i> Số người</label>
-                        <input type="number" class="form-control" min="1" max="30" id="n_person" name="n_person" value="1">
+                        <input type="number" class="form-control" min="1" max="30" id="n_person" name="n_person"
+                               value="1">
                     </div>
                     <div class="form-btn">
                         <input type="submit"
@@ -28,11 +30,11 @@
             <div class="slider col-sm-12 col-md-8">
                 @foreach($events as $event)
                     @php
-                    dd(json_decode($event->image),$event->image);
-                        $image = json_decode($event->image);
+                            $image = json_decode($event->image);
                     @endphp
                     <div>
-                        <img src="{{asset($image->image_path)}}" alt="{{$event->types}}">
+                        <img src="{{asset(isset($image->image_path) ? $image->image_path : '')}}"
+                             alt="{{$event->types}}">
                     </div>
                 @endforeach
             </div>
