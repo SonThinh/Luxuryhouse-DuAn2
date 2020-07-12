@@ -24,17 +24,19 @@ class SliderController extends Controller
     public function addEvent(EventRequest $request)
     {
         if ($request->image_event !== 'undefined') {
-            $image = $request->file('image_event');
-            $file_name = $request->key . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads/event/' . $request->key), $file_name);
-            $data = [
-                'image_name' => $file_name,
-                'image_path' => 'uploads/event/' . $request->key . '/' . $file_name
-            ];
             $event = new Slider();
             $event->types = $request->key;
-            $event->image = json_encode($data);
             $event->link = $request->link;
+            $event->save();
+            $ev = Slider::find($event->id);
+            $image = $request->file('image_event');
+            $file_name = $event->id . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/event/' . $event->id), $file_name);
+            $data = [
+                'image_name' => $file_name,
+                'image_path' => 'uploads/event/' . $event->id . '/' . $file_name
+            ];
+            $event->image = json_encode($data);
             $event->save();
             if ($event) {
                 return response()->json([

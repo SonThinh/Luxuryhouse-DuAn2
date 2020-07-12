@@ -102,14 +102,6 @@ class HostController extends Controller
 
     public function postAddHouse(HouseRequest $request)
     {
-        foreach ($request->file('house_image') as $image) {
-            $file_name = $request->name . '_' . rand() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads/house/' . $request->name), $file_name);
-            $house_image [] = [
-                'image_name' => $file_name,
-                'image_path' => 'uploads/house/' . $request->name . '/' . $file_name
-            ];
-        }
         $rules = [
             'cancel_rule' => $request->cancel_rules,
             'attention' => $request->attention,
@@ -138,6 +130,15 @@ class HostController extends Controller
         $house->status = 0;
         $house->h_status = 0;
         $house->save();
+        $h = House::find($house->id);
+        foreach ($request->file('house_image') as $image) {
+            $file_name = $h . '_' . rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/house/' . $h), $file_name);
+            $house_image [] = [
+                'image_name' => $file_name,
+                'image_path' => 'uploads/house/' . $h . '/' . $file_name
+            ];
+        }
         if ($house) {
             $host_id = Host::find($request->host);
             return redirect()->route('users.host.showDashboard', $host_id);
@@ -210,11 +211,11 @@ class HostController extends Controller
         $house->h_status = 0;
         if ($request->house_image) {
             foreach ($request->file('house_image') as $image) {
-                $file_name = $request->name . rand() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('uploads/house/' . $request->name), $file_name);
+                $file_name = $house->id . rand() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('uploads/house/' . $house->id), $file_name);
                 $house_image [] = [
                     'image_name' => $file_name,
-                    'image_path' => 'uploads/' . $request->name . '/' . $file_name
+                    'image_path' => 'uploads/' . $house->id . '/' . $file_name
                 ];
             }
             $house->image = json_encode($house_image);
@@ -247,7 +248,9 @@ class HostController extends Controller
         $bill->save();
         return response()->json(['success' => 'Đã đổi trạng thái đơn đặt phòng']);
     }
-    public function viewBills($id){
+
+    public function viewBills($id)
+    {
         $data['cities'] = City::all();
         $data['houses'] = House::all();
         $data['users'] = User::all();

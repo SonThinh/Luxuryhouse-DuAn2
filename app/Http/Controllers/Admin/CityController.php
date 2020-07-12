@@ -31,16 +31,18 @@ class CityController extends Controller
     {
         if ($request->image_city !== 'undefined') {
             $image = $request->file('image_city');
-            $file_name = $request->city_name . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads/city/' . $request->city_name), $file_name);
+            $city = new City;
+            $city->name = $request->city_name;
+            $city->description = $request->city_description;
+            $city->save();
+            $cities = City::find($city->id);
+            $file_name = $city->id . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/city/' . $city->id), $file_name);
             $data = [
                 'image_name' => $file_name,
-                'image_path' => 'uploads/city/' . $request->city_name . '/' . $file_name
+                'image_path' => 'uploads/city/' . $city->id . '/' . $file_name
             ];
-            $cities = new City;
-            $cities->name = $request->city_name;
             $cities->image = json_encode($data);
-            $cities->description = $request->city_description;
             $cities->save();
             if ($cities) {
                 return response()->json([
@@ -63,21 +65,21 @@ class CityController extends Controller
 
     public function postEditCities(CitiesRequest $request, $id)
     {
-        $cities = City::find($id);
-        $cities->name = $request->city_name;
-        $cities->description = $request->city_description;
+        $city = City::find($id);
+        $city->name = $request->city_name;
+        $city->description = $request->city_description;
         if ($request->image_city !== 'undefined') {
             $image = $request->file('image_city');
-            $file_name = $request->city_name . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads/city/' . $request->city_name), $file_name);
+            $file_name = $city->id . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/city/' . $city->id), $file_name);
             $data = [
                 'image_name' => $file_name,
-                'image_path' => 'uploads/city/' . $request->city_name . '/' . $file_name
+                'image_path' => 'uploads/city/' . $city->id . '/' . $file_name
             ];
-            $cities->image = json_encode($data);
+            $city->image = json_encode($data);
         }
-        $cities->save();
-        if ($cities) {
+        $city->save();
+        if ($city) {
             return response()->json([
                 'status' => 'true',
                 'message' => 'Sửa địa danh thành công',
