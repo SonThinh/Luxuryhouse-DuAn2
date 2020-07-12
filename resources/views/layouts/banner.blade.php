@@ -28,7 +28,7 @@
             <div class="slider col-sm-12 col-md-8">
                 @foreach($events as $event)
                     @php
-                    dd(json_decode($event->image));
+                    dd(json_decode($event->image),$event->image);
                         $image = json_decode($event->image);
                     @endphp
                     <div>
