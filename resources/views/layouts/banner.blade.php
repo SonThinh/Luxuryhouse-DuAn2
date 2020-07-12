@@ -28,15 +28,18 @@
                 </form>
             </div>
             <div class="slider col-sm-12 col-md-8">
-                @foreach($events as $event)
-                    @php
-                            $image = json_decode($event->image);
-                    @endphp
-                    <div>
-                        <img src="{{asset(isset($image->image_path) ? $image->image_path : '')}}"
-                             alt="{{$event->types}}">
-                    </div>
-                @endforeach
+                <div>
+                    <img src="{{asset('images/background/DN.png')}}"
+                         alt="">
+                </div>
+                <div>
+                    <img src="{{asset('images/background/HCMC.png')}}"
+                         alt="">
+                </div>
+                <div>
+                    <img src="{{asset('images/background/HN.png')}}"
+                         alt="">
+                </div>
             </div>
             <div class="clearfix"></div>
         </div>
