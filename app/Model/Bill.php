@@ -2,9 +2,6 @@
 
 namespace App\Model;
 
-use App\Host;
-use App\House;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Bill extends Model

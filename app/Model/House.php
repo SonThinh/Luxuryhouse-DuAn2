@@ -1,10 +1,7 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
-use App\Model\Bill;
-use App\Model\City;
-use App\Model\District;
 use Illuminate\Database\Eloquent\Model;
 
 class House extends Model

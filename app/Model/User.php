@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Models;
+namespace App\Model;
 
-use App\Host;
-use App\Model\Bill;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
     use Notifiable;
+
     protected $fillable = [
         'email',
         'password',
@@ -22,18 +20,25 @@ class User extends Authenticatable
         'google',
         'facebook',
         'avatar',
-        'description'
+        'description',
     ];
+
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
+
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function host(){
-        return $this->hasOne(Host::class,'m_id','id');
+
+    public function host()
+    {
+        return $this->hasOne(Host::class, 'm_id', 'id');
     }
-    public function bill(){
-        return $this->hasMany(Bill::class,'guest_id','id');
+
+    public function bill()
+    {
+        return $this->hasMany(Bill::class, 'guest_id', 'id');
     }
 }

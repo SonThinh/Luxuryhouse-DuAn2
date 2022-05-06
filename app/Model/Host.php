@@ -1,9 +1,7 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
-use App\Model\Bill;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Host extends Model

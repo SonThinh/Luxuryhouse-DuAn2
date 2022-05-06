@@ -2,7 +2,6 @@
 
 namespace App\Model;
 
-use App\House;
 use Illuminate\Database\Eloquent\Model;
 
 class City extends Model
