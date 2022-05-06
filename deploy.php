@@ -7,7 +7,7 @@ require 'deploy/utils.php';
 
 // Project name
 set('application', 'Luxuryhouse-DuAn2');
-
+set('default_stage', 'develop');
 // Project repository
 set('repository', 'https://github.com/SonThinh/Luxuryhouse-DuAn2.git');
 

@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Host;
-use App\House;
+use App\Mail\SendBill;
 use App\Mail\SendPaySuccess;
 use App\Model\Bill;
 use App\Model\City;
 use App\Model\District;
-use App\Models\User;
+use App\Model\Host;
+use App\Model\House;
+use App\Model\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\SendBill;
 
 class OrderController extends Controller
 {
@@ -27,6 +27,7 @@ class OrderController extends Controller
         $data['date_range'] = $request->dates_range;
         $data['cities'] = City::all();
         $data['districts'] = District::with(['city'])->get();
+
         return view('house.order_view', $data);
     }
 
@@ -49,18 +50,19 @@ class OrderController extends Controller
         $bill->notify = 1;
         $bill->save();
         $data = [
-            'n_person' => $request->n_person,
-            'h_name' => $request->h_name,
-            'check_in' => $request->check_in,
-            'check_out' => $request->check_out,
-            'guest_name' => $request->guest_name,
-            'phone' => $request->phone,
-            'email' => $request->email,
+            'n_person'      => $request->n_person,
+            'h_name'        => $request->h_name,
+            'check_in'      => $request->check_in,
+            'check_out'     => $request->check_out,
+            'guest_name'    => $request->guest_name,
+            'phone'         => $request->phone,
+            'email'         => $request->email,
             'request_guest' => $request->request_guest,
-            'total' => $request->total,
-            'date_range' => $request->date_range,
+            'total'         => $request->total,
+            'date_range'    => $request->date_range,
         ];
-//        $this->sendBill_detail($data);
+
+        //        $this->sendBill_detail($data);
         return redirect()->route('users.showViewBookingComplete', $code);
     }
 
@@ -77,6 +79,7 @@ class OrderController extends Controller
         $data['bills'] = Bill::query()->where('code', $code)->get();
         $data['cities'] = City::all();
         $data['districts'] = District::with(['city'])->get();
+
         return view('house.booking_success', $data);
     }
 
@@ -99,7 +102,8 @@ class OrderController extends Controller
         }
         $data['code'] = $code;
         $data['user_id'] = $user->id;
-//        $this->sendPay($data);
+
+        //        $this->sendPay($data);
 
         return view('cms.member.pay_success', $data);
     }

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\House;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Model\City;
+use App\Model\House;
 use App\Model\Slider;
-use App\Models\User;
+use App\Model\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -17,7 +17,8 @@ class HomeController extends Controller
     {
         $data['citiesList'] = City::all();
         $data['events'] = Slider::all();
-        $data['houses'] = House::query()->where('status',1)->where('h_status',1)->get();
+        $data['houses'] = House::query()->where('status', 1)->where('h_status', 1)->get();
+
         return view('pages.area', $data);
     }
 
@@ -29,6 +30,7 @@ class HomeController extends Controller
     function logout()
     {
         Auth::logout();
+
         return redirect()->route('users.login');
     }
 
@@ -45,23 +47,22 @@ class HomeController extends Controller
             $remember_me = false;
         }
         $data = [
-            'email' => $request->email,
+            'email'    => $request->email,
             'password' => $request->password,
         ];
         if (Auth::attempt($data, $remember_me)) {
             return response()->json([
-                'status' => 'true',
+                'status'  => 'true',
                 'message' => 'Đăng nhập thành công',
-                'url' => route('users.dashboard.showDashboard', [auth()->user()->id]),
+                'url'     => route('users.dashboard.showDashboard', [auth()->user()->id]),
             ]);
         } else {
             return response()->json([
-                'status' => 'false',
+                'status'  => 'false',
                 'message' => 'Sai tài khoản hoặc mật khẩu',
             ]);
         }
     }
-
 
     public function postRegister(RegisterRequest $request)
     {
@@ -73,13 +74,13 @@ class HomeController extends Controller
         $user->save();
         if ($user) {
             return response()->json([
-                'status' => 'true',
+                'status'  => 'true',
                 'message' => 'Đăng ký thành công! Mời đăng nhập',
-                'url' => route('users.login'),
+                'url'     => route('users.login'),
             ]);
         } else {
             return response()->json([
-                'status' => 'false',
+                'status'  => 'false',
                 'message' => 'Đăng ký thất bại! Vui lòng kiểm tra lại thông tin',
             ]);
         }

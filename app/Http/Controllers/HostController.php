@@ -2,36 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Host;
-use App\House;
 use App\Http\Requests\HouseEditRequest;
 use App\Http\Requests\HouseRequest;
 use App\Http\Requests\RegisterHostRequest;
 use App\Model\Bill;
 use App\Model\City;
 use App\Model\District;
+use App\Model\Host;
+use App\Model\House;
 use App\Model\Trip;
-use App\Models\User;
 use App\Model\Type;
+use App\Model\User;
 use App\Model\Utility;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use function Sodium\increment;
 
 class HostController extends Controller
 {
     public function showViewRegisterHost($id)
     {
         $data['user'] = User::find($id);
+
         return view('cms.host.register_host', $data);
     }
 
     public function selectDistrict(Request $request)
     {
         $areas = District::query()
-            ->where('city_id', $request->city_id)
-            ->select('id', 'name')
-            ->get();
+                         ->where('city_id', $request->city_id)
+                         ->select('id', 'name')
+                         ->get();
+
         return response()->json([
             'data' => $areas,
         ]);
@@ -41,11 +41,11 @@ class HostController extends Controller
     {
         if ($request->imgIdCard !== 'undefined') {
             $image = $request->file('imgIdCard');
-            $file_name = 'ID_Card' . $id . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads/host/' . $id), $file_name);
+            $file_name = 'ID_Card'.$id.'.'.$image->getClientOriginalExtension();
+            $image->move(public_path('uploads/host/'.$id), $file_name);
             $img_card = [
                 'image_name' => $file_name,
-                'image_path' => 'uploads/host/' . $id . '/' . $file_name
+                'image_path' => 'uploads/host/'.$id.'/'.$file_name,
             ];
             $host = new Host;
             $host->m_id = $id;
@@ -55,11 +55,11 @@ class HostController extends Controller
             if ($request->business_license) {
                 if ($request->imgBL !== 'undefined') {
                     $image = $request->file('imgBL');
-                    $file_name = 'BL' . $id . '.' . $image->getClientOriginalExtension();
-                    $image->move(public_path('uploads/host/' . $id), $file_name);
+                    $file_name = 'BL'.$id.'.'.$image->getClientOriginalExtension();
+                    $image->move(public_path('uploads/host/'.$id), $file_name);
                     $img_business_license = [
                         'image_name' => $file_name,
-                        'image_path' => 'uploads/host/' . $id . '/' . $file_name
+                        'image_path' => 'uploads/host/'.$id.'/'.$file_name,
                     ];
                 }
                 $host->business_license = $request->business_license;
@@ -68,20 +68,21 @@ class HostController extends Controller
             $host->save();
             if ($host) {
                 $memberId = User::find($id);
+
                 return response()->json([
-                    'status' => 'true',
+                    'status'  => 'true',
                     'message' => 'Đăng ký host thành công! Đợi duyệt',
-                    'url' => route('users.dashboard.showDashboard', $memberId),
+                    'url'     => route('users.dashboard.showDashboard', $memberId),
                 ]);
             } else {
                 return response()->json([
-                    'status' => 'false',
+                    'status'  => 'false',
                     'message' => 'Đăng ký host thất bại! Vui lòng kiểm tra lại thông tin',
                 ]);
             }
         } else {
             return response()->json([
-                'status' => 'false',
+                'status'  => 'false',
                 'message' => 'Vui lòng kiểm tra lại thông tin',
             ]);
         }
@@ -97,6 +98,7 @@ class HostController extends Controller
         $data['types'] = Type::all();
         $data['utilities'] = Utility::all();
         $data['trips'] = Trip::all();
+
         return view('cms.host.dashboard', $data);
     }
 
@@ -104,9 +106,9 @@ class HostController extends Controller
     {
         $rules = [
             'cancel_rule' => $request->cancel_rules,
-            'attention' => $request->attention,
-            'check_in' => $request->check_in,
-            'check_out' => $request->check_out,
+            'attention'   => $request->attention,
+            'check_in'    => $request->check_in,
+            'check_out'   => $request->check_out,
         ];
         $house = new House();
         $house->city_id = $request->selectCity;
@@ -132,29 +134,31 @@ class HostController extends Controller
         $house->save();
         $h = House::find($house->id);
         foreach ($request->file('house_image') as $image) {
-            $file_name = $h . '_' . rand() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads/house/' . $h), $file_name);
+            $file_name = $h.'_'.rand().'.'.$image->getClientOriginalExtension();
+            $image->move(public_path('uploads/house/'.$h), $file_name);
             $house_image [] = [
                 'image_name' => $file_name,
-                'image_path' => 'uploads/house/' . $h . '/' . $file_name
+                'image_path' => 'uploads/house/'.$h.'/'.$file_name,
             ];
         }
         if ($house) {
             $host_id = Host::find($request->host);
+
             return redirect()->route('users.host.showDashboard', $host_id);
         }
+
         return back();
-//            return response()->json([
-//                'status' => 'true',
-//                'message' => 'Đăng ký host thành công! Đợi duyệt',
-//                'url' => route('users.dashboard.showDashboard', $memberId),
-//            ]);
-//        } else {
-//            return response()->json([
-//                'status' => 'false',
-//                'message' => 'Đăng ký host thất bại! Vui lòng kiểm tra lại thông tin',
-//            ]);
-//        }
+        //            return response()->json([
+        //                'status' => 'true',
+        //                'message' => 'Đăng ký host thành công! Đợi duyệt',
+        //                'url' => route('users.dashboard.showDashboard', $memberId),
+        //            ]);
+        //        } else {
+        //            return response()->json([
+        //                'status' => 'false',
+        //                'message' => 'Đăng ký host thất bại! Vui lòng kiểm tra lại thông tin',
+        //            ]);
+        //        }
 
     }
 
@@ -170,6 +174,7 @@ class HostController extends Controller
         $data['utilities'] = Utility::all();
         $data['bookings'] = Bill::query()->where('host_id', $id)->get();
         $data['host'] = Host::find($id);
+
         return view('cms.host.house', $data);
     }
 
@@ -178,6 +183,7 @@ class HostController extends Controller
         $house = House::find($request->id);
         $house->h_status = $request->h_status;
         $house->save();
+
         return response()->json(['success' => 'Đổi trạng thái thành công.']);
     }
 
@@ -185,9 +191,9 @@ class HostController extends Controller
     {
         $rules = [
             'cancel_rule' => $request->cancel_rules,
-            'attention' => $request->attention,
-            'check_in' => $request->check_in,
-            'check_out' => $request->check_out,
+            'attention'   => $request->attention,
+            'check_in'    => $request->check_in,
+            'check_out'   => $request->check_out,
         ];
         $house = House::find($id);
         $house->city_id = $request->selectCity;
@@ -211,11 +217,11 @@ class HostController extends Controller
         $house->h_status = 0;
         if ($request->house_image) {
             foreach ($request->file('house_image') as $image) {
-                $file_name = $house->id . rand() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('uploads/house/' . $house->id), $file_name);
+                $file_name = $house->id.rand().'.'.$image->getClientOriginalExtension();
+                $image->move(public_path('uploads/house/'.$house->id), $file_name);
                 $house_image [] = [
                     'image_name' => $file_name,
-                    'image_path' => 'uploads/' . $house->id . '/' . $file_name
+                    'image_path' => 'uploads/'.$house->id.'/'.$file_name,
                 ];
             }
             $house->image = json_encode($house_image);
@@ -223,8 +229,10 @@ class HostController extends Controller
         $house->save();
         if ($house) {
             $host_id = Host::find($request->host);
+
             return redirect()->route('users.host.showDashboard', $host_id);
         }
+
         return back();
     }
 
@@ -238,6 +246,7 @@ class HostController extends Controller
         $data['types'] = Type::all();
         $data['trips'] = Trip::all();
         $data['utilities'] = Utility::all();
+
         return view('cms.host.booking', $data);
     }
 
@@ -246,6 +255,7 @@ class HostController extends Controller
         $bill = Bill::find($request->id);
         $bill->status = $request->status;
         $bill->save();
+
         return response()->json(['success' => 'Đã đổi trạng thái đơn đặt phòng']);
     }
 
@@ -259,6 +269,7 @@ class HostController extends Controller
         $data['utilities'] = Utility::all();
         $data['host'] = Host::find($id);
         $data['bookings'] = Bill::query()->where('host_id', $id)->where('status', 1)->where('pay', 1)->get();
+
         return view('cms.host.bills', $data);
     }
 }
