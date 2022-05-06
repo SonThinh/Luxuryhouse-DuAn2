@@ -17,7 +17,7 @@ class HomeController extends Controller
     {
         $data['citiesList'] = City::all();
         $data['events'] = Slider::all();
-        $data['houses'] = House::query()->where('status', 1)->where('h_status', 1)->get();
+        //$data['houses'] = House::query()->where('status', 1)->where('h_status', 1)->get();
 
         return view('pages.area', $data);
     }
