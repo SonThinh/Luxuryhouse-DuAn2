@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Host;
-use App\House;
-use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
 use App\Model\City;
 use App\Model\District;
-use App\Model\Slider;
-use App\Models\User;
+use App\Model\Host;
+use App\Model\House;
+use App\Model\User;
 use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
@@ -22,6 +21,7 @@ class AdminController extends Controller
     function logout()
     {
         Auth::logout();
+
         return redirect()->route('admin.login');
     }
 
@@ -34,6 +34,7 @@ class AdminController extends Controller
         $data['house_all'] = House::query()->where('status', 1)->get();
         $data['district'] = District::with(['city'])->get();
         $data['cities'] = City::all();
+
         return view('admin.pages.admin_dashboard', $data);
     }
 
@@ -46,34 +47,36 @@ class AdminController extends Controller
                 $remember_me = false;
             }
             $data = [
-                'email' => $request->email,
+                'email'    => $request->email,
                 'password' => $request->password,
             ];
             if (Auth::attempt($data, $remember_me)) {
                 return response()->json([
-                    'status' => 'true',
+                    'status'  => 'true',
                     'message' => 'Đăng nhập thành công',
-                    'url' => route('admin.dashboard'),
+                    'url'     => route('admin.dashboard'),
                 ]);
             } else {
                 return response()->json([
-                    'status' => 'false',
+                    'status'  => 'false',
                     'message' => 'Sai tài khoản hoặc mật khẩu',
                 ]);
             }
-        } else
+        } else {
             return response()->json([
-                'status' => 'false',
+                'status'  => 'false',
                 'message' => 'Sai tài khoản hoặc mật khẩu',
             ]);
+        }
     }
 
-    public function checkLevelByEmail(String $email)
+    public function checkLevelByEmail(string $email)
     {
         $email = User::query()->where('email', $email)->where('level', 0);
-        if ($email->count() > 0)
+        if ($email->count() > 0) {
             return true;
+        }
+
         return false;
     }
-
 }

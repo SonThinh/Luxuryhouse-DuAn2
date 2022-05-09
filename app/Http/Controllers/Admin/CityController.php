@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\AreaRequest;
 use App\Http\Requests\CitiesRequest;
 use App\Model\City;
-use App\Http\Controllers\Controller;
 use App\Model\District;
 
 class CityController extends Controller
@@ -13,6 +13,7 @@ class CityController extends Controller
     public function showCities()
     {
         $data['citiesList'] = City::all();
+
         return view('admin.pages.city.admin_cities', $data);
     }
 
@@ -24,6 +25,7 @@ class CityController extends Controller
     public function showViewEditCities($id)
     {
         $data['city'] = City::find($id);
+
         return view('admin.pages.city.edit_city', $data);
     }
 
@@ -36,28 +38,29 @@ class CityController extends Controller
             $city->description = $request->city_description;
             $city->save();
             $cities = City::find($city->id);
-            $file_name = $city->id . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads/city/' . $city->id), $file_name);
+            $file_name = $city->id.'.'.$image->getClientOriginalExtension();
+            $image->move(public_path('uploads/city/'.$city->id), $file_name);
             $data = [
                 'image_name' => $file_name,
-                'image_path' => 'uploads/city/' . $city->id . '/' . $file_name
+                'image_path' => 'uploads/city/'.$city->id.'/'.$file_name,
             ];
             $cities->image = json_encode($data);
             $cities->save();
             if ($cities) {
                 return response()->json([
-                    'status' => 'true',
+                    'status'  => 'true',
                     'message' => 'Thêm địa danh thành công',
-                    'url' => route('admin.city.showCities'),
+                    'url'     => route('admin.city.showCities'),
                 ]);
-            } else
+            } else {
                 return response()->json([
-                    'status' => 'false',
+                    'status'  => 'false',
                     'message' => 'Thêm địa danh thất bại!',
                 ]);
+            }
         } else {
             return response()->json([
-                'status' => 'false',
+                'status'  => 'false',
                 'message' => 'Chưa chọn ảnh!',
             ]);
         }
@@ -70,43 +73,47 @@ class CityController extends Controller
         $city->description = $request->city_description;
         if ($request->image_city !== 'undefined') {
             $image = $request->file('image_city');
-            $file_name = $city->id . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads/city/' . $city->id), $file_name);
+            $file_name = $city->id.'.'.$image->getClientOriginalExtension();
+            $image->move(public_path('uploads/city/'.$city->id), $file_name);
             $data = [
                 'image_name' => $file_name,
-                'image_path' => 'uploads/city/' . $city->id . '/' . $file_name
+                'image_path' => 'uploads/city/'.$city->id.'/'.$file_name,
             ];
             $city->image = json_encode($data);
         }
         $city->save();
         if ($city) {
             return response()->json([
-                'status' => 'true',
+                'status'  => 'true',
                 'message' => 'Sửa địa danh thành công',
-                'url' => route('admin.city.showCities'),
+                'url'     => route('admin.city.showCities'),
             ]);
-        } else
+        } else {
             return response()->json([
-                'status' => 'false',
+                'status'  => 'false',
                 'message' => 'Sửa địa danh thất bại!',
             ]);
+        }
     }
 
     public function deleteCity($id)
     {
         City::destroy($id);
+
         return back();
     }
 
     public function showAreas()
     {
         $data['areaList'] = District::all();
+
         return view('admin.pages.city.area.admin_area', $data);
     }
 
     public function showViewAddAreas()
     {
         $data['cities'] = City::all();
+
         return view('admin.pages.city.area.add_area', $data);
     }
 
@@ -119,18 +126,19 @@ class CityController extends Controller
             $areas->save();
             if ($areas) {
                 return response()->json([
-                    'status' => 'true',
+                    'status'  => 'true',
                     'message' => 'Thêm khu vực thành công',
-                    'url' => route('admin.city.showAreas'),
+                    'url'     => route('admin.city.showAreas'),
                 ]);
-            } else
+            } else {
                 return response()->json([
-                    'status' => 'false',
+                    'status'  => 'false',
                     'message' => 'Thêm khu vực thất bại!',
                 ]);
+            }
         } else {
             return response()->json([
-                'status' => 'false',
+                'status'  => 'false',
                 'message' => 'Chưa chọn thành phố!',
             ]);
         }
@@ -140,6 +148,7 @@ class CityController extends Controller
     {
         $data['areas'] = District::find($id);
         $data['cities'] = City::all();
+
         return view('admin.pages.city.area.edit_area', $data);
     }
 
@@ -151,20 +160,22 @@ class CityController extends Controller
         $areas->save();
         if ($areas) {
             return response()->json([
-                'status' => 'true',
+                'status'  => 'true',
                 'message' => 'Sửa khu vực thành công',
-                'url' => route('admin.city.showAreas'),
+                'url'     => route('admin.city.showAreas'),
             ]);
-        } else
+        } else {
             return response()->json([
-                'status' => 'false',
+                'status'  => 'false',
                 'message' => 'Sửa khu vực thất bại!',
             ]);
+        }
     }
 
     public function deleteAreas($id)
     {
         District::destroy($id);
+
         return back();
     }
 }
