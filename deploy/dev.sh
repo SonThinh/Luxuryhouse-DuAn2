@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
-ssh-add ~/.ssh/id_rsa
+eval `ssh-agent -s`
+ssh-add C:/Users/Admin/.ssh/id_rsa
 ./vendor/bin/dep deploy develop -vv

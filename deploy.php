@@ -9,7 +9,7 @@ require 'deploy/utils.php';
 set('application', 'Luxuryhouse-DuAn2');
 set('default_stage', 'develop');
 // Project repository
-set('repository', 'https://github.com/SonThinh/Luxuryhouse-DuAn2.git');
+set('repository', 'git@github.com:SonThinh/nested.git');
 
 // [Optional] Allocate tty for git clone. Default value is false.
 set('git_tty', true);
